@@ -3,20 +3,26 @@
 	License: MIT License
 
 	Last Modified:
+        10.16.2016 (DWG): Added comments
 		10.16.2016 (DWG): Added license information
 		2015 (DWG): Initial release
 ]]
 
+-- Parses the given message and looks for any conditionals
+-- msg: The message to parse
+-- returns: The remaining spell name, the modifier if set, the unit id if set and help if set
+-- remarks: if help == 1 then [help], if help == 0 then [harm], if help == nil then not set
 function MMC_parseMsg(msg)
 	-- if string is
-	local modifier = string.gsub(msg, "(%b[])", "%1");
-	local modifierEnd = string.find(modifier, "]");
-	local target;
+	local modifier, target;
+	local modifierEnd = string.find(msg, "]");
 	local help = nil;
 	
-	if modifier and string.sub(modifier, 1, 1) == "[" and modifierEnd then
+    -- If we find conditionals trim down the message to everything except the conditionals
+	if string.sub(msg, 1, 1) == "[" and modifierEnd then
 		modifier = string.sub(msg, 2, modifierEnd - 1);
 		msg = string.sub(msg, modifierEnd + 2);
+    -- No conditionals found. Just return the message as is
 	else
 		return msg;
 	end
@@ -41,18 +47,25 @@ function MMC_parseMsg(msg)
 	return msg, _mod, target, help;
 end
 
-function MMC_ValidateModifier(modifier)
-	if modifier == "alt" and not IsAltKeyDown() then
-		return false;
-	elseif modifier == "ctrl" and not IsControlKeyDown() then
-		return false;
-	elseif modifier == "shift" and not IsShiftKeyDown() then
-		return false;
+-- Validates that the given modifier is pressed
+-- modifier: The modifier to validate
+-- returns: True if the given modifier is valid. False if it is not.
+function MMC_CheckIfModifierIsPressed(modifier)
+	if modifier == "alt" and IsAltKeyDown() then
+		return true;
+	elseif modifier == "ctrl" and IsControlKeyDown() then
+		return true;
+	elseif modifier == "shift" and IsShiftKeyDown() then
+		return true;
 	end
 	
-	return true;
+	return false;
 end
 
+-- Validates that the given target is either friend (if [help]) or foe (if [harm])
+-- target: The unit id to check
+-- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy.
+-- remarks: Will always return true if help is not given
 function MMC_CheckHelp(target, help)
 	if help then
 		if help == 1 then
@@ -68,6 +81,9 @@ function MMC_CheckHelp(target, help)
 	return true;
 end
 
+-- Ensures the validity of the given target
+-- target: The unit id to check
+-- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
 function MMC_IsValidTarget(target, help)
 	if target ~= "mouseover" then
 		if not MMC_CheckHelp(target, help) or not UnitExists(target) then
@@ -86,15 +102,16 @@ end
 
 --/cast [mod:ctrl, target=player] Detect Greater Invisibility
 --/cast [help target=mouseover] Detect Greater Invisibility
-function MMC_DoCast(editBox, value, msg)
+--/cast [target=player] Holy Light
+function MMC_DoCast(editBox, fun, msg)
 	local modifier;
 	msg, modifier, target, help = MMC_parseMsg(msg);
-	
+    
 	if not modifier and not target and not help then
 		if not msg then
 			return;
 		else
-			value(msg);
+			fun(msg);
 			editBox:AddHistoryLine(text);
 			ChatEdit_OnEscapePressed(editBox);
 			return;
@@ -102,7 +119,7 @@ function MMC_DoCast(editBox, value, msg)
 	end
 	
 	if modifier then
-		if not MMC_ValidateModifier(modifier) then
+		if not MMC_CheckIfModifierIsPressed(modifier) then
 			ChatEdit_OnEscapePressed(editBox);
 			return;
 		end
