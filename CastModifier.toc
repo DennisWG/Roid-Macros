@@ -1,0 +1,10 @@
+## Interface: 11200
+## Author: DWG
+## Title: CastModifier
+## Notes: Adds TBC like modifiers to your cast macros
+## Title-deDE: CastModifier
+## Notes-deDE: Fügt TBC ähnliche Modifizierer zu den Zaubermacros hinzu
+## Dependencies: ClassicMouseover
+## SavedVariables: MMCDB
+## SavedVariablesPerCharacter: MMCDB_Char
+MMC.lua
