@@ -3,6 +3,7 @@
 	License: MIT License
 
 	Last Modified:
+        10.16.2016 (DWG): Implemented conditional casts
         10.16.2016 (DWG): Added comments
 		10.16.2016 (DWG): Added license information
 		2015 (DWG): Initial release
@@ -13,7 +14,6 @@
 -- returns: The remaining spell name, the modifier if set, the unit id if set and help if set
 -- remarks: if help == 1 then [help], if help == 0 then [harm], if help == nil then not set
 function MMC_parseMsg(msg)
-	-- if string is
 	local modifier, target;
 	local modifierEnd = string.find(msg, "]");
 	local help = nil;
@@ -99,55 +99,92 @@ function MMC_IsValidTarget(target, help)
 	return MMC_CheckHelp(target, help);
 end
 
-
---/cast [mod:ctrl, target=player] Detect Greater Invisibility
---/cast [help target=mouseover] Detect Greater Invisibility
---/cast [target=player] Holy Light
-function MMC_DoCast(editBox, fun, msg)
-	local modifier;
-	msg, modifier, target, help = MMC_parseMsg(msg);
+-- A very primitive way of trying to verify that the given target is the same as the player's current target
+-- target: The target to check
+-- returns: True if the target and the player's target share some values
+function MMC_VerifyIdentity(target)
+    local plvl = UnitLevel("playertarget");
+    local tlvl = UnitLevel(target);
+    local pmana = UnitMana("playertarget");
+    local tmana = UnitMana(target);
+    local pmaxmana = UnitManaMax("playertarget");
+    local tmaxmana = UnitManaMax(target);
     
-	if not modifier and not target and not help then
-		if not msg then
-			return;
-		else
-			fun(msg);
-			editBox:AddHistoryLine(text);
-			ChatEdit_OnEscapePressed(editBox);
-			return;
-		end
-	end
-	
-	if modifier then
-		if not MMC_CheckIfModifierIsPressed(modifier) then
-			ChatEdit_OnEscapePressed(editBox);
-			return;
-		end
-	end
-	
-	if not target then
-		target = "target";
-	end
-	if not MMC_IsValidTarget(target, help) then
-		ChatEdit_OnEscapePressed(editBox);
-		return;
-	end
-	
-	if target == "mouseover" then
-		if help == 0 then
-			TargetUnit(target);
-			CastSpellByName(msg);
-			ChatEdit_OnEscapePressed(editBox);
-			return;
-		end
-		CM:Cast(msg);
-		ChatEdit_OnEscapePressed(editBox);
-		return;
-	end
-	
-	CastSpellByName(msg);
-	SpellTargetUnit(target);
-	ChatEdit_OnEscapePressed(editBox);
+    return plvl == tlvl and pmana == tmana and pmaxmana == tmaxmana;
+end
+
+-- Attempts to cast a single spell
+-- editBox: Blizzard stuff
+-- fun: Blizzard stuff
+-- msg: The conditions followed by the spell name
+-- returns: True if the spell has been casted. False if it has not.
+function MMC_DoCastOne(editBox, fun, msg)
+    local msg, modifier, target, help = MMC_parseMsg(msg);
+    
+    -- No modifiers. Just exit.
+    if not modifier and not target and not help then
+        if not msg then
+            return false;
+        else
+            fun(msg);
+            editBox:AddHistoryLine(text);
+            return false;
+        end
+    end
+    
+    if modifier then
+        if not MMC_CheckIfModifierIsPressed(modifier) then
+            return false;
+        end
+    end
+    
+    if not target then
+        target = "target";
+    end
+    if not MMC_IsValidTarget(target, help) then
+        return false;
+    end
+    
+    if target == "mouseover" then
+        if help == 0 then
+            TargetUnit(target);
+            CastSpellByName(msg);
+            return true;
+        end
+        CM:Cast(msg);
+        return true;
+    end
+    
+    local needRetarget = false;
+    -- if our current target is not equal to the specified target...
+    if not MMC_VerifyIdentity(target) then
+        needRetarget = true;
+    end
+    
+    TargetUnit(target);
+    CastSpellByName(msg);
+    
+    -- ... then we have to re-target it after casting the spell!
+    if needRetarget then
+        TargetLastTarget();
+    end
+    
+    return true;
+end
+
+-- Attempts to cast a single spell from the given set of conditional spells
+-- editBox: Blizzard stuff
+-- fun: Blizzard stuff
+-- msg: The player's macro text
+function MMC_DoCast(editBox, fun, msg)
+    for k, v in pairs(MMC_splitString(msg, ";%s*")) do
+        ChatFrame1:AddMessage(v);
+        if MMC_DoCastOne(editBox, fun, v) then
+            break;
+        end
+    end
+    
+    ChatEdit_OnEscapePressed(editBox);
 end
 
 -- Mostly Blizzards stuff (ChatFrame.lua)
