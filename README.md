@@ -8,6 +8,7 @@ This addon allows you to use a small subset of the macro conditionals, first int
 
 ### Installation
 
+  - [Download](http://www.wow-one.com/forum/topic/13808-introducing-classic-mouseover-cm/) Classic Mouseover and put it into your `WoW/Interface/AddOns` folder.
   - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
   - Rename `CastModifier-master` to `CastModifier`
   - Run World of Warcraft and make sure to enable this addon in the character select screen
