@@ -40,7 +40,7 @@ This will cast your highest rank of Healing Wave whenever you have the CTRL key 
 
 ### help / harm
 
-The [help] condition is true when the unit can receive a beneficial effect, e.g., a healing spell. The [harm] condition is true when the unit would get an adverse effect, e.g., a damaging spell.
+The [help] condition is true when the unit can receive a beneficial effect, e.g. a healing spell. The [harm] condition is true when the unit would get an adverse effect, e.g. a damaging spell.
 
 Example:
 ```lua
