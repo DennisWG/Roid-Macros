@@ -4,7 +4,7 @@ This addon allows you to use a small subset of the macro conditionals, first int
 
 (Outdated) Demo video:
 
-[![Example Video](https://img.youtube.com/vi/R5wtyhUbaLs/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![Example Video](https://img.youtube.com/vi/xHTe4Df77MY/0.jpg)](https://www.youtube.com/watch?v=xHTe4Df77MY)
 
 ### Installation
 
