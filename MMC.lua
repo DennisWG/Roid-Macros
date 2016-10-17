@@ -3,18 +3,53 @@
 	License: MIT License
 
 	Last Modified:
+        10.17.2016 (DWG): Added Shapeshift Conditionals
         10.16.2016 (DWG): Implemented conditional casts
         10.16.2016 (DWG): Added comments
-		10.16.2016 (DWG): Added license information
-		2015 (DWG): Initial release
+        10.16.2016 (DWG): Added license information
+        2015 (DWG): Initial release
 ]]
+
+function MMC_GetCurrentShapeshiftIndex()
+    for i=1, GetNumShapeshiftForms() do
+        _, _, active = GetShapeshiftFormInfo(i);
+        if active then
+            return i; 
+        end
+    end
+    
+    return 0;
+end
+
+function isKeyword(word)
+    local keywords = {
+        "stance",
+        "mod",
+        "help",
+        "harm",
+    };
+    
+    for k,v in pairs(keywords) do
+        if v == word then
+            return true;
+        end
+    end
+    
+    return false;
+end
+
+function MMC_test()
+    local str = "stance:1/2 mod:ctrl @player help";
+    --local pattern = "(%w+)";
+    --string.gsub(str, pattern, print)
+    
+end
 
 -- Parses the given message and looks for any conditionals
 -- msg: The message to parse
--- returns: The remaining spell name, the modifier if set, the unit id if set and help if set
--- remarks: if help == 1 then [help], if help == 0 then [harm], if help == nil then not set
+-- returns: A set of conditionals found inside the given string
 function MMC_parseMsg(msg)
-	local modifier, target;
+	local modifier;
 	local modifierEnd = string.find(msg, "]");
 	local help = nil;
 	
@@ -27,24 +62,26 @@ function MMC_parseMsg(msg)
 		return msg;
 	end
 	
-	local last = string.gfind(modifier, "%a+");
-	local _mod;
-	
-	for w in string.gfind(modifier, "%a+") do
-		if last == "mod" then
-			_mod = w;
-		elseif last == "target" then
-			target = w;
-		end
-		if w == "help" then
-			help = 1;
-		elseif w == "harm" then
-			help = 0;
-		end
-		last = w;
-	end
-	
-	return msg, _mod, target, help;
+    local target;
+    local conditionals = {};
+    
+    local pattern = "(@*%w+:*%w*/*%w*)";
+    for w in string.gfind(modifier, pattern) do
+        local delimeter = string.find(w, ":");
+        -- x:y
+        if delimeter then
+            local conditional = string.sub(w, 1, delimeter - 1);
+            conditionals[conditional] = string.sub(w, delimeter + 1);
+        -- @target
+        elseif string.sub(w, 1, 1) == "@" then
+            conditionals["target"] = string.sub(w,  2);
+        -- Any other keyword like harm or help
+        elseif isKeyword(w) then
+            conditionals[w] = 1;
+        end
+    end
+    
+	return msg, conditionals;
 end
 
 -- Validates that the given modifier is pressed
@@ -119,10 +156,10 @@ end
 -- msg: The conditions followed by the spell name
 -- returns: True if the spell has been casted. False if it has not.
 function MMC_DoCastOne(editBox, fun, msg)
-    local msg, modifier, target, help = MMC_parseMsg(msg);
+    local msg, conditionals = MMC_parseMsg(msg);
     
     -- No modifiers. Just exit.
-    if not modifier and not target and not help then
+    if not conditionals then
         if not msg then
             return false;
         else
@@ -132,17 +169,39 @@ function MMC_DoCastOne(editBox, fun, msg)
         end
     end
     
-    if modifier then
-        if not MMC_CheckIfModifierIsPressed(modifier) then
+    if conditionals.mod then
+        if not MMC_CheckIfModifierIsPressed(conditionals.mod) then
             return false;
         end
     end
     
-    if not target then
-        target = "target";
+    if not conditionals.target then
+        conditionals.target = "target";
     end
-    if not MMC_IsValidTarget(target, help) then
+    
+    local help = nil;
+    if conditionals.help then
+        help = 1;
+    elseif conditionals.harm then
+        help = 0;
+    end
+    
+    if not MMC_IsValidTarget(conditionals.target, help) then
         return false;
+    end
+    
+    if conditionals["stance"] then
+        local inStance = false;
+        for k,v in pairs(MMC_splitString(conditionals.stance, "/")) do
+            if MMC_GetCurrentShapeshiftIndex() == tonumber(v) then
+                inStance = true;
+                break;
+            end
+        end
+        
+        if not inStance then
+            return false;
+        end
     end
     
     if target == "mouseover" then
@@ -157,11 +216,11 @@ function MMC_DoCastOne(editBox, fun, msg)
     
     local needRetarget = false;
     -- if our current target is not equal to the specified target...
-    if not MMC_VerifyIdentity(target) then
+    if not MMC_VerifyIdentity(conditionals.target) then
         needRetarget = true;
     end
     
-    TargetUnit(target);
+    TargetUnit(conditionals.target);
     CastSpellByName(msg);
     
     -- ... then we have to re-target it after casting the spell!
@@ -178,7 +237,6 @@ end
 -- msg: The player's macro text
 function MMC_DoCast(editBox, fun, msg)
     for k, v in pairs(MMC_splitString(msg, ";%s*")) do
-        ChatFrame1:AddMessage(v);
         if MMC_DoCastOne(editBox, fun, v) then
             break;
         end

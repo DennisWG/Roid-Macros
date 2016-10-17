@@ -4,7 +4,7 @@ This addon allows you to use a small subset of the macro conditionals, first int
 
 (Outdated) Demo video:
 
-[![Example Video](https://img.youtube.com/vi/R5wtyhUbaLs/0.jpg)](https://www.youtube.com/watch?v=R5wtyhUbaLs)
+[![Example Video](https://img.youtube.com/vi/R5wtyhUbaLs/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 ### Installation
 
@@ -16,7 +16,7 @@ This addon allows you to use a small subset of the macro conditionals, first int
 
 ### Branching
 
-Since every Conditional may fail, it might be desireable to have the ability to specify an alternative Conditional to check or a fallback ability to cast. This allows the user to chain together a set of Conditionals in an 'if-else' equivalent branch. For example:
+Since every Conditional may fail, it might be desirable to have the ability to specify an alternative Conditional to check or a fallback ability to cast. This allows the user to chain together a set of Conditionals in an 'if-else' equivalent branch. For example:
 ```lua
 /cast [mod:ctrl] Healing Wave; Healing Wave (Rank 1)
 ```
@@ -40,7 +40,7 @@ This will cast your highest rank of Healing Wave whenever you have the CTRL key 
 
 ### help / harm
 
-The [help] condition is true when the unit can receive a beneficial effect, e.g. a healing spell. The [harm] condition is true when the unit would get an adverse effect, e.g. a damaging spell.
+The [help] condition is true when the unit can receive a beneficial effect, e.g., a healing spell. The [harm] condition is true when the unit would get an adverse effect, e.g., a damaging spell.
 
 Example:
 ```lua
@@ -49,16 +49,35 @@ Example:
 
 This will cast Frost Shock on hostile targets and Healing Wave on friendly targets.
 
-### target=[UnitID](http://wow.gamepedia.com/index.php?title=UnitId&oldid=204442)
+### @[UnitID](http://wow.gamepedia.com/index.php?title=UnitId&oldid=204442)
 
 Sets the target of the spell. Can be any valid Unit ID, including 'mouseover'. However, 'mouseover' currently still requires the use of the ClassicMouseover addon. I'll integrate this part into the addon if I ever find the time for it.
 
 Example:
 ```lua
-/cast [harm target=target] Frost Shock; [help target=mouseover] Healing Wave
+/cast [harm @target] Frost Shock; [help @mouseover] Healing Wave
 ```
 
 You will cast Frost Shock on your current target if it is considered hostile. If it isn't and your mouseover target is considered friendly, your character will cast Healing Wave on your mouseover target instead.
+
+###### Remarks:
+If you do not specify a target, the addon will fall back to your current target. This will cause spells to fail that can only be cast on yourself if you have no current target. To work around this issue, use @player. E.g. `/cast [stance:1 @player] Enrage`
+
+### stance:1/2/.../n
+
+Allows you to check whether or not you are in the given stance / shapeshift form. To check for multiple stances, separate their numbers with `/`. Stance numbers start at the left most stance with the number 1.
+
+Example (Druids):
+```lua
+/cast [stance:1 @player] Enrage; Dire Bear Form
+```
+This macro will cast Enrage if you are in your (Dire) Bear Form. If not it will go into said Form.
+
+Example (Warriors):
+```lua
+/cast [stance:1/2] Shield Bash; Defensive Stance
+```
+If you are in either the Battle Stance or the Defensive Stance, you will cast Shield Bash. If you are in the Berserker Stance, however, you will switch into Defensive Stance.
 
 ### Combining Conditionals
 
@@ -66,10 +85,24 @@ In the previous example I've made use of the feature of combining Conditionals. 
 
 Example:
 ```lua
-/cast [mod:ctrl harm target=player] Holy Light
+/cast [mod:ctrl harm @player] Holy Light
 ```
 
 You will only cast Holy Light if you have CTRL pressed and the target is hostile. It will also target yourself.
+
+### Gray button fix:
+
+In order to fix the range and cooldown check (gray buttons), you have to write this line at the top of each macro:
+
+`/script if nil then CastSpellByName("SPELLNAME"); end`
+
+Make sure to replace `SPELLNAME` with the actual name of your spell.
+
+Example:
+```lua
+/script if nil then CastSpellByName("Chain Heal"); end
+/cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)
+```
 
 ### Todos
 
