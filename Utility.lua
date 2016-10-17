@@ -5,7 +5,6 @@
 	Last Modified:
         10.16.2016 (DWG): Added MMC_splitString
 ]]
---/run for k, v in ipairs(MMC_splitString("help, harm,target=player", ",%s*")) do message(v); end
 
 -- Splits the given string into a list of sub-strings
 -- str: The string to split
