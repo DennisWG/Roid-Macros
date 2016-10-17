@@ -2,7 +2,7 @@
 
 This addon allows you to use a small subset of the macro conditionals, first introduced in the TBC expansion, in your 1.12.1 Vanilla client.
 
-(Outdated) Demo video:
+Demo video:
 
 [![Example Video](https://img.youtube.com/vi/xHTe4Df77MY/0.jpg)](https://www.youtube.com/watch?v=xHTe4Df77MY)
 
