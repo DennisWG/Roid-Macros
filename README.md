@@ -8,10 +8,10 @@ Demo video:
 
 ### Installation
 
-  - [Download](http://www.wow-one.com/forum/topic/13808-introducing-classic-mouseover-cm/) Classic Mouseover and put it into your `WoW/Interface/AddOns` folder.
-  - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
-  - Rename `CastModifier-master` to `CastModifier`
-  - Run World of Warcraft and make sure to enable this addon in the character select screen
+  - [Download](http://www.wow-one.com/forum/topic/13808-introducing-classic-mouseover-cm/) Classic Mouseover and put it into your `WoW/Interface/AddOns` folder.
+  - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
+  - Rename `CastModifier-master` to `CastModifier`
+  - Run World of Warcraft and make sure to enable this addon in the character select screen
 
 ## Conditionals
 
@@ -64,9 +64,9 @@ You will cast Frost Shock on your current target if it is considered hostile. If
 ###### Remarks:
 If you do not specify a target, the addon will fall back to your current target. This will cause spells to fail that can only be cast on yourself if you have no current target. To work around this issue, use @player. E.g. `/cast [stance:1 @player] Enrage`
 
-### stance:1/2/.../n
+### stance:0[/1/.../n]
 
-Allows you to check whether or not you are in the given stance / shapeshift form. To check for multiple stances, separate their numbers with `/`. Stance numbers start at the left most stance with the number 1.
+Allows you to check whether or not you are in the given stance / shapeshift form. To check for multiple stances, separate their numbers with `/`. Stance numbers start at the left most stance with the number 1. Number 0 means you are in no stance.
 
 Example (Druids):
 ```lua
@@ -80,16 +80,38 @@ Example (Warriors):
 ```
 If you are in either the Battle Stance or the Defensive Stance, you will cast Shield Bash. If you are in the Berserker Stance, however, you will switch into Defensive Stance.
 
+### [no]stealth
+
+The Conditional will only pass when your character is stealthed. May be inverted by adding `no` in front of `stealth`.
+
+Example:
+```lua
+/cast [stealth @player] Healing Touch; Shadowmeld
+```
+
+If your character is stealthed, he or she will cast Healing Touch. If your character is not stealthed, Shadowmeld will be cast instead.
+
+### [no]combat
+
+May only be used in combat. Can be inverted by adding `no` in front of `combat`.
+
+Example:
+```lua
+/cast [nocombat] Starfire; Wrath
+```
+
+Your Oomkin will cast Starfire when you are not in combat, as an opener and Wrath afterward.
+
 ### Combining Conditionals
 
-In the previous example I've made use of the feature of combining Conditionals. You're able to combine one Conditional of each category to create an 'and' equivalent conjunction, by adding additional Conditionals, seperated by white spaces, into the brackets.
+In the previous examples, I've made use of the feature of combining Conditionals. You're able to combine one Conditional of each category to create an 'and' equivalent conjunction, by adding additional Conditionals, separated by white spaces, into the brackets.
 
 Example:
 ```lua
 /cast [mod:ctrl harm @player] Holy Light
 ```
 
-You will only cast Holy Light if you have CTRL pressed and the target is hostile. It will also target yourself.
+You will only cast Holy Light if you have CTRL pressed and the target is hostile. It will also target your character.
 
 ### Gray button fix:
 
@@ -107,12 +129,11 @@ Example:
 
 ### Todos
 
- - Write Tests
- - Implement proper mouseover targeting
- - Add Code Comments
+ - Write Tests
+ - Implement proper mouseover targeting
+ - Add Code Comments
 
 License
 ----
 
 MIT
-

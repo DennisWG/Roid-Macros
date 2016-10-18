@@ -3,6 +3,7 @@
 	License: MIT License
 
 	Last Modified:
+        10.18.2016 (DWG): Restructured code and added Conditionals for [no]combat and [no]stealth
         10.17.2016 (DWG): Added Shapeshift Conditionals
         10.16.2016 (DWG): Implemented conditional casts
         10.16.2016 (DWG): Added comments
@@ -10,6 +11,47 @@
         2015 (DWG): Initial release
 ]]
 
+-- Validates that the given target is either friend (if [help]) or foe (if [harm])
+-- target: The unit id to check
+-- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy.
+-- remarks: Will always return true if help is not given
+-- returns: Whether or not the given target can either be attacked or supported, depending on help
+function MMC_CheckHelp(target, help)
+	if help then
+		if help == 1 then
+			if not UnitIsFriend(target, "player") then
+				return false;
+			end								
+		else
+			if UnitIsFriend(target, "player") then
+				return false;
+			end		
+		end
+	end
+	return true;
+end
+
+-- Ensures the validity of the given target
+-- target: The unit id to check
+-- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
+-- returns: Whether or not the target is a viable target
+function MMC_IsValidTarget(target, help)
+	if target ~= "mouseover" then
+		if not MMC_CheckHelp(target, help) or not UnitExists(target) then
+			return false;
+		end
+		return true;
+	end
+	
+	if (not CM or not CM.currentUnit) and not UnitName("mouseover") then
+		return false;
+	end
+	
+	return MMC_CheckHelp(target, help);
+end
+
+-- Returns the current shapeshift / stance index
+-- returns: The index of the current shapeshift form / stance. 0 if in no shapeshift form / stance
 function MMC_GetCurrentShapeshiftIndex()
     for i=1, GetNumShapeshiftForms() do
         _, _, active = GetShapeshiftFormInfo(i);
@@ -21,16 +63,12 @@ function MMC_GetCurrentShapeshiftIndex()
     return 0;
 end
 
-function isKeyword(word)
-    local keywords = {
-        "stance",
-        "mod",
-        "help",
-        "harm",
-    };
-    
-    for k,v in pairs(keywords) do
-        if v == word then
+-- Checks whether or not the given textureName is present in the current player's buff bar
+-- textureName: The full name (including path) of the texture
+-- returns: True if the texture can be found, false otherwhise
+function MMC_HasBuff(textureName)
+    for i = 1, 16 do
+        if UnitBuff("player", i) == textureName then
             return true;
         end
     end
@@ -38,12 +76,55 @@ function isKeyword(word)
     return false;
 end
 
-function MMC_test()
-    local str = "stance:1/2 mod:ctrl @player help";
-    --local pattern = "(%w+)";
-    --string.gsub(str, pattern, print)
+-- A list of Conditionals and their functions to validate them
+local MMC_Keywords = {
+    stance = function(conditionals)
+        local inStance = false;
+        for k,v in pairs(MMC_splitString(conditionals.stance, "/")) do
+            if MMC_GetCurrentShapeshiftIndex() == tonumber(v) then
+                inStance = true;
+                break;
+            end
+        end
+        
+        if not inStance then
+            return false;
+        end
+        return true;
+    end,
     
-end
+    mod = function(conditionals)    
+        if conditionals.mod == "alt" and IsAltKeyDown() then
+            return true;
+        elseif conditionals.mod == "ctrl" and IsControlKeyDown() then
+            return true;
+        elseif conditionals.mod == "shift" and IsShiftKeyDown() then
+            return true;
+        end
+        
+        return false;
+    end,
+    
+    target = function(conditionals)
+        return MMC_IsValidTarget(conditionals.target, conditionals.help);
+    end,
+    
+    combat = function(conditionals)
+        return UnitAffectingCombat("player");
+    end,
+    
+    nocombat = function(conditionals)
+        return not UnitAffectingCombat("player");
+    end,
+    
+    stealth = function(conditionals)
+        return MMC_HasBuff("Interface\\Icons\\Ability_Ambush");
+    end,
+    
+    nostealth = function(conditionals)
+        return not MMC_HasBuff("Interface\\Icons\\Ability_Ambush");
+    end,
+};
 
 -- Parses the given message and looks for any conditionals
 -- msg: The message to parse
@@ -76,64 +157,12 @@ function MMC_parseMsg(msg)
         elseif string.sub(w, 1, 1) == "@" then
             conditionals["target"] = string.sub(w,  2);
         -- Any other keyword like harm or help
-        elseif isKeyword(w) then
+        elseif MMC_Keywords[w] ~= nil then
             conditionals[w] = 1;
         end
     end
     
 	return msg, conditionals;
-end
-
--- Validates that the given modifier is pressed
--- modifier: The modifier to validate
--- returns: True if the given modifier is valid. False if it is not.
-function MMC_CheckIfModifierIsPressed(modifier)
-	if modifier == "alt" and IsAltKeyDown() then
-		return true;
-	elseif modifier == "ctrl" and IsControlKeyDown() then
-		return true;
-	elseif modifier == "shift" and IsShiftKeyDown() then
-		return true;
-	end
-	
-	return false;
-end
-
--- Validates that the given target is either friend (if [help]) or foe (if [harm])
--- target: The unit id to check
--- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy.
--- remarks: Will always return true if help is not given
-function MMC_CheckHelp(target, help)
-	if help then
-		if help == 1 then
-			if not UnitIsFriend(target, "player") then
-				return false;
-			end								
-		else
-			if UnitIsFriend(target, "player") then
-				return false;
-			end		
-		end
-	end
-	return true;
-end
-
--- Ensures the validity of the given target
--- target: The unit id to check
--- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
-function MMC_IsValidTarget(target, help)
-	if target ~= "mouseover" then
-		if not MMC_CheckHelp(target, help) or not UnitExists(target) then
-			return false;
-		end
-		return true;
-	end
-	
-	if (not CM or not CM.currentUnit) and not UnitName("mouseover") then
-		return false;
-	end
-	
-	return MMC_CheckHelp(target, help);
 end
 
 -- A very primitive way of trying to verify that the given target is the same as the player's current target
@@ -158,19 +187,13 @@ end
 function MMC_DoCastOne(editBox, fun, msg)
     local msg, conditionals = MMC_parseMsg(msg);
     
-    -- No modifiers. Just exit.
+    -- No conditionals. Just exit.
     if not conditionals then
         if not msg then
             return false;
         else
             fun(msg);
             editBox:AddHistoryLine(text);
-            return false;
-        end
-    end
-    
-    if conditionals.mod then
-        if not MMC_CheckIfModifierIsPressed(conditionals.mod) then
             return false;
         end
     end
@@ -186,24 +209,12 @@ function MMC_DoCastOne(editBox, fun, msg)
         help = 0;
     end
     
-    if not MMC_IsValidTarget(conditionals.target, help) then
-        return false;
-    end
-    
-    if conditionals["stance"] then
-        local inStance = false;
-        for k,v in pairs(MMC_splitString(conditionals.stance, "/")) do
-            if MMC_GetCurrentShapeshiftIndex() == tonumber(v) then
-                inStance = true;
-                break;
-            end
-        end
-        
-        if not inStance then
+    for k, v in pairs(conditionals) do
+        if not MMC_Keywords[k] or not MMC_Keywords[k](conditionals) then
             return false;
         end
     end
-    
+        
     if target == "mouseover" then
         if help == 0 then
             TargetUnit(target);
