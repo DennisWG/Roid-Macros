@@ -67,7 +67,7 @@ Allows you to check whether or not you are in the given stance / shapeshift form
 
 Example (Druids):
 ```lua
-/cast [stance:1 @player] Enrage; Dire Bear Form
+/cast [stance:1] Enrage; Dire Bear Form
 ```
 This macro will cast Enrage if you are in your (Dire) Bear Form. If not it will go into said Form.
 
