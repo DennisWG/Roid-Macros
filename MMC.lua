@@ -189,11 +189,14 @@ function MMC_DoCastOne(editBox, fun, msg)
     
     -- No conditionals. Just exit.
     if not conditionals then
-        if not msg then
+        if not msg or not fun then
             return false;
         else
             fun(msg);
-            editBox:AddHistoryLine(text);
+            
+            if editBox then
+                editBox:AddHistoryLine(text);
+            end
             return false;
         end
     end
@@ -253,12 +256,41 @@ function MMC_DoCast(editBox, fun, msg)
         end
     end
     
-    ChatEdit_OnEscapePressed(editBox);
+    if editBox then
+        ChatEdit_OnEscapePressed(editBox);
+    end
 end
+
+-- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
+local MMC_Frame = CreateFrame("FRAME", "MMCDummyFrame");
+MMC_Frame:SetScript("OnEvent", function()
+    if event ~= "ADDON_LOADED" or arg1 ~= "SuperMacro" then
+        return;
+    end
+    
+    -- Hook SuperMacro's RunLine to stay compatible
+    local RunLineOrig = RunLine;
+    RunLine = function(...)
+        for k = 1, arg.n do
+            local text = arg[k];
+            -- if we find '/cast [' take over execution
+            local begin, _end = string.find(text, "^/cast%s*%[");
+            if begin then
+                local msg = string.sub(text, _end);
+                ChatFrame1:AddMessage(msg);
+                MMC_DoCast(nil, SlashCmdList["CAST"], msg);
+                
+            -- if not pass it along to SuperMacro
+            else
+                RunLineOrig(text);
+            end
+        end
+    end
+end);
+MMC_Frame:RegisterEvent("ADDON_LOADED");
 
 -- Mostly Blizzards stuff (ChatFrame.lua)
 ChatEdit_ParseText = function(editBox, send)
-
 	local text = editBox:GetText();
 	if ( strlen(text) <= 0 ) then
 		return;
