@@ -281,7 +281,6 @@ MMC_Frame:SetScript("OnEvent", function()
             local begin, _end = string.find(text, "^/cast%s*%[");
             if begin then
                 local msg = string.sub(text, _end);
-                ChatFrame1:AddMessage(msg);
                 MMC_DoCast(nil, SlashCmdList["CAST"], msg);
                 
             -- if not pass it along to SuperMacro
