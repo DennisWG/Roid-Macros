@@ -61,9 +61,6 @@ Example:
 
 You will cast Frost Shock on your current target if it is considered hostile. If it isn't and your mouseover target is considered friendly, your character will cast Healing Wave on your mouseover target instead.
 
-###### Remarks:
-If you do not specify a target, the addon will fall back to your current target. This will cause spells to fail that can only be cast on yourself if you have no current target. To work around this issue, use @player. E.g. `/cast [stance:1 @player] Enrage`
-
 ### stance:0[/1/.../n]
 
 Allows you to check whether or not you are in the given stance / shapeshift form. To check for multiple stances, separate their numbers with `/`. Stance numbers start at the left most stance with the number 1. Number 0 means you are in no stance.

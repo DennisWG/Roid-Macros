@@ -202,7 +202,11 @@ function MMC_DoCastOne(editBox, fun, msg)
     end
     
     if not conditionals.target then
-        conditionals.target = "target";
+        if UnitExists("target") then
+            conditionals.target = "target";
+        else
+            conditionals.target = "player";
+        end
     end
     
     local help = nil;
