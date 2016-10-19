@@ -195,7 +195,12 @@ function MMC.DoCastOne(msg)
     
     -- No conditionals. Just exit.
     if not conditionals then
-        return false
+        if not msg then
+            return false;
+        else
+            MMC.Hooks.CAST_SlashCmd(msg);
+            return true;
+        end
     end
     
     if not conditionals.target then
