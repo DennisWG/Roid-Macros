@@ -1,14 +1,6 @@
 --[[
 	Author: Dennis Werner Garske (DWG)
 	License: MIT License
-
-	Last Modified:
-        10.18.2016 (DWG): Restructured code and added Conditionals for [no]combat and [no]stealth
-        10.17.2016 (DWG): Added Shapeshift Conditionals
-        10.16.2016 (DWG): Implemented conditional casts
-        10.16.2016 (DWG): Added comments
-        10.16.2016 (DWG): Added license information
-        2015 (DWG): Initial release
 ]]
 
 -- Setup to wrap our stuff in a table so we don't pollute the global environment
@@ -84,6 +76,62 @@ function MMC.HasBuff(textureName)
     return false;
 end
 
+-- Maps easy to use weapon type names (e.g. Axes, Shields) to their inventory slot name and their localized tooltip name
+MMC.WeaponTypeNames = {
+    Daggers = { slot = "MainHandSlot", name = MMC.Localized.Dagger },
+    Fists =  { slot = "MainHandSlot", name = MMC.Localized.FistWeapon },
+    Axes =  { slot = "MainHandSlot", name = MMC.Localized.Axe },
+    Swords =  { slot = "MainHandSlot", name = MMC.Localized.Sword },
+    Staffs =  { slot = "MainHandSlot", name = MMC.Localized.Staff },
+    Maces =  { slot = "MainHandSlot", name = MMC.Localized.Mace },
+    Polearms =  { slot = "MainHandSlot", name = MMC.Localized.Polearm },
+    Shields = { slot = "SecondaryHandSlot", name = MMC.Localized.Shield },
+    Guns = { slot = "RangedSlot", name = MMC.Localized.Gun },
+    Crossbows = { slot = "RangedSlot", name = MMC.Localized.Crossbow },
+    Bows = { slot = "RangedSlot", name = MMC.Localized.Bow },
+    Thrown = { slot = "RangedSlot", name = MMC.Localized.Thrown },
+    Wands = { slot = "RangedSlot", name = MMC.Localized.Wand },
+};
+
+-- Checks whether or not the given weaponType is currently equipped
+-- weaponType: The name of the weapon's type (e.g. Axe, Shield, etc.)
+-- returns: True when equipped, otherwhise false
+function MMC.HasWeaponEquipped(weaponType)
+    if not MMC.WeaponTypeNames[weaponType] then
+        return false;
+    end
+    
+	MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+    
+    local slotName = MMC.WeaponTypeNames[weaponType].slot;
+    local localizedName = MMC.WeaponTypeNames[weaponType].name;
+
+    local slotId = GetInventorySlotInfo(slotName);
+    hasItem = MMCTooltip:SetInventoryItem("player", slotId);
+    if not hasItem then
+        return false;
+    end
+    
+	local lines = MMCTooltip:NumLines();
+	for i = 1, lines do
+		local label = getglobal("MMCTooltipTextLeft"..i);
+		if label:GetText() then
+			if label:GetText() == localizedName then
+                return true;
+            end
+		end
+        
+		label = getglobal("MMCTooltipTextRight"..i);
+		if label:GetText() then
+			if label:GetText() == localizedName then
+                return true;
+            end
+		end
+    end
+    
+    return false;
+end
+
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
     stance = function(conditionals)
@@ -131,6 +179,10 @@ MMC.Keywords = {
     
     nostealth = function(conditionals)
         return not MMC.HasBuff("Interface\\Icons\\Ability_Ambush");
+    end,
+    
+    equipped = function(conditionals)
+        return MMC.HasWeaponEquipped(conditionals.equipped);
     end,
 };
 

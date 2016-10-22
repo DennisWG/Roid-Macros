@@ -1,9 +1,6 @@
 --[[
 	Author: Dennis Werner Garske (DWG)
 	License: MIT License
-
-	Last Modified:
-        10.16.2016 (DWG): Added MMC_splitString
 ]]
 local _G = _G or getfenv(0)
 local MMC = _G.CastModifier or {} -- redundant since we're loading first but peace of mind if another file is added top of chain

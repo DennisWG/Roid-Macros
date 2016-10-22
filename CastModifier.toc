@@ -7,5 +7,7 @@
 ## Dependencies: ClassicMouseover
 ## SavedVariables: MMCDB
 ## SavedVariablesPerCharacter: MMCDB_Char
+MMC.xml
+Localization.lua
 Utility.lua
 MMC.lua
