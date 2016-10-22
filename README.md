@@ -105,7 +105,7 @@ Ensures that the given item type is equipped. Item type may be one of the follow
 
   - Daggers - Looks for a dagger in your mainhand
   - Fists - Looks for a fist weapon in your mainhand
-  - Axes - Looks for a axe in your mainhand
+  - Axes - Looks for an axe in your mainhand
   - Swords - Looks for a sword in your mainhand
   - Staffs - Looks for a staff in your mainhand
   - Maces - Looks for a mace in your mainhand
