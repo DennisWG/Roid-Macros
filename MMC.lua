@@ -158,6 +158,10 @@ function MMC.CheckChanneled(conditionals)
         return false;
     end
     
+    if conditionals.channeled == MMC.Localized.Attack then
+        return not MMC.CurrentSpell.autoAttack;
+    end
+    
     MMC.CurrentSpell.spellName = conditionals.channeled;
     return true;
 end
@@ -387,6 +391,8 @@ MMC.CurrentSpell = {
     type = "",
     -- the name of the spell
     spellName = "",
+    -- is the Attack ability enabled
+    autoAttack = false,
 };
 
 -- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
@@ -396,6 +402,8 @@ MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_START");
 MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_STOP");
 MMC.Frame:RegisterEvent("SPELLCAST_INTERRUPTED");
 MMC.Frame:RegisterEvent("SPELLCAST_FAILED");
+MMC.Frame:RegisterEvent("PLAYER_ENTER_COMBAT");
+MMC.Frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
 
 MMC.Frame:SetScript("OnEvent", function()
     MMC.Frame[event]();
@@ -436,6 +444,14 @@ end
 
 MMC.Frame.SPELLCAST_INTERRUPTED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
 MMC.Frame.SPELLCAST_FAILED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
+
+function MMC.Frame.PLAYER_ENTER_COMBAT()
+    MMC.CurrentSpell.autoAttack = true;
+end
+
+function MMC.Frame.PLAYER_LEAVE_COMBAT()
+    MMC.CurrentSpell.autoAttack = false;
+end
 
 MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"]
 MMC.CAST_SlashCmd = function(msg)

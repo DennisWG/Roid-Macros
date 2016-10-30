@@ -15,13 +15,18 @@ Demo videos:
   - Rename `CastModifier-master` to `CastModifier`
   - Run World of Warcraft and make sure to enable this addon in the character select screen
 
-## Channelled spells
+## Channelled spells and auto attack
 
 If you do not want to re-cast a channelled spell until it is finished, you can ensure that the spell finishes by putting an exclamation mark in front of the spell's name.
 
 Example:
 ```lua
 /cast !Mind Flay
+```
+
+This also works for auto attacks:
+```lua
+/cast !Attack
 ```
 
 You may now spam this button to cast Mind Flay whenever it's done casting.
