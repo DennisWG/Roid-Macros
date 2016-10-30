@@ -15,9 +15,9 @@ Demo videos:
   - Rename `CastModifier-master` to `CastModifier`
   - Run World of Warcraft and make sure to enable this addon in the character select screen
 
-## Channeled spells
+## Channelled spells
 
-If you do not want to re-cast a channeled spell until it is finished, you can ensure that the spell finishes by putting an exclamation mark in front of the spell's name.
+If you do not want to re-cast a channelled spell until it is finished, you can ensure that the spell finishes by putting an exclamation mark in front of the spell's name.
 
 Example:
 ```lua
