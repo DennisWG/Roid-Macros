@@ -124,6 +124,57 @@ Example:
 
 Will use your ranged shoot ability depending on what ranged weapon you currently have equipped.
 
+### [no]dead
+
+May only be used when your target is dead. Can be inverted by adding `no` in front of `dead`.
+
+Example:
+```lua
+/cast [dead] Resurrection; Flash Heal
+```
+
+Will cast Resurrection if your current target is dead. If it isn't you will cast Flash Heal instead.
+
+Example:
+```lua
+/cast [nodead] Flash Heal; Resurrection
+```
+
+The same as above just with `nodead`.
+
+### party
+
+The Conditional will only fire when your target is in your party.
+
+Example:
+```lua
+/cast [party] Arcane Brilliance; Arcane Intellect
+```
+
+This macro will cast Arcane Brilliance when your current target is in your party. If your target isn't, it will cast Arcane Intellect on it instead.
+
+### raid
+
+The Conditional will only fire when your target is in your raid.
+
+Example:
+```lua
+/cast [raid] Arcane Brilliance; Arcane Intellect
+```
+
+This macro will cast Arcane Brilliance when your current target is in your raid. If your target isn't, it will cast Arcane Intellect on it instead.
+
+### group:party/raid
+
+The Conditional will only fire when you're in a party or raid.
+
+Example:
+```lua
+/cast [group:party] Arcane Brilliance; [group:raid] Arcane Intellect
+```
+
+This macro will cast Arcane Brilliance when you are in a party. It will cast Arcane Intellect instead when you are in a raid.
+
 ### Combining Conditionals
 
 In the previous examples, I've made use of the feature of combining Conditionals. You're able to combine one Conditional of each category to create an 'and' equivalent conjunction, by adding additional Conditionals, separated by white spaces, into the brackets.

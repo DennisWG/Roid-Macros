@@ -132,6 +132,25 @@ function MMC.HasWeaponEquipped(weaponType)
     return false;
 end
 
+-- Checks whether or not the given UnitId is in your party or your raid
+-- target: The UnitId of the target to check
+-- groupType: The name of the group type your target has to be in ("party" or "raid")
+-- returns: True when the given target is in the given groupType, otherwhise false
+function MMC.IsTargetInGroupType(target, groupType)
+    local upperBound = 5;
+    if groupType == "raid" then
+        upperBound = 40;
+    end
+    
+    for i = 1, upperBound do
+        if UnitName(groupType..i) == UnitName(target) then
+            return true;
+        end
+    end
+    
+    return false;
+end
+
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
     stance = function(conditionals)
@@ -183,6 +202,31 @@ MMC.Keywords = {
     
     equipped = function(conditionals)
         return MMC.HasWeaponEquipped(conditionals.equipped);
+    end,
+    
+    dead = function(conditionals)
+        return UnitIsDeadOrGhost(conditionals.target);
+    end,
+    
+    nodead = function(conditionals)
+        return not UnitIsDeadOrGhost(conditionals.target);
+    end,
+    
+    party = function(conditionals)
+        return MMC.IsTargetInGroupType(conditionals.target, "party");
+    end,
+    
+    raid = function(conditionals)
+        return MMC.IsTargetInGroupType(conditionals.target, "raid");
+    end,
+    
+    group = function(conditionals)
+        if conditionals.group == "raid" then
+            return GetNumRaidMembers() > 0;
+        elseif conditionals.group == "party" then
+            return GetNumPartyMembers() > 0;
+        end
+        return false;
     end,
 };
 
