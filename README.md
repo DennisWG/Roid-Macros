@@ -2,9 +2,11 @@
 
 This addon allows you to use a small subset of the macro conditionals, first introduced in the TBC expansion, in your 1.12.1 Vanilla client.
 
-Demo video:
+Demo videos:
 
 [![Example Video](https://img.youtube.com/vi/xHTe4Df77MY/0.jpg)](https://www.youtube.com/watch?v=xHTe4Df77MY)
+
+[![Example Video2](https://img.youtube.com/vi/0w5nePeJlPU/0.jpg)](https://www.youtube.com/watch?v=0w5nePeJlPU)
 
 ### Installation
 
@@ -12,6 +14,17 @@ Demo video:
   - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
   - Rename `CastModifier-master` to `CastModifier`
   - Run World of Warcraft and make sure to enable this addon in the character select screen
+
+## Channelled spells
+
+If you do not want to re-cast a channelled spell until it is finished, you can ensure that the spell finishes by putting an exclamation mark in front of the spell's name.
+
+Example:
+```lua
+/cast !Mind Flay
+```
+
+You may now spam this button to cast Mind Flay whenever it's done casting.
 
 ## Conditionals
 

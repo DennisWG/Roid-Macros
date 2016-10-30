@@ -151,6 +151,17 @@ function MMC.IsTargetInGroupType(target, groupType)
     return false;
 end
 
+-- Checks whether or not we're currently casting a channeled spell
+function MMC.CheckChanneled(conditionals)
+    --MMC.CurrentSpell
+    if MMC.CurrentSpell.type == "channeled" and MMC.CurrentSpell.spellName == conditionals.channeled then
+        return false;
+    end
+    
+    MMC.CurrentSpell.spellName = conditionals.channeled;
+    return true;
+end
+
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
     stance = function(conditionals)
@@ -221,12 +232,16 @@ MMC.Keywords = {
     end,
     
     group = function(conditionals)
-        if conditionals.group == "raid" then
-            return GetNumRaidMembers() > 0;
-        elseif conditionals.group == "party" then
+        if conditionals.group == "party" then
             return GetNumPartyMembers() > 0;
+        elseif conditionals.group == "raid" then
+            return GetNumRaidMembers() > 0;
         end
         return false;
+    end,
+    
+    channeled = function(conditionals)
+        return MMC.CheckChanneled(conditionals);
     end,
 };
 
@@ -234,7 +249,7 @@ MMC.Keywords = {
 -- msg: The message to parse
 -- returns: A set of conditionals found inside the given string
 function MMC.parseMsg(msg)
-	local modifier;
+	local modifier = "";
 	local modifierEnd = string.find(msg, "]");
 	local help = nil;
 	
@@ -243,14 +258,20 @@ function MMC.parseMsg(msg)
 		modifier = string.sub(msg, 2, modifierEnd - 1);
 		msg = string.sub(msg, modifierEnd + 2);
     -- No conditionals found. Just return the message as is
-	else
+	elseif string.sub(msg, 1, 1) ~= "!" then
 		return msg;
 	end
 	
     local target;
     local conditionals = {};
     
-    local pattern = "(@*%w+:*%w*/*%w*)";
+    
+    if string.sub(msg, 1, 1) == "!" then
+        msg = string.sub(msg, 2);
+        conditionals.channeled = msg;
+    end
+    
+    local pattern = "(@?%w+:*%w*/*%w*)";
     for w in string.gfind(modifier, pattern) do
         local delimeter = string.find(w, ":");
         -- x:y
@@ -360,9 +381,27 @@ function MMC.DoCast(msg)
     return handled;
 end
 
+-- Holds information about the currently cast spell
+MMC.CurrentSpell = {
+    -- "channeled" or "cast"
+    type = "",
+    -- the name of the spell
+    spellName = "",
+};
+
 -- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
 MMC.Frame = CreateFrame("FRAME");
+MMC.Frame:RegisterEvent("ADDON_LOADED");
+MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_START");
+MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_STOP");
+MMC.Frame:RegisterEvent("SPELLCAST_INTERRUPTED");
+MMC.Frame:RegisterEvent("SPELLCAST_FAILED");
+
 MMC.Frame:SetScript("OnEvent", function()
+    MMC.Frame[event]();
+end);
+
+function MMC.Frame.ADDON_LOADED()
     if event ~= "ADDON_LOADED" or arg1 ~= "SuperMacro" then
         return;
     end
@@ -373,7 +412,7 @@ MMC.Frame:SetScript("OnEvent", function()
         for k = 1, arg.n do
             local text = arg[k];
             -- if we find '/cast [' take over execution
-            local begin, _end = string.find(text, "^/cast%s*%[");
+            local begin, _end = string.find(text, "^/cast%s+!?%[?");
             if begin then
                 local msg = string.sub(text, _end);
                 MMC.DoCast(msg);
@@ -384,8 +423,19 @@ MMC.Frame:SetScript("OnEvent", function()
         end
     end
     RunLine = MMC.RunLine
-end);
-MMC.Frame:RegisterEvent("ADDON_LOADED");
+end
+
+function MMC.Frame.SPELLCAST_CHANNEL_START()
+    MMC.CurrentSpell.type = "channeled";
+end
+
+function MMC.Frame.SPELLCAST_CHANNEL_STOP()
+    MMC.CurrentSpell.type = "";
+    MMC.CurrentSpell.spellName = "";
+end
+
+MMC.Frame.SPELLCAST_INTERRUPTED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
+MMC.Frame.SPELLCAST_FAILED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
 
 MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"]
 MMC.CAST_SlashCmd = function(msg)
