@@ -10,10 +10,10 @@ Demo videos:
 
 ### Installation
 
-  - Make sure ClassicMouseover is no longer installed or disable it in the character select screen!
-  - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
-  - Rename `CastModifier-master` to `CastModifier`
-  - Run World of Warcraft and make sure to enable this addon in the character select screen
+- Make sure ClassicMouseover is no longer installed or disable it in the character select screen!
+- [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
+- Rename `CastModifier-master` to `CastModifier`
+- Run World of Warcraft and make sure to enable this addon in the character select screen
 
 ## Channelled spells and auto attack
 
