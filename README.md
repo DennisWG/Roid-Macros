@@ -70,7 +70,7 @@ This will cast Frost Shock on hostile targets and Healing Wave on friendly targe
 
 ### @[UnitID](http://wow.gamepedia.com/index.php?title=UnitId&oldid=204442)
 
-Sets the target of the spell. Can be any valid Unit ID, including 'mouseover'. However, 'mouseover' requires additional work in order to work with every UnitFrame AddOn that exists. Please refer to https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility for more information.
+Sets the target of the spell. Can be any valid Unit ID, including 'mouseover'. However, 'mouseover' requires additional work in order to work with every UnitFrame AddOn that exists. Please refer to [Compatibility List](https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility) for more information.
 
 Example:
 ```lua
