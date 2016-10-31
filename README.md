@@ -10,7 +10,7 @@ Demo videos:
 
 ### Installation
 
-  - [Download](http://www.wow-one.com/forum/topic/13808-introducing-classic-mouseover-cm/) Classic Mouseover and put it into your `WoW/Interface/AddOns` folder.
+  - Make sure ClassicMouseover is no longer installed or disable it in the character select screen!
   - [Download](https://github.com/DennisWG/CastModifier/archive/master.zip) the latest version of CastModifier directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
   - Rename `CastModifier-master` to `CastModifier`
   - Run World of Warcraft and make sure to enable this addon in the character select screen
@@ -70,7 +70,7 @@ This will cast Frost Shock on hostile targets and Healing Wave on friendly targe
 
 ### @[UnitID](http://wow.gamepedia.com/index.php?title=UnitId&oldid=204442)
 
-Sets the target of the spell. Can be any valid Unit ID, including 'mouseover'. However, 'mouseover' currently still requires the use of the ClassicMouseover addon. I'll integrate this part into the addon if I ever find the time for it.
+Sets the target of the spell. Can be any valid Unit ID, including 'mouseover'. However, 'mouseover' requires additional work in order to work with every UnitFrame AddOn that exists. Please refer to https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility for more information.
 
 Example:
 ```lua
@@ -78,6 +78,13 @@ Example:
 ```
 
 You will cast Frost Shock on your current target if it is considered hostile. If it isn't and your mouseover target is considered friendly, your character will cast Healing Wave on your mouseover target instead.
+
+Additionally, this AddOn interoperates with ClassicFocus, allowing you to use @focus when you have that AddOn installed!
+
+Example:
+```lua
+/cast [@mouseover] Flash Heal; [@focus] Flash Heal
+```
 
 ### stance:0[/1/.../n]
 
@@ -217,12 +224,6 @@ Example:
 /script if nil then CastSpellByName("Chain Heal"); end
 /cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)
 ```
-
-### Todos
-
- - Write Tests
- - Implement proper mouseover targeting
- - Add Code Comments
 
 License
 ----

@@ -4,12 +4,13 @@
 ]]
 
 -- Setup to wrap our stuff in a table so we don't pollute the global environment
-local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-_G.CastModifier = MMC
-MMC.Hooks = MMC.Hooks or {}
--- Use MMC.Print(anything) for debug output
+local _G = _G or getfenv(0);
+local MMC = _G.CastModifier or {};
+_G.CastModifier = MMC;
+MMC.Hooks = MMC.Hooks or {};
+MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
 
+MMC.Extensions = MMC.Extensions or {};
 
 -- Validates that the given target is either friend (if [help]) or foe (if [harm])
 -- target: The unit id to check
@@ -36,17 +37,31 @@ end
 -- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
 -- returns: Whether or not the target is a viable target
 function MMC.IsValidTarget(target, help)
+    local retarget = false;
+    
+    if target == "focus" then
+        if not ClassicFocus_CurrentFocus then
+            return false;
+        end
+        SlashCmdList["TARGET"](ClassicFocus_CurrentFocus);
+        target = "target";
+        retarget = true;
+    end
+    
 	if target ~= "mouseover" then
 		if not MMC.CheckHelp(target, help) or not UnitExists(target) then
+            if retarget then
+                TargetLastTarget();
+            end
 			return false;
 		end
 		return true;
 	end
 	
-	if (not CM or not CM.currentUnit) and not UnitName("mouseover") then
+	if (not MMC.mouseoverUnit) and not UnitName("mouseover") then
 		return false;
 	end
-	
+    
 	return MMC.CheckHelp(target, help);
 end
 
@@ -324,6 +339,15 @@ function MMC.DoCastOne(msg)
         end
     end
     
+    if conditionals.target == "mouseover" then
+        if not UnitExists("mouseover") then
+            conditionals.target = MMC.mouseoverUnit;
+        end
+        if not conditionals.target or not UnitExists(conditionals.target) then
+            return false;
+        end
+    end
+    
     if not conditionals.target then
         if UnitExists("target") then
             conditionals.target = "target";
@@ -344,15 +368,11 @@ function MMC.DoCastOne(msg)
             return false;
         end
     end
-        
-    if target == "mouseover" then
-        if help == 0 then
-            TargetUnit(target);
-            CastSpellByName(msg);
-            return true;
-        end
-        CM:Cast(msg);
-        return true;
+    
+    if conditionals.target == "focus" and ClassicFocus_CurrentFocus then
+        SlashCmdList["TARGET"](ClassicFocus_CurrentFocus);
+        conditionals.target = "target";
+        needRetarget = true;
     end
     
     local needRetarget = false;
@@ -410,12 +430,21 @@ MMC.Frame:SetScript("OnEvent", function()
 end);
 
 function MMC.Frame.ADDON_LOADED()
-    if event ~= "ADDON_LOADED" or arg1 ~= "SuperMacro" then
+    if event ~= "ADDON_LOADED" then
+        return;
+    end
+    
+    if arg1 == "CastModifier" then
+        MMC.InitializeExtensions();
+        return;
+    end
+    
+    if arg1 ~= "SuperMacro" then
         return;
     end
     
     -- Hook SuperMacro's RunLine to stay compatible
-    MMC.Hooks.RunLine = RunLine
+    MMC.Hooks.RunLine = RunLine;
     MMC.RunLine = function(...)
         for k = 1, arg.n do
             local text = arg[k];
@@ -430,7 +459,7 @@ function MMC.Frame.ADDON_LOADED()
             end
         end
     end
-    RunLine = MMC.RunLine
+    RunLine = MMC.RunLine;
 end
 
 function MMC.Frame.SPELLCAST_CHANNEL_START()
@@ -453,13 +482,17 @@ function MMC.Frame.PLAYER_LEAVE_COMBAT()
     MMC.CurrentSpell.autoAttack = false;
 end
 
-MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"]
+MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
 MMC.CAST_SlashCmd = function(msg)
     -- get in there first, i.e do a PreHook
     if MMC.DoCast(msg) then
-        return
+        return;
     end
     -- if there was nothing for us to handle pass it to the original
-    MMC.Hooks.CAST_SlashCmd(msg)
+    MMC.Hooks.CAST_SlashCmd(msg);
 end
-SlashCmdList["CAST"] = MMC.CAST_SlashCmd
+
+SlashCmdList["CAST"] = MMC.CAST_SlashCmd;
+
+SLASH_MMC1 = "/rl"
+SlashCmdList["MMC"] = function() ReloadUI(); end
