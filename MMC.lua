@@ -37,22 +37,8 @@ end
 -- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
 -- returns: Whether or not the target is a viable target
 function MMC.IsValidTarget(target, help)
-    local retarget = false;
-    
-    if target == "focus" then
-        if not ClassicFocus_CurrentFocus then
-            return false;
-        end
-        SlashCmdList["TARGET"](ClassicFocus_CurrentFocus);
-        target = "target";
-        retarget = true;
-    end
-    
 	if target ~= "mouseover" then
 		if not MMC.CheckHelp(target, help) or not UnitExists(target) then
-            if retarget then
-                TargetLastTarget();
-            end
 			return false;
 		end
 		return true;
@@ -143,7 +129,6 @@ function MMC.HasWeaponEquipped(weaponType)
             end
 		end
     end
-    
     return false;
 end
 
@@ -168,7 +153,6 @@ end
 
 -- Checks whether or not we're currently casting a channeled spell
 function MMC.CheckChanneled(conditionals)
-    --MMC.CurrentSpell
     if MMC.CurrentSpell.type == "channeled" and MMC.CurrentSpell.spellName == conditionals.channeled then
         return false;
     end
@@ -183,6 +167,14 @@ end
 
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
+    help = function(conditionals)
+        return true;
+    end,
+    
+    harm = function(conditionals)
+        return true;
+    end,
+    
     stance = function(conditionals)
         local inStance = false;
         for k,v in pairs(MMC.splitString(conditionals.stance, "/")) do
@@ -289,7 +281,7 @@ function MMC.parseMsg(msg)
         msg = string.sub(msg, 2);
         conditionals.channeled = msg;
     end
-    
+        
     local pattern = "(@?%w+:*%w*/*%w*)";
     for w in string.gfind(modifier, pattern) do
         local delimeter = string.find(w, ":");
@@ -356,23 +348,28 @@ function MMC.DoCastOne(msg)
         end
     end
     
-    local help = nil;
     if conditionals.help then
-        help = 1;
+        conditionals.help = 1;
     elseif conditionals.harm then
-        help = 0;
+        conditionals.help = 0;
+    end
+    
+    if conditionals.target == "focus" then
+        if not ClassicFocus_CurrentFocus then
+            return false;
+        end
+        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
+        conditionals.target = "target";
+        needRetarget = true;
     end
     
     for k, v in pairs(conditionals) do
         if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
+            if needRetarget then
+                TargetLastTarget();
+            end
             return false;
         end
-    end
-    
-    if conditionals.target == "focus" and ClassicFocus_CurrentFocus then
-        SlashCmdList["TARGET"](ClassicFocus_CurrentFocus);
-        conditionals.target = "target";
-        needRetarget = true;
     end
     
     local needRetarget = false;
@@ -399,6 +396,90 @@ function MMC.DoCast(msg)
     for k, v in pairs(MMC.splitString(msg, ";%s*")) do
         if MMC.DoCastOne(v) then
             handled = true; -- we parsed at least one command
+            break;
+        end
+    end
+    return handled;
+end
+
+-- Attempts to target a single unit
+-- msg: The conditionals followed by the name of the unit to target
+-- returns: True if the unit has been targeted. False if not.
+function MMC.DoTargetOne(msg)
+    local msg, conditionals = MMC.parseMsg(msg);
+    
+    -- No conditionals. Just exit.
+    if not conditionals then
+        if not msg then
+            return false;
+        else
+            MMC.Hooks.TARGET_SlashCmd(msg);
+            return true;
+        end
+    end
+    
+    if conditionals.target == "mouseover" then
+        if not UnitExists("mouseover") then
+            conditionals.target = MMC.mouseoverUnit;
+        end
+        if not conditionals.target or not UnitExists(conditionals.target) then
+            return false;
+        end
+    end
+    
+    if not conditionals.target then
+        if UnitExists("target") then
+            conditionals.target = "target";
+        else
+            conditionals.target = "player";
+        end
+    end
+    
+    if conditionals.help then
+        conditionals.help = 1;
+    elseif conditionals.harm then
+        conditionals.help = 0;
+    end
+    
+    if conditionals.target == "focus" then
+        if not ClassicFocus_CurrentFocus then
+            return false;
+        end
+        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
+        conditionals.target = "target";
+        needRetarget = true;
+    end
+    
+    for k, v in pairs(conditionals) do
+        if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
+            if needRetarget then
+                TargetLastTarget();
+            end
+            
+            return false;
+        end
+    end
+    
+    if needRetarget then
+        TargetLastTarget();
+    end
+    
+    if string.sub(msg, 1, 1) == "@" then
+        msg = UnitName(string.sub(msg, 2));
+    end
+    
+    MMC.Hooks.TARGET_SlashCmd(msg);
+    
+    return true;
+end
+
+-- Attempts to target a unit by its name using a set of conditionals
+-- msg: The raw message intercepted from a /target command
+function MMC.DoTarget(msg)
+    local handled = false;
+    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+        if MMC.DoTargetOne(v) then
+            handled = true;
             break;
         end
     end
@@ -455,7 +536,14 @@ function MMC.Frame.ADDON_LOADED()
                 MMC.DoCast(msg);
             -- if not pass it along to SuperMacro
             else
-                MMC.Hooks.RunLine(text);
+            -- if we find '/target [' take over execution
+                begin, _end = string.find(text, "^/target%s+!?%[?");
+                if begin then
+                    local msg = string.sub(text, _end);
+                    MMC.DoTarget(msg);
+                else
+                    MMC.Hooks.RunLine(text);
+                end
             end
         end
     end
@@ -493,6 +581,16 @@ MMC.CAST_SlashCmd = function(msg)
 end
 
 SlashCmdList["CAST"] = MMC.CAST_SlashCmd;
+
+MMC.Hooks.TARGET_SlashCmd = SlashCmdList["TARGET"];
+MMC.TARGET_SlashCmd = function(msg)
+    if MMC.DoTarget(msg) then
+        return;
+    end
+    MMC.Hooks.TARGET_SlashCmd(msg);
+end
+
+SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
 
 SLASH_MMC1 = "/rl"
 SlashCmdList["MMC"] = function() ReloadUI(); end
