@@ -21,7 +21,7 @@ Demo videos:
 - [Target Conditionals](https://github.com/DennisWG/CastModifier/wiki/target-Conditionals)
 - [UnitFrames Compatiblity](https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility)
 - [Toggleable abilities and channelled spells](https://github.com/DennisWG/CastModifier/wiki/Toggleable-abilities-and-channelled-spells)
-
+- [Known Bugs and work arounds](https://github.com/DennisWG/CastModifier/wiki/Known-Bugs-and-work-arounds)
 
 
 License
