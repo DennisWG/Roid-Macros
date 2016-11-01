@@ -36,7 +36,7 @@ end
 -- target: The unit id to check
 -- help: Optional. If set to 1 then the target must be friendly. If set to 0 it must be an enemy
 -- returns: Whether or not the target is a viable target
-function MMC.IsValidTarget(target, help)
+function MMC.IsValidTarget(target, help)    
 	if target ~= "mouseover" then
 		if not MMC.CheckHelp(target, help) or not UnitExists(target) then
 			return false;
@@ -62,6 +62,52 @@ function MMC.GetCurrentShapeshiftIndex()
     end
     
     return 0;
+end
+
+-- Checks whether or not the given buffName is present on the given unit's buff bar
+-- buffName: The name of the buff
+-- unit: The UnitID of the unit to check
+-- returns: True if the buffName can be found, false otherwhise
+function MMC.HasBuffName(buffName, unit)
+    if not buffName or not unit then
+        return false;
+    end
+    
+    local text = getglobal(MMCTooltip:GetName().."TextLeft1");
+	for i=1, 16 do
+		MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+		MMCTooltip:SetUnitBuff(unit, i);
+		name = text:GetText();
+		MMCTooltip:Hide();
+		if ( name and string.find(name, buffName) ) then
+			return true;
+		end
+    end
+    
+    return false;
+end
+
+-- Checks whether or not the given buffName is present on the given unit's debuff bar
+-- buffName: The name of the debuff
+-- unit: The UnitID of the unit to check
+-- returns: True if the buffName can be found, false otherwhise
+function MMC.HasDeBuffName(buffName, unit)
+    if not buffName or not unit then
+        return false;
+    end
+    
+    local text = getglobal(MMCTooltip:GetName().."TextLeft1");
+	for i=1, 16 do
+		MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+		MMCTooltip:SetUnitDebuff(unit, i);
+		name = text:GetText();
+		MMCTooltip:Hide();
+		if ( name and string.find(name, buffName) ) then
+			return true;
+		end
+    end
+    
+    return false;
 end
 
 -- Checks whether or not the given textureName is present in the current player's buff bar
@@ -129,6 +175,7 @@ function MMC.HasWeaponEquipped(weaponType)
             end
 		end
     end
+    
     return false;
 end
 
@@ -163,6 +210,34 @@ function MMC.CheckChanneled(conditionals)
     
     MMC.CurrentSpell.spellName = conditionals.channeled;
     return true;
+end
+
+-- Checks whether or not the given unit has more or less power in percent than the given amount
+-- unit: The unit we're checking
+-- bigger: 1 if the percentage needs to be bigger, 0 if it needs to be lower
+-- amount: The required amount
+-- returns: True or false
+function MMC.ValidatePower(unit, bigger, amount)
+    local powerPercent = 100 / UnitManaMax(unit) * UnitMana(unit);
+    if bigger == 0 then
+        return powerPercent < tonumber(amount);
+    end
+    
+    return powerPercent > tonumber(amount);
+end
+
+-- Checks whether or not the given unit has more or less hp in percent than the given amount
+-- unit: The unit we're checking
+-- bigger: 1 if the percentage needs to be bigger, 0 if it needs to be lower
+-- amount: The required amount
+-- returns: True or false
+function MMC.ValidateHp(unit, bigger, amount)
+    local powerPercent = 100 / UnitHealthMax(unit) * UnitHealth(unit);
+    if bigger == 0 then
+        return powerPercent < tonumber(amount);
+    end
+    
+    return powerPercent > tonumber(amount);
 end
 
 -- A list of Conditionals and their functions to validate them
@@ -254,7 +329,78 @@ MMC.Keywords = {
     channeled = function(conditionals)
         return MMC.CheckChanneled(conditionals);
     end,
+    
+    buff = function(conditionals)
+        return MMC.HasBuffName(conditionals.buff, conditionals.target);
+    end,
+    
+    nobuff = function(conditionals)
+        return not MMC.HasBuffName(conditionals.nobuff, conditionals.target);
+    end,
+    
+    debuff = function(conditionals)
+        return MMC.HasDeBuffName(conditionals.debuff, conditionals.target);
+    end,
+    
+    nodebuff = function(conditionals)
+        return not MMC.HasDeBuffName(conditionals.nodebuff, conditionals.target);
+    end,
+    
+    mybuff = function(conditionals)
+        return MMC.HasBuffName(conditionals.mybuff, "player");
+    end,
+    
+    nomybuff = function(conditionals)
+        return not MMC.HasBuffName(conditionals.nomybuff, "player");
+    end,
+    
+    mydebuff = function(conditionals)
+        return MMC.HasDeBuffName(conditionals.mydebuff, "player");
+    end,
+    
+    nomydebuff = function(conditionals)
+        return not MMC.HasDeBuffName(conditionals.nomydebuff, "player");
+    end,
+    
+    power = function(conditionals)
+        return MMC.ValidatePower(conditionals.target, conditionals.power.bigger, conditionals.power.amount);
+    end,
+    
+    mypower = function(conditionals)
+        return MMC.ValidatePower("player", conditionals.mypower.bigger, conditionals.mypower.amount);
+    end,
+    
+    hp = function(conditionals)
+        return MMC.ValidateHp(conditionals.target, conditionals.hp.bigger, conditionals.hp.amount);
+    end,
+    
+    myhp = function(conditionals)
+        return MMC.ValidateHp("player", conditionals.myhp.bigger, conditionals.myhp.amount);
+    end,
 };
+
+-- Searches for a ':', '>' or '<' in the given word and returns its position
+-- word: The word to search in
+-- returns: The position of the delimeter or nil and 1 for '>' or 2 for '<'
+function MMC.FindDelimeter(word)
+    local delimeter = string.find(word, ":");
+    local which = nil;
+    
+    if not delimeter then
+        delimeter = string.find(word, ">");
+        which = 1;
+        if not delimeter then
+            delimeter = string.find(word, "<");
+            which = 0;
+        end
+    end
+    
+    if not delimeter then
+        which = nil;
+    end
+    
+    return delimeter, which;
+end
 
 -- Parses the given message and looks for any conditionals
 -- msg: The message to parse
@@ -282,13 +428,17 @@ function MMC.parseMsg(msg)
         conditionals.channeled = msg;
     end
         
-    local pattern = "(@?%w+:*%w*/*%w*)";
+    local pattern = "(@?%w+:?>?<?%w*/?%w*)";
     for w in string.gfind(modifier, pattern) do
-        local delimeter = string.find(w, ":");
+        local delimeter, which = MMC.FindDelimeter(w);
         -- x:y
         if delimeter then
             local conditional = string.sub(w, 1, delimeter - 1);
-            conditionals[conditional] = string.sub(w, delimeter + 1);
+            if which then
+                conditionals[conditional] = { bigger = which, amount = string.sub(w, delimeter + 1) };
+            else
+                conditionals[conditional] = string.sub(w, delimeter + 1);
+            end
         -- @target
         elseif string.sub(w, 1, 1) == "@" then
             conditionals["target"] = string.sub(w,  2);
