@@ -22,6 +22,7 @@ Demo videos:
 - [UnitFrames Compatiblity](https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility)
 - [Toggleable abilities and channelled spells](https://github.com/DennisWG/CastModifier/wiki/Toggleable-abilities-and-channelled-spells)
 - [Known Bugs and work arounds](https://github.com/DennisWG/CastModifier/wiki/Known-Bugs-and-work-arounds)
+- [Supported AddOns](https://github.com/DennisWG/CastModifier/wiki/Supported-AddOns)
 
 
 License
