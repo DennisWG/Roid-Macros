@@ -578,11 +578,9 @@ function MMC.DoTargetOne(msg)
     end
     
     if not conditionals.target then
-        if UnitExists("target") then
-            conditionals.target = "target";
-        else
-            conditionals.target = "player";
-        end
+        MMC.Hooks.TARGET_SlashCmd(msg);
+        conditionals.target = "target";
+        needRetarget = true;
     end
     
     if conditionals.help then
