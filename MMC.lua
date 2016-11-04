@@ -20,13 +20,9 @@ MMC.Extensions = MMC.Extensions or {};
 function MMC.CheckHelp(target, help)
 	if help then
 		if help == 1 then
-			if not UnitIsFriend(target, "player") then
-				return false;
-			end								
+            return UnitCanAssist("player", target);
 		else
-			if UnitIsFriend(target, "player") then
-				return false;
-			end		
+			return UnitCanAttack("player", target);
 		end
 	end
 	return true;
