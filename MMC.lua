@@ -447,20 +447,6 @@ function MMC.parseMsg(msg)
 	return msg, conditionals;
 end
 
--- A very primitive way of trying to verify that the given target is the same as the player's current target
--- target: The target to check
--- returns: True if the target and the player's target share some values
-function MMC.VerifyIdentity(target)
-    local plvl = UnitLevel("playertarget");
-    local tlvl = UnitLevel(target);
-    local pmana = UnitMana("playertarget");
-    local tmana = UnitMana(target);
-    local pmaxmana = UnitManaMax("playertarget");
-    local tmaxmana = UnitManaMax(target);
-    
-    return plvl == tlvl and pmana == tmana and pmaxmana == tmaxmana;
-end
-
 -- Attempts to cast a single spell
 -- msg: The conditions followed by the spell name
 -- returns: True if the spell has been casted. False if it has not.
@@ -520,7 +506,7 @@ function MMC.DoCastOne(msg)
     
     local needRetarget = false;
     -- if our current target is not equal to the specified target...
-    if not MMC.VerifyIdentity(conditionals.target) then
+    if not UnitIsUnit("playertarget", conditionals.target) then
         needRetarget = true;
     end
     
