@@ -620,6 +620,92 @@ function MMC.DoTarget(msg)
     return handled;
 end
 
+-- Attempts to target a single unit
+-- msg: The conditionals followed by the name of the unit to target
+-- returns: True if the unit has been targeted. False if not.
+function MMC.DoPetAttackOne(msg)
+    local msg, conditionals = MMC.parseMsg(msg);
+    
+    -- No conditionals. Just exit.
+    if not conditionals then
+        if not msg then
+            return false;
+        else
+            return true;
+        end
+    end
+    
+    if conditionals.target == "mouseover" then
+        if not UnitExists("mouseover") then
+            conditionals.target = MMC.mouseoverUnit;
+        end
+        if not conditionals.target or not UnitExists(conditionals.target) then
+            return false;
+        end
+    end
+    
+    if not conditionals.target then
+        if UnitExists("target") then
+            conditionals.target = "target";
+        else
+            conditionals.target = "player";
+        end
+    end
+    
+    if conditionals.help then
+        conditionals.help = 1;
+    elseif conditionals.harm then
+        conditionals.help = 0;
+    end
+    
+    if conditionals.target == "focus" then
+        if not ClassicFocus_CurrentFocus then
+            return false;
+        end
+        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
+        conditionals.target = "target";
+        needRetarget = true;
+    end
+    
+    for k, v in pairs(conditionals) do
+        if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
+            if needRetarget then
+                TargetLastTarget();
+            end
+            return false;
+        end
+    end
+    
+    local needRetarget = false;
+    -- if our current target is not equal to the specified target...
+    if not UnitIsUnit("playertarget", conditionals.target) then
+        needRetarget = true;
+    end
+    
+    TargetUnit(conditionals.target);
+    PetAttack();
+    
+    -- ... then we have to re-target it after casting the spell!
+    if needRetarget then
+        TargetLastTarget();
+    end
+    
+    return true;
+end
+
+-- Attempts to attack a unit by a set of conditionals
+-- msg: The raw message intercepted from a /petattack command
+function MMC.DoPetAttack(msg)
+    local handled = false;
+    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+        if MMC.DoPetAttackOne(v) then
+            handled = true;
+            break;
+        end
+    end
+    return handled;
+end
+
 -- Holds information about the currently cast spell
 MMC.CurrentSpell = {
     -- "channeled" or "cast"
@@ -742,7 +828,10 @@ MMC.TARGET_SlashCmd = function(msg)
     MMC.Hooks.TARGET_SlashCmd(msg);
 end
 
-SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
+SlashCmdList["PETATTACK"] = MMC.TARGET_SlashCmd;
 
-SLASH_MMC1 = "/rl"
+SLASH_PETATTACK1 = "/petattack";
+SlashCmdList["PETATTACK"] = function(msg) MMC.DoPetAttack(msg); end
+
+SLASH_MMC1 = "/rl";
 SlashCmdList["MMC"] = function() ReloadUI(); end
