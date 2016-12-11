@@ -204,6 +204,10 @@ function MMC.CheckChanneled(conditionals)
         return not MMC.CurrentSpell.autoAttack;
     end
     
+    if conditionals.channeled == MMC.Localized.AutoShot then
+        return not MMC.CurrentSpell.autoShot;
+    end
+    
     MMC.CurrentSpell.spellName = conditionals.channeled;
     return true;
 end
@@ -624,6 +628,8 @@ MMC.CurrentSpell = {
     spellName = "",
     -- is the Attack ability enabled
     autoAttack = false,
+    -- is the Auto Shot ability enabled
+    autoShot = false,
 };
 
 -- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
@@ -635,6 +641,8 @@ MMC.Frame:RegisterEvent("SPELLCAST_INTERRUPTED");
 MMC.Frame:RegisterEvent("SPELLCAST_FAILED");
 MMC.Frame:RegisterEvent("PLAYER_ENTER_COMBAT");
 MMC.Frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
+MMC.Frame:RegisterEvent("START_AUTOREPEAT_SPELL");
+MMC.Frame:RegisterEvent("STOP_AUTOREPEAT_SPELL");
 
 MMC.Frame:SetScript("OnEvent", function()
     MMC.Frame[event]();
@@ -698,6 +706,20 @@ end
 
 function MMC.Frame.PLAYER_LEAVE_COMBAT()
     MMC.CurrentSpell.autoAttack = false;
+end
+
+function MMC.Frame.START_AUTOREPEAT_SPELL(...)
+    local _, className = UnitClass("player");
+    if className == "HUNTER" then
+        MMC.CurrentSpell.autoShot = true;
+    end
+end
+
+function MMC.Frame.STOP_AUTOREPEAT_SPELL(...)
+    local _, className = UnitClass("player");
+    if className == "HUNTER" then
+        MMC.CurrentSpell.autoShot = false;
+    end
 end
 
 MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
