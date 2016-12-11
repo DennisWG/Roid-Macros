@@ -68,13 +68,10 @@ function Extension.RegisterTargetTargetScripts()
 end
 
 function Extension.PLAYER_ENTERING_WORLD()
+    if not pfUI then
+        return;
+    end
     Extension.RegisterPlayerScripts();
     Extension.RegisterTargetScripts();
     Extension.RegisterTargetTargetScripts();
-end
-
-function Extension.OnLoad()
-    if arg1 ~= "pfUI" then
-        return;
-    end
 end
