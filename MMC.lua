@@ -677,7 +677,6 @@ function MMC.DoPetAttackOne(msg)
         end
     end
     
-    local needRetarget = false;
     -- if our current target is not equal to the specified target...
     if not UnitIsUnit("target", conditionals.target) then
         needRetarget = true;
