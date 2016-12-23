@@ -19,6 +19,7 @@ Demo videos:
 
 - [Cast Conditionals](https://github.com/DennisWG/CastModifier/wiki/cast-Conditionals)
 - [Target Conditionals](https://github.com/DennisWG/CastModifier/wiki/target-Conditionals)
+- [/petattack](https://github.com/DennisWG/CastModifier/wiki/petattack)
 - [UnitFrames Compatiblity](https://github.com/DennisWG/CastModifier/wiki/UnitFrames-Compatibility)
 - [Toggleable abilities and channelled spells](https://github.com/DennisWG/CastModifier/wiki/Toggleable-abilities-and-channelled-spells)
 - [Known Bugs and work arounds](https://github.com/DennisWG/CastModifier/wiki/Known-Bugs-and-work-arounds)
