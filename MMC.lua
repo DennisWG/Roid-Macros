@@ -490,27 +490,28 @@ function MMC.DoCastOne(msg)
         conditionals.help = 0;
     end
     
+    local needRetarget = false;
     if conditionals.target == "focus" then
         if not ClassicFocus_CurrentFocus then
             return false;
         end
         MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
-        conditionals.target = "target";
         needRetarget = true;
+        conditionals.target = "target";
     end
     
     for k, v in pairs(conditionals) do
         if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
             if needRetarget then
                 TargetLastTarget();
+                needRetarget = false;
             end
             return false;
         end
     end
     
-    local needRetarget = false;
     -- if our current target is not equal to the specified target...
-    if not UnitIsUnit("playertarget", conditionals.target) then
+    if not UnitIsUnit("target", conditionals.target) then
         needRetarget = true;
     end
     
@@ -563,6 +564,7 @@ function MMC.DoTargetOne(msg)
         end
     end
     
+    local needRetarget = false;
     if not conditionals.target then
         MMC.Hooks.TARGET_SlashCmd(msg);
         conditionals.target = "target";
@@ -588,6 +590,7 @@ function MMC.DoTargetOne(msg)
         if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
             if needRetarget then
                 TargetLastTarget();
+                needRetarget = false;
             end
             
             return false;
@@ -678,7 +681,7 @@ function MMC.DoPetAttackOne(msg)
     
     local needRetarget = false;
     -- if our current target is not equal to the specified target...
-    if not UnitIsUnit("playertarget", conditionals.target) then
+    if not UnitIsUnit("target", conditionals.target) then
         needRetarget = true;
     end
     
