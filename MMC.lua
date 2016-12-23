@@ -451,6 +451,14 @@ function MMC.parseMsg(msg)
 	return msg, conditionals;
 end
 
+function MMC.SetHelp(conditionals)
+    if conditionals.help then
+        conditionals.help = 1;
+    elseif conditionals.harm then
+        conditionals.help = 0;
+    end
+end
+
 -- Attempts to cast a single spell
 -- msg: The conditions followed by the spell name
 -- returns: True if the spell has been casted. False if it has not.
@@ -484,11 +492,7 @@ function MMC.DoCastOne(msg)
         end
     end
     
-    if conditionals.help then
-        conditionals.help = 1;
-    elseif conditionals.harm then
-        conditionals.help = 0;
-    end
+    MMC.SetHelp(conditionals);
     
     local needRetarget = false;
     if conditionals.target == "focus" then
@@ -571,11 +575,7 @@ function MMC.DoTargetOne(msg)
         needRetarget = true;
     end
     
-    if conditionals.help then
-        conditionals.help = 1;
-    elseif conditionals.harm then
-        conditionals.help = 0;
-    end
+    MMC.SetHelp(conditionals);
     
     if conditionals.target == "focus" then
         if not ClassicFocus_CurrentFocus then
@@ -655,12 +655,9 @@ function MMC.DoPetAttackOne(msg)
         end
     end
     
-    if conditionals.help then
-        conditionals.help = 1;
-    elseif conditionals.harm then
-        conditionals.help = 0;
-    end
+    MMC.SetHelp(conditionals);
     
+    local needRetarget = false;
     if conditionals.target == "focus" then
         if not ClassicFocus_CurrentFocus then
             return false;
@@ -674,6 +671,7 @@ function MMC.DoPetAttackOne(msg)
         if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
             if needRetarget then
                 TargetLastTarget();
+                needRetarget = false;
             end
             return false;
         end
