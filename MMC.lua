@@ -754,14 +754,14 @@ function MMC.Frame.ADDON_LOADED()
         for k = 1, arg.n do
             local text = arg[k];
             -- if we find '/cast [' take over execution
-            local begin, _end = string.find(text, "^/cast%s+!?%[?");
+            local begin, _end = string.find(text, "^/cast%s+!?%[");
             if begin then
                 local msg = string.sub(text, _end);
                 MMC.DoCast(msg);
             -- if not pass it along to SuperMacro
             else
             -- if we find '/target [' take over execution
-                begin, _end = string.find(text, "^/target%s+!?%[?");
+                begin, _end = string.find(text, "^/target%s+!?%[");
                 if begin then
                     local msg = string.sub(text, _end);
                     MMC.DoTarget(msg);
