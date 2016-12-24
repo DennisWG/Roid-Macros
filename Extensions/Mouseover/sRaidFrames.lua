@@ -10,7 +10,6 @@ local Extension = MMC.RegisterExtension("sRaidFrames");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension:OnEnter(frame)
-MMC.Print(frame.unit)
     MMC.mouseoverUnit = frame.unit;
 end
 
