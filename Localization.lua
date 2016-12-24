@@ -22,6 +22,7 @@ if MMC.Locale == "enUS" or MMC.Locale == "enGB" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "deDE" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -37,6 +38,7 @@ elseif MMC.Locale == "deDE" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "frFR" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -52,6 +54,7 @@ elseif MMC.Locale == "frFR" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "koKR" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -67,6 +70,7 @@ elseif MMC.Locale == "koKR" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "zhCN" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -82,6 +86,7 @@ elseif MMC.Locale == "zhCN" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "zhTW" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -97,6 +102,7 @@ elseif MMC.Locale == "zhTW" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "ruRU" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -112,6 +118,7 @@ elseif MMC.Locale == "ruRU" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 elseif MMC.Locale == "esES" then
     MMC.Localized.Shield = "Shield";
     MMC.Localized.Bow = "Bow";
@@ -127,6 +134,7 @@ elseif MMC.Locale == "esES" then
     MMC.Localized.Dagger = "Dagger";
     MMC.Localized.Axe = "Axe";
     MMC.Localized.Attack = "Attack";
+    MMC.Localized.AutoShot = "Auto Shot";
 end
 
 _G["CastModifier"] = MMC;
