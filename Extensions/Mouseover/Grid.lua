@@ -24,7 +24,7 @@ function Extension.OnLoad()
         return;
     end
     
-    MMC.Hooks.Grid.CreateFrames = GridFrame.frameClass.prototype.CreateFrames;
+    MMC.Hooks.Grid = { CreateFrames = GridFrame.frameClass.prototype.CreateFrames};
     GridFrame.frameClass.prototype.CreateFrames = MMC.GrdCreateFrames;
 end
 

@@ -7,8 +7,11 @@ local MMC = _G.CastModifier or {}
 
 MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("Grid");
+local Extension = MMC.RegisterExtension("pfUI");
 Extension.RegisterEvent("PLAYER_ENTERING_WORLD", "PLAYER_ENTERING_WORLD");
+
+function Extension.OnLoad()
+end
 
 function Extension.RegisterPlayerScripts()
     local onEnterFunc = pfUI.uf.player:GetScript("OnEnter");
