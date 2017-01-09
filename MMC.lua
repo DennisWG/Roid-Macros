@@ -226,6 +226,20 @@ function MMC.ValidatePower(unit, bigger, amount)
     return powerPercent > tonumber(amount);
 end
 
+-- Checks whether or not the given unit has more or less total power than the given amount
+-- unit: The unit we're checking
+-- bigger: 1 if the raw power needs to be bigger, 0 if it needs to be less
+-- amount: The required amount
+-- returns: True or false
+function MMC.ValidateRawPower(unit, bigger, amount)
+    local power = UnitMana(unit);
+    if bigger == 0 then
+        return power < tonumber(amount);
+    end
+    
+    return power > tonumber(amount);
+end
+
 -- Checks whether or not the given unit has more or less hp in percent than the given amount
 -- unit: The unit we're checking
 -- bigger: 1 if the percentage needs to be bigger, 0 if it needs to be lower
@@ -368,6 +382,14 @@ MMC.Keywords = {
     
     mypower = function(conditionals)
         return MMC.ValidatePower("player", conditionals.mypower.bigger, conditionals.mypower.amount);
+    end,
+    
+    rawpower = function(conditionals)
+        return MMC.ValidateRawPower(conditionals.target, conditionals.rawpower.bigger, conditionals.rawpower.amount);
+    end,
+    
+    myrawpower = function(conditionals)
+        return MMC.ValidateRawPower("player", conditionals.myrawpower.bigger, conditionals.myrawpower.amount);
     end,
     
     hp = function(conditionals)
