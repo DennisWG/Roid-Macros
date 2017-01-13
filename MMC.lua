@@ -481,10 +481,42 @@ function MMC.SetHelp(conditionals)
     end
 end
 
--- Attempts to cast a single spell
--- msg: The conditions followed by the spell name
--- returns: True if the spell has been casted. False if it has not.
-function MMC.DoCastOne(msg)
+-- Fixes the conditionals' target by using the player's current target if it exists or falling back to the player itself if it doesn'target
+-- conditionals: The conditionals containing the current target
+-- returns: Whether or not we've changed the player's current target
+function MMC.FixEmptyTarget(conditionals)
+    if not conditionals.target then
+        if UnitExists("target") then
+            conditionals.target = "target";
+        else
+            conditionals.target = "player";
+        end
+    end
+    
+    return false;
+end
+
+-- Fixes the conditionals' target by targeting the target with the given name
+-- conditionals: The conditionals containing the current target
+-- name: The name of the player to target
+-- hook: The target hook
+-- returns: Whether or not we've changed the player's current target
+function MMC.FixEmptyTargetSetTarget(conditionals, name, hook)
+    if not conditionals.target then
+        hook(name);
+        conditionals.target = "target";
+        return true;
+    end
+    return false;
+end
+
+-- Does the given action with a set of conditionals provided by the given msg
+-- msg: The conditions followed by the action's parameters
+-- hook: The hook of the function we've intercepted
+-- fixEmptyTargetFunc: A function setting the player's target if the player has none. Required to return true if we need to re-target later or false if not
+-- targetBeforeAction: A boolean value that determines whether or not we need to target the target given in the conditionals before performing the given action
+-- action: A function that is being called when everything checks out
+function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAction, action)
     local msg, conditionals = MMC.parseMsg(msg);
     
     -- No conditionals. Just exit.
@@ -492,7 +524,9 @@ function MMC.DoCastOne(msg)
         if not msg then
             return false;
         else
-            MMC.Hooks.CAST_SlashCmd(msg);
+            if hook then
+                hook(msg);
+            end
             return true;
         end
     end
@@ -506,24 +540,20 @@ function MMC.DoCastOne(msg)
         end
     end
     
-    if not conditionals.target then
-        if UnitExists("target") then
-            conditionals.target = "target";
-        else
-            conditionals.target = "player";
-        end
+    local needRetarget = false;
+    if fixEmptyTargetFunc then
+        needRetarget = fixEmptyTargetFunc(conditionals, msg, hook)
     end
     
     MMC.SetHelp(conditionals);
     
-    local needRetarget = false;
     if conditionals.target == "focus" then
         if not ClassicFocus_CurrentFocus then
             return false;
         end
         MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
-        needRetarget = true;
         conditionals.target = "target";
+        needRetarget = true;
     end
     
     for k, v in pairs(conditionals) do
@@ -536,15 +566,21 @@ function MMC.DoCastOne(msg)
         end
     end
     
-    -- if our current target is not equal to the specified target...
-    if not UnitIsUnit("target", conditionals.target) then
-        needRetarget = true;
+    if targetBeforeAction then
+        if not UnitIsUnit("target", conditionals.target) then
+            needRetarget = true;
+        end
+        
+        TargetUnit(conditionals.target);
+    else
+        if needRetarget then
+            TargetLastTarget();
+            needRetarget = false;
+        end
     end
     
-    TargetUnit(conditionals.target);
-    CastSpellByName(msg);
+    action(msg);
     
-    -- ... then we have to re-target it after casting the spell!
     if needRetarget then
         TargetLastTarget();
     end
@@ -557,7 +593,7 @@ end
 function MMC.DoCast(msg)
     local handled = false;
     for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoCastOne(v) then
+        if MMC.DoWithConditionals(v, MMC.Hooks.CAST_SlashCmd, MMC.FixEmptyTarget, true, CastSpellByName) then
             handled = true; -- we parsed at least one command
             break;
         end
@@ -565,79 +601,21 @@ function MMC.DoCast(msg)
     return handled;
 end
 
--- Attempts to target a single unit
--- msg: The conditionals followed by the name of the unit to target
--- returns: True if the unit has been targeted. False if not.
-function MMC.DoTargetOne(msg)
-    local msg, conditionals = MMC.parseMsg(msg);
-    
-    -- No conditionals. Just exit.
-    if not conditionals then
-        if not msg then
-            return false;
-        else
-            MMC.Hooks.TARGET_SlashCmd(msg);
-            return true;
-        end
-    end
-    
-    if conditionals.target == "mouseover" then
-        if not UnitExists("mouseover") then
-            conditionals.target = MMC.mouseoverUnit;
-        end
-        if not conditionals.target or not UnitExists(conditionals.target) then
-            return false;
-        end
-    end
-    
-    local needRetarget = false;
-    if not conditionals.target then
-        MMC.Hooks.TARGET_SlashCmd(msg);
-        conditionals.target = "target";
-        needRetarget = true;
-    end
-    
-    MMC.SetHelp(conditionals);
-    
-    if conditionals.target == "focus" then
-        if not ClassicFocus_CurrentFocus then
-            return false;
-        end
-        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
-        conditionals.target = "target";
-        needRetarget = true;
-    end
-    
-    for k, v in pairs(conditionals) do
-        if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
-            if needRetarget then
-                TargetLastTarget();
-                needRetarget = false;
-            end
-            
-            return false;
-        end
-    end
-    
-    if needRetarget then
-        TargetLastTarget();
-    end
-    
-    if string.sub(msg, 1, 1) == "@" then
-        msg = UnitName(string.sub(msg, 2));
-    end
-    
-    MMC.Hooks.TARGET_SlashCmd(msg);
-    
-    return true;
-end
-
 -- Attempts to target a unit by its name using a set of conditionals
 -- msg: The raw message intercepted from a /target command
 function MMC.DoTarget(msg)
     local handled = false;
+    
+    local action = function(msg)
+        if string.sub(msg, 1, 1) == "@" then
+            msg = UnitName(string.sub(msg, 2));
+        end
+        
+        MMC.Hooks.TARGET_SlashCmd(msg);
+    end
+    
     for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoTargetOne(v) then
+        if MMC.DoWithConditionals(v, MMC.Hooks.TARGET_SlashCmd, MMC.FixEmptyTargetSetTarget, false, action) then
             handled = true;
             break;
         end
@@ -645,82 +623,12 @@ function MMC.DoTarget(msg)
     return handled;
 end
 
--- Attempts to target a single unit
--- msg: The conditionals followed by the name of the unit to target
--- returns: True if the unit has been targeted. False if not.
-function MMC.DoPetAttackOne(msg)
-    local msg, conditionals = MMC.parseMsg(msg);
-    
-    -- No conditionals. Just exit.
-    if not conditionals then
-        if not msg then
-            return false;
-        else
-            return true;
-        end
-    end
-    
-    if conditionals.target == "mouseover" then
-        if not UnitExists("mouseover") then
-            conditionals.target = MMC.mouseoverUnit;
-        end
-        if not conditionals.target or not UnitExists(conditionals.target) then
-            return false;
-        end
-    end
-    
-    if not conditionals.target then
-        if UnitExists("target") then
-            conditionals.target = "target";
-        else
-            conditionals.target = "player";
-        end
-    end
-    
-    MMC.SetHelp(conditionals);
-    
-    local needRetarget = false;
-    if conditionals.target == "focus" then
-        if not ClassicFocus_CurrentFocus then
-            return false;
-        end
-        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
-        conditionals.target = "target";
-        needRetarget = true;
-    end
-    
-    for k, v in pairs(conditionals) do
-        if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
-            if needRetarget then
-                TargetLastTarget();
-                needRetarget = false;
-            end
-            return false;
-        end
-    end
-    
-    -- if our current target is not equal to the specified target...
-    if not UnitIsUnit("target", conditionals.target) then
-        needRetarget = true;
-    end
-    
-    TargetUnit(conditionals.target);
-    PetAttack();
-    
-    -- ... then we have to re-target it after casting the spell!
-    if needRetarget then
-        TargetLastTarget();
-    end
-    
-    return true;
-end
-
 -- Attempts to attack a unit by a set of conditionals
 -- msg: The raw message intercepted from a /petattack command
 function MMC.DoPetAttack(msg)
     local handled = false;
     for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoPetAttackOne(v) then
+        if MMC.DoWithConditionals(v, nil, MMC.FixEmptyTarget, true, PetAttack) then
             handled = true;
             break;
         end
@@ -849,6 +757,7 @@ MMC.TARGET_SlashCmd = function(msg)
     end
     MMC.Hooks.TARGET_SlashCmd(msg);
 end
+SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
 
 SlashCmdList["PETATTACK"] = MMC.TARGET_SlashCmd;
 
