@@ -636,6 +636,65 @@ function MMC.DoPetAttack(msg)
     return handled;
 end
 
+-- Searches for the given itemName in the player's iventory
+-- itemName: The name of the item to look for
+-- returns: The bag number and the slot number if the item has been found. nil otherwhise
+function MMC.FindItem(itemName)
+    MMCTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    for i = 0, 4 do
+        for j = 1, GetContainerNumSlots(i) do
+            MMCTooltip:ClearLines();
+            MMCTooltip:SetBagItem(i, j);
+            if MMCTooltipTextLeft1:GetText() == itemName then
+                return i, j;
+            end
+        end
+    end
+end
+
+-- Attempts to use or equip an item from the player's inventory by a  set of conditionals
+-- msg: The raw message intercepted from a /use or /equip command
+function MMC.DoUse(msg)
+    local handled = false;
+    
+    local action = function(msg)
+        local bag, slot = MMC.FindItem(msg);
+        if not bag or not slot then
+            return;
+        end
+        UseContainerItem(bag, slot);
+    end
+    
+    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+            handled = true;
+            break;
+        end
+    end
+    return handled;
+end
+
+function MMC.DoEquipOffhand(msg)
+    local handled = false;
+    
+    local action = function(msg)
+        local bag, slot = MMC.FindItem(msg);
+        if not bag or not slot then
+            return;
+        end
+        PickupContainerItem(bag, slot);
+        PickupInventoryItem(17);
+    end
+    
+    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+            handled = true;
+            break;
+        end
+    end
+    return handled;
+end
+
 -- Holds information about the currently cast spell
 MMC.CurrentSpell = {
     -- "channeled" or "cast"
@@ -738,6 +797,16 @@ function MMC.Frame.STOP_AUTOREPEAT_SPELL(...)
     end
 end
 
+SLASH_PETATTACK1 = "/petattack";
+
+SLASH_MMC1 = "/rl";
+
+SLASH_USE1 = "/use";
+
+SLASH_EQUIP1 = "/equip";
+
+SLASH_EQUIPOH1 = "/equipoh";
+
 MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
 MMC.CAST_SlashCmd = function(msg)
     -- get in there first, i.e do a PreHook
@@ -761,8 +830,12 @@ SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
 
 SlashCmdList["PETATTACK"] = MMC.TARGET_SlashCmd;
 
-SLASH_PETATTACK1 = "/petattack";
 SlashCmdList["PETATTACK"] = function(msg) MMC.DoPetAttack(msg); end
 
-SLASH_MMC1 = "/rl";
+SlashCmdList["USE"] = MMC.DoUse;
+
+SlashCmdList["EQUIP"] = MMC.DoUse;
+
+SlashCmdList["EQUIPOH"] = MMC.DoEquipOffhand;
+
 SlashCmdList["MMC"] = function() ReloadUI(); end
