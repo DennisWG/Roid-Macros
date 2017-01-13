@@ -737,23 +737,22 @@ function MMC.Frame.ADDON_LOADED()
         return;
     end
     
+    local hooks = {
+        cast = { action = MMC.DoCast, },
+        target = { action = MMC.DoTarget, },
+        use = { action = MMC.DoUse, },
+    };
+    
     -- Hook SuperMacro's RunLine to stay compatible
     MMC.Hooks.RunLine = RunLine;
     MMC.RunLine = function(...)
-        for k = 1, arg.n do
-            local text = arg[k];
-            -- if we find '/cast [' take over execution
-            local begin, _end = string.find(text, "^/cast%s+[!%[]");
-            if begin then
-                local msg = string.sub(text, _end);
-                MMC.DoCast(msg);
-            -- if not pass it along to SuperMacro
-            else
-            -- if we find '/target [' take over execution
-                begin, _end = string.find(text, "^/target%s+[!%[]");
+        for i = 1, arg.n do
+            local text = arg[i];
+            for k,v in pairs(hooks) do
+                local begin, _end = string.find(text, "^/"..k.."%s+[!%[]");
                 if begin then
                     local msg = string.sub(text, _end);
-                    MMC.DoTarget(msg);
+                    v.action(msg);
                 else
                     MMC.Hooks.RunLine(text);
                 end
