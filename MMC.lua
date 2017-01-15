@@ -196,19 +196,23 @@ end
 
 -- Checks whether or not we're currently casting a channeled spell
 function MMC.CheckChanneled(conditionals)
-    if MMC.CurrentSpell.type == "channeled" and MMC.CurrentSpell.spellName == conditionals.channeled then
+    -- Remove the "(Rank X)" part from the spells name in order to allow downranking
+    local spellName = string.gsub(MMC.CurrentSpell.spellName, "%(.-%)%s*", "");
+    local channeled = string.gsub(conditionals.channeled, "%(.-%)%s*", "");
+    
+    if MMC.CurrentSpell.type == "channeled" and spellName == channeled then
         return false;
     end
     
-    if conditionals.channeled == MMC.Localized.Attack then
+    if channeled == MMC.Localized.Attack then
         return not MMC.CurrentSpell.autoAttack;
     end
     
-    if conditionals.channeled == MMC.Localized.AutoShot then
+    if channeled == MMC.Localized.AutoShot then
         return not MMC.CurrentSpell.autoShot;
     end
     
-    MMC.CurrentSpell.spellName = conditionals.channeled;
+    MMC.CurrentSpell.spellName = channeled;
     return true;
 end
 
