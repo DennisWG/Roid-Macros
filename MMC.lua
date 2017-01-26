@@ -523,6 +523,9 @@ end
 function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAction, action)
     local msg, conditionals = MMC.parseMsg(msg);
     
+    -- trim leading and trailing white spaces
+    msg = gsub(msg,"^%s*(.-)%s*$","%1");
+    
     -- No conditionals. Just exit.
     if not conditionals then
         if not msg then
