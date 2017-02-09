@@ -75,6 +75,7 @@ function MMC.HasBuffName(buffName, unit)
 		MMCTooltip:SetUnitBuff(unit, i);
 		name = text:GetText();
 		MMCTooltip:Hide();
+        buffName = string.gsub(buffName, "_", " ");
 		if ( name and string.find(name, buffName) ) then
 			return true;
 		end
@@ -98,6 +99,7 @@ function MMC.HasDeBuffName(buffName, unit)
 		MMCTooltip:SetUnitDebuff(unit, i);
 		name = text:GetText();
 		MMCTooltip:Hide();
+        buffName = string.gsub(buffName, "_", " ");
 		if ( name and string.find(name, buffName) ) then
 			return true;
 		end
