@@ -454,7 +454,7 @@ function MMC.parseMsg(msg)
         conditionals.channeled = msg;
     end
         
-    local pattern = "(@?%w+:?>?<?%w*/?%w*)";
+    local pattern = "(@?%w+:?>?<?%w*_?/?%w*)";
     for w in string.gfind(modifier, pattern) do
         local delimeter, which = MMC.FindDelimeter(w);
         -- x:y
