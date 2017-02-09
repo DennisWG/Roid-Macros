@@ -17,6 +17,7 @@ Extensions\Mouseover\CT_RaidAssist.lua
 Extensions\Mouseover\CT_UnitFrames.lua
 Extensions\Mouseover\DiscordUnitFrames.lua
 Extensions\Mouseover\Grid.lua
+Extensions\Mouseover\NotGrid.lua
 Extensions\Mouseover\PerfectRaid.lua
 Extensions\Mouseover\pfUI.lua
 Extensions\Mouseover\sRaidFrames.lua
