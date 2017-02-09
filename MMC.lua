@@ -514,6 +514,29 @@ function MMC.FixEmptyTargetSetTarget(conditionals, name, hook)
     return false;
 end
 
+-- Returns the name of the focus target or nil
+function MMC.GetFocusName()
+    if ClassicFocus_CurrentFocus then
+        return ClassicFocus_CurrentFocus;
+    elseif CURR_FOCUS_TARGET then
+        return CURR_FOCUS_TARGET;
+    end
+    
+    return nil;
+end
+
+-- Attempts to target the focus target.
+-- returns: Whether or not it succeeded
+function MMC.TryTargetFocus()
+    local name = MMC.GetFocusName();
+    if not name then
+        return false;
+    end
+    
+    MMC.Hooks.TARGET_SlashCmd(name);
+    return true;
+end
+
 -- Does the given action with a set of conditionals provided by the given msg
 -- msg: The conditions followed by the action's parameters
 -- hook: The hook of the function we've intercepted
@@ -542,7 +565,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         if not UnitExists("mouseover") then
             conditionals.target = MMC.mouseoverUnit;
         end
-        if not conditionals.target or not UnitExists(conditionals.target) then
+        if not conditionals.target or (conditionals.target ~= "focus" and not UnitExists(conditionals.target)) then
             return false;
         end
     end
@@ -555,10 +578,9 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
     MMC.SetHelp(conditionals);
     
     if conditionals.target == "focus" then
-        if not ClassicFocus_CurrentFocus then
+        if not MMC.TryTargetFocus() then
             return false;
         end
-        MMC.Hooks.TARGET_SlashCmd(ClassicFocus_CurrentFocus);
         conditionals.target = "target";
         needRetarget = true;
     end
