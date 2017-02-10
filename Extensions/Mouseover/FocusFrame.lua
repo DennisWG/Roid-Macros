@@ -8,12 +8,6 @@ MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
 
 local Extension = MMC.RegisterExtension("FocusFrame");
 
-function Extension.OnEnter()
-end
-
-function Extension.OnEnter()
-end
-
 function Extension.RegisterMouseoverForFrame(frame)
     local onenter = frame:GetScript("OnEnter");
     local onleave = frame:GetScript("OnLeave");
@@ -26,7 +20,7 @@ function Extension.RegisterMouseoverForFrame(frame)
     end);
     
     frame:SetScript("OnLeave", function()
-        MMC.mouseoverUnit = "focus";
+        MMC.mouseoverUnit = nil;
         if onleave then
             onleave();
         end
