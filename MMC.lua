@@ -778,15 +778,20 @@ function MMC.Frame.ADDON_LOADED()
     MMC.Hooks.RunLine = RunLine;
     MMC.RunLine = function(...)
         for i = 1, arg.n do
+            local intercepted = false;
             local text = arg[i];
+            
             for k,v in pairs(hooks) do
                 local begin, _end = string.find(text, "^/"..k.."%s+[!%[]");
                 if begin then
                     local msg = string.sub(text, _end);
                     v.action(msg);
-                else
-                    MMC.Hooks.RunLine(text);
+                    intercepted = true;
                 end
+            end
+            
+            if not intercepted then
+                MMC.Hooks.RunLine(text);
             end
         end
     end
