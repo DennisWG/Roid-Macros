@@ -260,6 +260,17 @@ function MMC.ValidateHp(unit, bigger, amount)
     return powerPercent > tonumber(amount);
 end
 
+-- Checks whether the given creatureType is the same as the target's creature type
+-- creatureType: The type to check
+-- target: The target's unitID
+-- returns: True or false
+-- remarks: Allows for both localized and unlocalized type names
+function MMC.ValidateCreatureType(creatureType, target)
+    local targetType = UnitCreatureType(target);
+    local englishType = MMC.Localized.CreatureTypes[targetType];
+    return creatureType == targetType or creatureType == englishType;
+end
+
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
     help = function(conditionals)
@@ -404,6 +415,10 @@ MMC.Keywords = {
     
     myhp = function(conditionals)
         return MMC.ValidateHp("player", conditionals.myhp.bigger, conditionals.myhp.amount);
+    end,
+    
+    type = function(conditionals)
+        return MMC.ValidateCreatureType(conditionals.type, conditionals.target);
     end,
 };
 
