@@ -741,6 +741,31 @@ function MMC.DoEquipOffhand(msg)
     return handled;
 end
 
+function MMC.DoUnshift(msg)
+    local handled;
+    
+    local action = function(msg)
+        local currentShapeshiftIndex = MMC.GetCurrentShapeshiftIndex();
+        if currentShapeshiftIndex ~= 0 then
+            CastShapeshiftForm(currentShapeshiftIndex);
+        end
+    end
+    
+    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+        handled = false;
+        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+            handled = true;
+            break;
+        end
+    end
+    
+    if handled == nil then
+        action();
+    end
+    
+    return handled;
+end
+
 -- Holds information about the currently cast spell
 MMC.CurrentSpell = {
     -- "channeled" or "cast"
@@ -852,6 +877,8 @@ SLASH_EQUIP1 = "/equip";
 
 SLASH_EQUIPOH1 = "/equipoh";
 
+SLASH_UNSHIFT1 = "/unshift";
+
 MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
 MMC.CAST_SlashCmd = function(msg)
     -- get in there first, i.e do a PreHook
@@ -873,8 +900,6 @@ MMC.TARGET_SlashCmd = function(msg)
 end
 SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
 
-SlashCmdList["PETATTACK"] = MMC.TARGET_SlashCmd;
-
 SlashCmdList["PETATTACK"] = function(msg) MMC.DoPetAttack(msg); end
 
 SlashCmdList["USE"] = MMC.DoUse;
@@ -884,3 +909,5 @@ SlashCmdList["EQUIP"] = MMC.DoUse;
 SlashCmdList["EQUIPOH"] = MMC.DoEquipOffhand;
 
 SlashCmdList["MMC"] = function() ReloadUI(); end
+
+SlashCmdList["UNSHIFT"] = MMC.DoUnshift;
