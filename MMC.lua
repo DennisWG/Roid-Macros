@@ -456,7 +456,7 @@ function MMC.parseMsg(msg)
     -- If we find conditionals trim down the message to everything except the conditionals
 	if string.sub(msg, 1, 1) == "[" and modifierEnd then
 		modifier = string.sub(msg, 2, modifierEnd - 1);
-		msg = string.sub(msg, modifierEnd + 2);
+		msg = string.sub(msg, modifierEnd + 1);
     -- No conditionals found. Just return the message as is
 	elseif string.sub(msg, 1, 1) ~= "!" then
 		return msg;
@@ -471,7 +471,7 @@ function MMC.parseMsg(msg)
         conditionals.channeled = msg;
     end
         
-    local pattern = "(@?%w+:?>?<?%w*_?/?%w*)";
+    local pattern = "(@?%w+:?>?<?%w*_?[/?%w*]*)";
     for w in string.gfind(modifier, pattern) do
         local delimeter, which = MMC.FindDelimeter(w);
         -- x:y
