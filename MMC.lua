@@ -271,6 +271,74 @@ function MMC.ValidateCreatureType(creatureType, target)
     return creatureType == targetType or creatureType == englishType;
 end
 
+-- Returns the cooldown of the given spellName or nil if no such spell was found
+function MMC.GetSpellCooldownByName(spellName)
+    local checkFor = function(bookType)
+        local i = 1
+        while true do
+            local name, spellRank = GetSpellName(i, bookType);
+            
+            if not name then
+                break;
+            end
+            
+            if name == spellName then
+                local _, duration = GetSpellCooldown(i, bookType);
+                return duration;
+            end
+            
+            i = i + 1
+        end
+        return nil;
+    end
+    
+    
+    local cd = checkFor(BOOKTYPE_PET);
+    if not cd then cd = checkFor(BOOKTYPE_SPELL); end
+    
+    return cd;
+end
+
+-- Returns the cooldown of the given equipped itemName or nil if no such item was found
+function MMC.GetInventoryCooldownByName(itemName)
+    MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+    for i=0, 19 do
+        MMCTooltip:ClearLines();
+        hasItem = MMCTooltip:SetInventoryItem("player", i);
+        
+        if hasItem then
+            local lines = MMCTooltip:NumLines();
+            
+            local label = getglobal("MMCTooltipTextLeft1");
+            
+            if label:GetText() == itemName then
+                local _, duration, _ = GetInventoryItemCooldown("player", i);
+                return duration;
+            end
+        end
+    end
+    
+    return nil;
+end
+
+-- Returns the cooldown of the given itemName in the player's bags or nil if no such item was found
+function MMC.GetContainerItemCooldownByName(itemName)
+    MMCTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    
+    for i = 0, 4 do
+        for j = 1, GetContainerNumSlots(i) do
+            MMCTooltip:ClearLines();
+            MMCTooltip:SetBagItem(i, j);
+            if MMCTooltipTextLeft1:GetText() == itemName then
+                local _, duration, _ = GetContainerItemCooldown(i, j);
+                return duration;
+            end
+        end
+    end
+    
+    return nil;
+end
+
 -- A list of Conditionals and their functions to validate them
 MMC.Keywords = {
     help = function(conditionals)
@@ -426,6 +494,22 @@ MMC.Keywords = {
     
     type = function(conditionals)
         return MMC.ValidateCreatureType(conditionals.type, conditionals.target);
+    end,
+    
+    cooldown = function(conditionals)
+        local name = string.gsub(conditionals.cooldown, "_", " ");
+        local cd = MMC.GetSpellCooldownByName(name);
+        if not cd then cd = MMC.GetInventoryCooldownByName(name); end
+        if not cd then cd = MMC.GetContainerItemCooldownByName(name) end
+        return cd > 0;
+    end,
+    
+    nocooldown = function(conditionals)
+        local name = string.gsub(conditionals.nocooldown, "_", " ");
+        local cd = MMC.GetSpellCooldownByName(name);
+        if not cd then cd = MMC.GetInventoryCooldownByName(name); end
+        if not cd then cd = MMC.GetContainerItemCooldownByName(name) end
+        return cd == 0;
     end,
 };
 
@@ -728,7 +812,6 @@ function MMC.FindItem(itemName)
     
     for i = 0, 19 do
         MMCTooltip:ClearLines();
-        MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
         hasItem = MMCTooltip:SetInventoryItem("player", i);
         
         if hasItem and MMCTooltipTextLeft1:GetText() == itemName then
