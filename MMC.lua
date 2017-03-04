@@ -429,6 +429,24 @@ MMC.Keywords = {
     end,
 };
 
+-- Attempts to execute a macro by the given name
+-- name: The name of the macro
+-- returns: Whether the macro was executed or not
+function MMC.ExecuteMacroByName(name)
+    local macroId = GetMacroIndexByName(name);
+    if not macroId then
+        return false;
+    end
+    
+    local _,_, body = GetMacroInfo(macroId);
+    if not body then
+        return false;
+    end
+    
+    ChatFrameEditBox:SetText(body);
+    ChatEdit_SendText(ChatFrameEditBox);
+end
+
 -- Searches for a ':', '>' or '<' in the given word and returns its position
 -- word: The word to search in
 -- returns: The position of the delimeter or nil and 1 for '>' or 2 for '<'
@@ -578,6 +596,10 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         if not msg then
             return false;
         else
+            if string.sub(msg, 1, 1) == "{" and string.sub(msg, -1) == "}" then
+                return MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
+            end
+            
             if hook then
                 hook(msg);
             end
