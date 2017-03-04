@@ -725,6 +725,16 @@ function MMC.FindItem(itemName)
             end
         end
     end
+    
+    for i = 0, 19 do
+        MMCTooltip:ClearLines();
+        MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+        hasItem = MMCTooltip:SetInventoryItem("player", i);
+        
+        if hasItem and MMCTooltipTextLeft1:GetText() == itemName then
+            return -i;
+        end
+    end
 end
 
 -- Attempts to use or equip an item from the player's inventory by a  set of conditionals
@@ -734,6 +744,11 @@ function MMC.DoUse(msg)
     
     local action = function(msg)
         local bag, slot = MMC.FindItem(msg);
+        
+        if bag < 0 then
+            return UseInventoryItem(-bag);
+        end
+        
         if not bag or not slot then
             return;
         end
