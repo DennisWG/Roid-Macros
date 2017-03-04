@@ -296,16 +296,23 @@ MMC.Keywords = {
         return true;
     end,
     
-    mod = function(conditionals)    
-        if conditionals.mod == "alt" and IsAltKeyDown() then
-            return true;
-        elseif conditionals.mod == "ctrl" and IsControlKeyDown() then
-            return true;
-        elseif conditionals.mod == "shift" and IsShiftKeyDown() then
-            return true;
+    mod = function(conditionals)
+        local modifiersPressed = true;
+        
+        for k,v in pairs(MMC.splitString(conditionals.mod, "/")) do
+            if v == "alt" and not IsAltKeyDown() then
+                modifiersPressed = false;
+                break;
+            elseif v == "ctrl" and not IsControlKeyDown() then
+                modifiersPressed = false;
+                break;
+            elseif v == "shift" and not IsShiftKeyDown() then
+                modifiersPressed = false;
+                break;
+            end
         end
         
-        return false;
+        return modifiersPressed;
     end,
     
     target = function(conditionals)
