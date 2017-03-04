@@ -200,7 +200,7 @@ end
 function MMC.CheckChanneled(conditionals)
     -- Remove the "(Rank X)" part from the spells name in order to allow downranking
     local spellName = string.gsub(MMC.CurrentSpell.spellName, "%(.-%)%s*", "");
-    local channeled = string.gsub(conditionals.channeled, "%(.-%)%s*", "");
+    local channeled = string.gsub(conditionals.checkchanneled, "%(.-%)%s*", "");
     
     if MMC.CurrentSpell.type == "channeled" and spellName == channeled then
         return false;
@@ -432,7 +432,7 @@ MMC.Keywords = {
         return false;
     end,
     
-    channeled = function(conditionals)
+    checkchanneled = function(conditionals)
         return MMC.CheckChanneled(conditionals);
     end,
     
@@ -511,6 +511,14 @@ MMC.Keywords = {
         if not cd then cd = MMC.GetContainerItemCooldownByName(name) end
         return cd == 0;
     end,
+    
+    channeled = function(conditionals)
+        return MMC.CurrentSpell.spellName ~= "";
+    end,
+    
+    nochanneled = function(conditionals)
+        return MMC.CurrentSpell.spellName == "";
+    end,
 };
 
 -- Attempts to execute a macro by the given name
@@ -577,7 +585,7 @@ function MMC.parseMsg(msg)
     
     if string.sub(msg, 1, 1) == "!" then
         msg = string.sub(msg, 2);
-        conditionals.channeled = msg;
+        conditionals.checkchanneled = msg;
     end
         
     local pattern = "(@?%w+:?>?<?%w*[_?%w*]*[/?%w*]*)";
