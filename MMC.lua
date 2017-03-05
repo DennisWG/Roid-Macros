@@ -836,7 +836,7 @@ function MMC.DoUse(msg)
     local action = function(msg)
         local bag, slot = MMC.FindItem(msg);
         
-        if bag < 0 then
+        if bag and bag < 0 then
             return UseInventoryItem(-bag);
         end
         
