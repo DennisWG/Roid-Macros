@@ -20,6 +20,9 @@ function Extension.OnLoad()
     --[[if arg1 ~= "ag_UnitFrames" then
         return;
     end]]--
+    in not aUF then
+	return
+    end
     MMC.Hooks.ag_UnitFrames = { OnEnter = aUF.classes.aUFunit.prototype.OnEnter, OnLeave = aUF.classes.aUFunit.prototype.OnLeave}
     aUF.classes.aUFunit.prototype.OnEnter = MMC.aUFOnEnter
     aUF.classes.aUFunit.prototype.OnLeave = MMC.aUFOnLeave
