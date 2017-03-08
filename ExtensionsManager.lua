@@ -73,6 +73,11 @@ function MMC.RegisterExtension(name)
         MMC.RegisterMethodHook(name, object, functionName, callbackName, dontCallOriginal);
     end;
     
+    
+    extension.UnregisterEvent = function(eventName, callbackName)
+        MMC.UnregisterEvent(name, eventName, callbackName);
+    end;
+    
     extension.internal.OnEvent = function()
         local callbackName = extension.internal.eventHandlers[event];
         if callbackName then
@@ -94,6 +99,7 @@ function MMC.RegisterExtension(name)
             hook.origininal(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         end
     end;
+    
     
     extension.internal.frame:SetScript("OnEvent", extension.internal.OnEvent);
     
@@ -193,6 +199,14 @@ function MMC.RegisterMethodHook(extensionName, object, functionName, callbackNam
     object[functionName] = function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
         extension.internal.OnHook(object, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
     end;
+end
+
+function MMC.UnregisterEvent(extensionName, eventName, callbackName)
+    local extension = MMC.Extensions[extensionName];
+    if extension.internal.eventHandlers[eventName] then
+        extension.internal.eventHandlers[eventName] = nil;
+        extension.internal.frame:UnregisterEvent(eventName);
+    end
 end
 
 _G["CastModifier"] = MMC
