@@ -8,7 +8,7 @@
 
 ## Title-deDE: CastModifier
 
-## Notes-deDE: Fügt TBC ähnliche Modifizierer zu den Zaubermacros hinzu
+## Notes-deDE: FÃ¼gt TBC Ã¤hnliche Modifizierer zu den Zaubermacros hinzu
 
 ## OptionalDeps: ClassicFocus, FocusFrame
 
@@ -45,4 +45,3 @@ Extensions\Mouseover\pfUI.lua
 Extensions\Mouseover\sRaidFrames.lua
 
 Extensions\Mouseover\ag_UnitFrames.lua
-Extensions\Spelldata\Supermacro_Theorycraft.lua
