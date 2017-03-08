@@ -1,24 +1,48 @@
 ## Interface: 11200
+
 ## Author: DWG
+
 ## Title: CastModifier
+
 ## Notes: Adds TBC like modifiers to your cast macros
+
 ## Title-deDE: CastModifier
+
 ## Notes-deDE: Fügt TBC ähnliche Modifizierer zu den Zaubermacros hinzu
+
 ## OptionalDeps: ClassicFocus, FocusFrame
 
+
 MMC.xml
+
 Localization.lua
+
 Utility.lua
+
 MMC.lua
+
 ExtensionsManager.lua
 
+
 Extensions\Mouseover\GameTooltip.lua
+
 Extensions\Mouseover\CT_RaidAssist.lua
+
 Extensions\Mouseover\CT_UnitFrames.lua
+
 Extensions\Mouseover\DiscordUnitFrames.lua
+
 Extensions\Mouseover\FocusFrame.lua
+
 Extensions\Mouseover\Grid.lua
+
 Extensions\Mouseover\NotGrid.lua
+
 Extensions\Mouseover\PerfectRaid.lua
+
 Extensions\Mouseover\pfUI.lua
+
 Extensions\Mouseover\sRaidFrames.lua
+
+Extensions\Mouseover\ag_UnitFrames.lua
+Extensions\Spelldata\Supermacro_Theorycraft.lua
