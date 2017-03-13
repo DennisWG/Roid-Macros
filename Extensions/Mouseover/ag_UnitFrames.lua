@@ -29,15 +29,15 @@ end
 -- Taken from ag_UnitClass.lua
 function MMC:aUFOnEnter()
     Extension.OnEnter(self.unit)
-	self.frame.unit = self.unit
-	self:UpdateHighlight(true)
-	UnitFrame_OnEnter()
+    self.frame.unit = self.unit
+    self:UpdateHighlight(true)
+    UnitFrame_OnEnter()
 end
 
 function MMC:aUFOnLeave()
     Extension.OnLeave()
-	self:UpdateHighlight()
-	UnitFrame_OnLeave()
+    self:UpdateHighlight()
+    UnitFrame_OnLeave()
 end
 
 
