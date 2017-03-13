@@ -17,9 +17,6 @@ end
 
 -- Because AddOns are loaded in alphabetical order, this callback will never see the aUF loaded message, had to do a workaround...
 function Extension.OnLoad()
-    --[[if arg1 ~= "ag_UnitFrames" then
-        return;
-    end]]--
     if not aUF then
         return
     end
