@@ -749,9 +749,9 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         end
     end
     
-    
+    local result = true;
     if string.sub(msg, 1, 1) == "{" and string.sub(msg, -1) == "}" then
-        return MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
+        result = MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
     else
         action(msg);
     end
@@ -760,7 +760,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         TargetLastTarget();
     end
     
-    return true;
+    return result;
 end
 
 -- Attempts to cast a single spell from the given set of conditional spells
