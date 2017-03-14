@@ -535,8 +535,11 @@ function MMC.ExecuteMacroByName(name)
         return false;
     end
     
-    ChatFrameEditBox:SetText(body);
-    ChatEdit_SendText(ChatFrameEditBox);
+    local lines = MMC.splitString(body, "\n");
+    for k,v in pairs(lines) do
+        ChatFrameEditBox:SetText(v);
+        ChatEdit_SendText(ChatFrameEditBox);
+    end
 end
 
 -- Searches for a ':', '>' or '<' in the given word and returns its position
@@ -746,7 +749,12 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         end
     end
     
-    action(msg);
+    
+    if string.sub(msg, 1, 1) == "{" and string.sub(msg, -1) == "}" then
+        return MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
+    else
+        action(msg);
+    end
     
     if needRetarget then
         TargetLastTarget();
