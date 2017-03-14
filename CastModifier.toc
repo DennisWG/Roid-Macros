@@ -3,15 +3,13 @@
 ## Title: CastModifier
 ## Notes: Adds TBC like modifiers to your cast macros
 ## Title-deDE: CastModifier
-## Notes-deDE: Fügt TBC ähnliche Modifizierer zu den Zaubermacros hinzu
+## Notes-deDE: FÃ¼gt TBC Ã¤hnliche Modifizierer zu den Zaubermacros hinzu
 ## OptionalDeps: ClassicFocus, FocusFrame
-
 MMC.xml
 Localization.lua
 Utility.lua
 MMC.lua
 ExtensionsManager.lua
-
 Extensions\Mouseover\GameTooltip.lua
 Extensions\Mouseover\CT_RaidAssist.lua
 Extensions\Mouseover\CT_UnitFrames.lua
@@ -22,3 +20,4 @@ Extensions\Mouseover\NotGrid.lua
 Extensions\Mouseover\PerfectRaid.lua
 Extensions\Mouseover\pfUI.lua
 Extensions\Mouseover\sRaidFrames.lua
+Extensions\Mouseover\ag_UnitFrames.lua
