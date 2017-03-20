@@ -519,6 +519,14 @@ MMC.Keywords = {
     nochanneled = function(conditionals)
         return MMC.CurrentSpell.spellName == "";
     end,
+    
+    attacks = function(conditionals)
+        return UnitIsUnit("targettarget", conditionals.attacks);
+    end,
+    
+    noattacks = function(conditionals)
+        return not UnitIsUnit("targettarget", conditionals.noattacks);
+    end,
 };
 
 -- Attempts to execute a macro by the given name
