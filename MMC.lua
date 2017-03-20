@@ -527,6 +527,14 @@ MMC.Keywords = {
     noattacks = function(conditionals)
         return not UnitIsUnit("targettarget", conditionals.noattacks);
     end,
+    
+    isplayer = function(conditionals)
+        return UnitIsPlayer(conditionals.isplayer);
+    end,
+    
+    isnpc = function(conditionals)
+        return not UnitIsPlayer(conditionals.isnpc);
+    end,
 };
 
 -- Attempts to execute a macro by the given name
