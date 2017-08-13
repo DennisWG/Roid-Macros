@@ -70,7 +70,7 @@ function MMC.HasBuffName(buffName, unit)
     end
     
     local text = getglobal(MMCTooltip:GetName().."TextLeft1");
-	for i=1, 16 do
+	for i=1, 32 do
 		MMCTooltip:SetOwner(UIParent, "ANCHOR_NONE");
 		MMCTooltip:SetUnitBuff(unit, i);
 		name = text:GetText();
