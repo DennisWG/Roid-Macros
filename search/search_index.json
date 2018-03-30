@@ -21,6 +21,41 @@
             "title": "Further Information"
         }, 
         {
+            "location": "/commands/", 
+            "text": "Chat Commands\n\n\n\n\n/rl\n\n\n/petattack", 
+            "title": "Chat Commands"
+        }, 
+        {
+            "location": "/commands/#chat-commands", 
+            "text": "/rl  /petattack", 
+            "title": "Chat Commands"
+        }, 
+        {
+            "location": "/commands/petattack/", 
+            "text": "/petattack\n\n\n/petattack\n makes your pet attack.\n\n\nExamples\n\n\n/petattack [@focus]\n\n\n\n\nYou pet will attack your focus target (if you have the Addon ClassicFocus or FocusFrame installed).\n\n\n\n\n/petattack [@mouseover harm nodead]\n\n\n\n\nYour pet will attack your mouseover target if it is attackable and not dead.", 
+            "title": "/petattack"
+        }, 
+        {
+            "location": "/commands/petattack/#petattack", 
+            "text": "/petattack  makes your pet attack.", 
+            "title": "/petattack"
+        }, 
+        {
+            "location": "/commands/petattack/#examples", 
+            "text": "/petattack [@focus]  You pet will attack your focus target (if you have the Addon ClassicFocus or FocusFrame installed).   /petattack [@mouseover harm nodead]  Your pet will attack your mouseover target if it is attackable and not dead.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/commands/reload/", 
+            "text": "/rl\n\n\n/rl\n tells the client to reload all Addons. This is mainly used for debugging.", 
+            "title": "/rl"
+        }, 
+        {
+            "location": "/commands/reload/#rl", 
+            "text": "/rl  tells the client to reload all Addons. This is mainly used for debugging.", 
+            "title": "/rl"
+        }, 
+        {
             "location": "/about/", 
             "text": "MIT License\n\n\nCopyright (c) 2018 Dennis Werner Garske (DWG)\n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.", 
             "title": "About"
