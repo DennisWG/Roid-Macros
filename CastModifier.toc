@@ -12,6 +12,7 @@ MMC.lua
 Console.lua
 Conditionals.lua
 ExtensionsManager.lua
+
 Extensions\Mouseover\GameTooltip.lua
 Extensions\Mouseover\CT_RaidAssist.lua
 Extensions\Mouseover\CT_UnitFrames.lua
@@ -23,3 +24,5 @@ Extensions\Mouseover\PerfectRaid.lua
 Extensions\Mouseover\pfUI.lua
 Extensions\Mouseover\sRaidFrames.lua
 Extensions\Mouseover\ag_UnitFrames.lua
+
+Extensions\Tooltip\Generic.lua

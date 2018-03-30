@@ -511,3 +511,13 @@ function MMC.Frame.STOP_AUTOREPEAT_SPELL(...)
         MMC.CurrentSpell.wand = false;
     end
 end
+
+
+MMC.Hooks.SendChatMessage = SendChatMessage;
+
+function SendChatMessage(msg, ...)
+    if msg and string.find(msg, "^#showtooltip ") then
+        return;
+    end
+    MMC.Hooks.SendChatMessage(msg, unpack(arg));
+end

@@ -24,6 +24,7 @@ if MMC.Locale == "enUS" or MMC.Locale == "enGB" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["Beast"] = "Beast",
@@ -55,6 +56,7 @@ elseif MMC.Locale == "deDE" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["Wildtier"] = "Beast",
@@ -86,6 +88,7 @@ elseif MMC.Locale == "frFR" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["Bête"] = "Beast",
@@ -117,6 +120,7 @@ elseif MMC.Locale == "koKR" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["야수"] = "Beast",
@@ -148,6 +152,7 @@ elseif MMC.Locale == "zhCN" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["野兽"] = "Beast",
@@ -179,6 +184,7 @@ elseif MMC.Locale == "zhTW" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["野獸"] = "Beast",
@@ -210,6 +216,7 @@ elseif MMC.Locale == "ruRU" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["Животное"] = "Beast",
@@ -241,6 +248,7 @@ elseif MMC.Locale == "esES" then
     MMC.Localized.Attack = "Attack";
     MMC.Localized.AutoShot = "Auto Shot";
     MMC.Localized.Shoot = "Shoot";
+    MMC.Localized.SpellRank = "%(Rank %d+%)";
     
     MMC.Localized.CreatureTypes = {
         ["Bestia"] = "Beast",
