@@ -214,6 +214,10 @@ function MMC.CheckChanneled(conditionals)
         return not MMC.CurrentSpell.autoShot;
     end
     
+    if channeled == MMC.Localized.Shoot then
+        return not MMC.CurrentSpell.wand;
+    end
+    
     MMC.CurrentSpell.spellName = channeled;
     return true;
 end
@@ -935,6 +939,8 @@ MMC.CurrentSpell = {
     autoAttack = false,
     -- is the Auto Shot ability enabled
     autoShot = false,
+    -- is the Shoot ability (wands) enabled
+    wand = false,
 };
 
 -- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
@@ -1021,6 +1027,8 @@ function MMC.Frame.START_AUTOREPEAT_SPELL(...)
     local _, className = UnitClass("player");
     if className == "HUNTER" then
         MMC.CurrentSpell.autoShot = true;
+    else
+        MMC.CurrentSpell.wand = true;
     end
 end
 
@@ -1028,6 +1036,8 @@ function MMC.Frame.STOP_AUTOREPEAT_SPELL(...)
     local _, className = UnitClass("player");
     if className == "HUNTER" then
         MMC.CurrentSpell.autoShot = false;
+    else
+        MMC.CurrentSpell.wand = false;
     end
 end
 
