@@ -9,6 +9,8 @@ MMC.xml
 Localization.lua
 Utility.lua
 MMC.lua
+Console.lua
+Conditionals.lua
 ExtensionsManager.lua
 Extensions\Mouseover\GameTooltip.lua
 Extensions\Mouseover\CT_RaidAssist.lua
