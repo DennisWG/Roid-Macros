@@ -210,11 +210,16 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
     MMC.SetHelp(conditionals);
     
     if conditionals.target == "focus" then
-        if not MMC.TryTargetFocus() then
-            return false;
+        if UnitExists("target") and UnitName("target") == MMC.GetFocusName() then
+            conditionals.target = "target";
+            needRetarget = false;
+        else
+            if not MMC.TryTargetFocus() then
+                return false;
+            end
+            conditionals.target = "target";
+            needRetarget = true;
         end
-        conditionals.target = "target";
-        needRetarget = true;
     end
     
     for k, v in pairs(conditionals) do
