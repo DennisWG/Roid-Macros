@@ -31,14 +31,28 @@ function MMC.splitString(str, seperatorPattern)
     return tbl
 end
 
--- Debug output
--- msg: The message to print to chat
-function MMC.Print(msg)
+-- Prints all the given arguments into WoW's default chat frame
+function MMC.Print(...)
     if not DEFAULT_CHAT_FRAME:IsVisible() then
         FCF_SelectDockFrame(DEFAULT_CHAT_FRAME)
     end
-    local out = "|cffc8c864CastModifier:|r"..tostring(msg)
+    local out = "|cffc8c864CastModifier:|r";
+    
+    for i=1, arg.n, 1 do
+        out = out..tostring(arg[i]).."  ";
+    end
+    
     DEFAULT_CHAT_FRAME:AddMessage(out)
+end
+
+-- Trims any leading or trailing white space characters from the given string
+-- str: The string to trim
+-- returns: The trimmed string
+function MMC.Trim(str)
+    if not str then
+        return nil;
+    end
+    return string.gsub(str,"^%s*(.-)%s*$", "%1");
 end
 
 _G["CastModifier"] = MMC
