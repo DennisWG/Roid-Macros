@@ -1,5 +1,9 @@
 site_name: Cast Conditionals
 pages:
     - Home: index.md
+    - Commands:
+        - commands.md
+        - commands/petattack.md
+        - commands/reload.md
     - About: about.md
 theme: readthedocs
