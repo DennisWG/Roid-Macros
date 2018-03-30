@@ -3,30 +3,30 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0);
-local MMC = _G.CastModifier or {};
-MMC.Locale = GetLocale();
-MMC.Localized = {};
+local Roids = _G.Roids or {};
+Roids.Locale = GetLocale();
+Roids.Localized = {};
 
-if MMC.Locale == "enUS" or MMC.Locale == "enGB" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+if Roids.Locale == "enUS" or Roids.Locale == "enGB" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["Beast"] = "Beast",
         ["Critter"] = "Critter",
         ["Demon"] = "Demon",
@@ -39,26 +39,26 @@ if MMC.Locale == "enUS" or MMC.Locale == "enGB" then
         ["Totem"] = "Totem",
         ["Undead"] = "Undead",
     };
-elseif MMC.Locale == "deDE" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "deDE" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["Wildtier"] = "Beast",
         ["Kleintier"] = "Critter",
         ["Dämon"] = "Demon",
@@ -71,26 +71,26 @@ elseif MMC.Locale == "deDE" then
         ["Totem"] = "Totem",
         ["Untoter"] = "Undead",
     };
-elseif MMC.Locale == "frFR" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "frFR" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["Bête"] = "Beast",
         ["Bestiole"] = "Critter",
         ["Démon"] = "Demon",
@@ -103,26 +103,26 @@ elseif MMC.Locale == "frFR" then
         ["Totem"] = "Totem",
         ["Mort-vivant"] = "Undead",
     };
-elseif MMC.Locale == "koKR" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "koKR" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["야수"] = "Beast",
         ["동물"] = "Critter",
         ["악마"] = "Demon",
@@ -135,26 +135,26 @@ elseif MMC.Locale == "koKR" then
         ["토템"] = "Totem",
         ["언데드"] = "Undead",
     };
-elseif MMC.Locale == "zhCN" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "zhCN" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["野兽"] = "Beast",
         ["小动物"] = "Critter",
         ["恶魔"] = "Demon",
@@ -167,26 +167,26 @@ elseif MMC.Locale == "zhCN" then
         ["图腾"] = "Totem",
         ["亡灵"] = "Undead",
     };
-elseif MMC.Locale == "zhTW" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "zhTW" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["野獸"] = "Beast",
         ["小動物"] = "Critter",
         ["惡魔"] = "Demon",
@@ -199,26 +199,26 @@ elseif MMC.Locale == "zhTW" then
         ["圖騰"] = "Totem",
         ["不死族"] = "Undead",
     };
-elseif MMC.Locale == "ruRU" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "ruRU" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["Животное"] = "Beast",
         ["Существо"] = "Critter",
         ["Демон"] = "Demon",
@@ -231,26 +231,26 @@ elseif MMC.Locale == "ruRU" then
         ["Тотем"] = "Totem",
         ["Нежить"] = "Undead",
     };
-elseif MMC.Locale == "esES" then
-    MMC.Localized.Shield = "Shield";
-    MMC.Localized.Bow = "Bow";
-    MMC.Localized.Crossbow = "Crossbow";
-    MMC.Localized.Gun = "Gun";
-    MMC.Localized.Thrown = "Thrown";
-    MMC.Localized.Wand = "Wand";
-    MMC.Localized.Sword = "Sword";
-    MMC.Localized.Staff = "Staff";
-    MMC.Localized.Polearm = "Polearm";
-    MMC.Localized.Mace = "Mace";
-    MMC.Localized.FistWeapon = "Fist Weapon";
-    MMC.Localized.Dagger = "Dagger";
-    MMC.Localized.Axe = "Axe";
-    MMC.Localized.Attack = "Attack";
-    MMC.Localized.AutoShot = "Auto Shot";
-    MMC.Localized.Shoot = "Shoot";
-    MMC.Localized.SpellRank = "%(Rank %d+%)";
+elseif Roids.Locale == "esES" then
+    Roids.Localized.Shield = "Shield";
+    Roids.Localized.Bow = "Bow";
+    Roids.Localized.Crossbow = "Crossbow";
+    Roids.Localized.Gun = "Gun";
+    Roids.Localized.Thrown = "Thrown";
+    Roids.Localized.Wand = "Wand";
+    Roids.Localized.Sword = "Sword";
+    Roids.Localized.Staff = "Staff";
+    Roids.Localized.Polearm = "Polearm";
+    Roids.Localized.Mace = "Mace";
+    Roids.Localized.FistWeapon = "Fist Weapon";
+    Roids.Localized.Dagger = "Dagger";
+    Roids.Localized.Axe = "Axe";
+    Roids.Localized.Attack = "Attack";
+    Roids.Localized.AutoShot = "Auto Shot";
+    Roids.Localized.Shoot = "Shoot";
+    Roids.Localized.SpellRank = "%(Rank %d+%)";
     
-    MMC.Localized.CreatureTypes = {
+    Roids.Localized.CreatureTypes = {
         ["Bestia"] = "Beast",
         ["Alma"] = "Critter",
         ["Demonio"] = "Demon",
@@ -265,4 +265,4 @@ elseif MMC.Locale == "esES" then
     };
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

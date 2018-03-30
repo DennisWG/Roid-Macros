@@ -3,14 +3,14 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("sRaidFrames");
+local Extension = Roids.RegisterExtension("sRaidFrames");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension:OnEnter(frame)
-    MMC.mouseoverUnit = frame.unit;
+    Roids.mouseoverUnit = frame.unit;
 end
 
 function Extension.OnLoad()
@@ -21,4 +21,4 @@ function Extension.OnLoad()
     Extension.HookMethod(sRaidFrames, "UnitTooltip", "OnEnter");
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

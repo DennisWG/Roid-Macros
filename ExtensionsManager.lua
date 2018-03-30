@@ -3,17 +3,17 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
+local Roids = _G.Roids or {}
 
 -- A list of all registered extensions
-MMC.Extensions = MMC.Extensions or {};
+Roids.Extensions = Roids.Extensions or {};
 
 -- Calls the "OnLoad" function of every extension
-function MMC.InitializeExtensions()
-    for k, v in pairs(MMC.Extensions) do
+function Roids.InitializeExtensions()
+    for k, v in pairs(Roids.Extensions) do
         local func = v["OnLoad"];
         if not func then
-            MMC.Print("MMC.InitializeExtensions - Couldn't find 'OnLoad' function for extension "..k);
+            Roids.Print("Roids.InitializeExtensions - Couldn't find 'OnLoad' function for extension "..k);
         else
             func();
         end 
@@ -22,35 +22,35 @@ end
 
 -- Removes the given hook
 -- hook: The hook to remove
-function MMC.RemoveHook(hook)
+function Roids.RemoveHook(hook)
     _G[hook.name] = hook.origininal;
 end
 
 -- Removes the given hook from the given object
 -- object: The object to remove the hook from
 -- hook: The hook to remove
-function MMC.RemoveMethodHook(object, hook)
+function Roids.RemoveMethodHook(object, hook)
     object[hook.name] = hook.origininal;
 end
 
 -- Clears all previously declared hooks
-function MMC.ClearHooks()
-    for k, v in pairs(MMC.Extensions) do
+function Roids.ClearHooks()
+    for k, v in pairs(Roids.Extensions) do
         for k2, v2 in pairs(v.internal.memberHooks) do
             for k3, v3 in pairs(v2) do
-                MMC.RemoveMethodHook(k2, v3);
+                Roids.RemoveMethodHook(k2, v3);
             end
         end
         
         for k2, v2 in pairs(v.internal.hooks) do
-            MMC.RemoveHook(v2);
+            Roids.RemoveHook(v2);
         end
     end
 end
 
 -- Creates a new extension with the given name
 -- name: the name of the extension
-function MMC.RegisterExtension(name)    
+function Roids.RegisterExtension(name)    
     local extension = {
         internal =
         {
@@ -62,20 +62,20 @@ function MMC.RegisterExtension(name)
     };
     
     extension.RegisterEvent = function(eventName, callbackName)
-        MMC.RegisterEvent(name, eventName, callbackName);
+        Roids.RegisterEvent(name, eventName, callbackName);
     end;
     
     extension.Hook = function(functionName, callbackName, dontCallOriginal)
-        MMC.RegisterHook(name, functionName, callbackName, dontCallOriginal);
+        Roids.RegisterHook(name, functionName, callbackName, dontCallOriginal);
     end;
     
     extension.HookMethod = function(object, functionName, callbackName, dontCallOriginal)
-        MMC.RegisterMethodHook(name, object, functionName, callbackName, dontCallOriginal);
+        Roids.RegisterMethodHook(name, object, functionName, callbackName, dontCallOriginal);
     end;
     
     
     extension.UnregisterEvent = function(eventName, callbackName)
-        MMC.UnregisterEvent(name, eventName, callbackName);
+        Roids.UnregisterEvent(name, eventName, callbackName);
     end;
     
     extension.internal.OnEvent = function()
@@ -103,7 +103,7 @@ function MMC.RegisterExtension(name)
     
     extension.internal.frame:SetScript("OnEvent", extension.internal.OnEvent);
     
-    MMC.Extensions[name] = extension;
+    Roids.Extensions[name] = extension;
     
     return extension;
 end
@@ -112,8 +112,8 @@ end
 -- extensionName: The name of the extension trying to register the callback
 -- eventName: The event's name we'd like to register a callback for
 -- callbackName: The name of the callback that get's called when the event fires
-function MMC.RegisterEvent(extensionName, eventName, callbackName)
-    local extension = MMC.Extensions[extensionName];
+function Roids.RegisterEvent(extensionName, eventName, callbackName)
+    local extension = Roids.Extensions[extensionName];
     extension.internal.eventHandlers[eventName] = callbackName;
     extension.internal.frame:RegisterEvent(eventName);
 end
@@ -123,17 +123,17 @@ end
 -- functionName: The name of the function that'll be hooked
 -- callbackName: The name of the callback that get's called when the hooked function is called
 -- dontCallOriginal: Set to true when the original function should not be called
-function MMC.RegisterHook(extensionName, functionName, callbackName, dontCallOriginal)
+function Roids.RegisterHook(extensionName, functionName, callbackName, dontCallOriginal)
     local orig = _G[functionName];
-    local extension = MMC.Extensions[extensionName];
+    local extension = Roids.Extensions[extensionName];
     
     if not extension then
-        MMC.Print("MMC.RegisterHook - Invalid extension: "..extension);
+        Roids.Print("Roids.RegisterHook - Invalid extension: "..extension);
         return;
     end
     
     if not extension[callbackName] then
-        MMC.Print("MMC.RegisterHook - Couldn't find callback: "..callbackName);
+        Roids.Print("Roids.RegisterHook - Couldn't find callback: "..callbackName);
         return;
     end
     
@@ -155,33 +155,33 @@ end
 -- extensionName: The name of the extension trying to register the callback
 -- functionName: The name of the function that'll be hooked
 -- callbackName: The name of the callback that get's called when the hooked function is called
-function MMC.RegisterMethodHook(extensionName, object, functionName, callbackName, dontCallOriginal)
+function Roids.RegisterMethodHook(extensionName, object, functionName, callbackName, dontCallOriginal)
     if not object then
-        MMC.Print("MMC.RegisterMethodHook - The object could not be found!");
+        Roids.Print("Roids.RegisterMethodHook - The object could not be found!");
         return;
     end
 
     if type(object) ~= "table" then
-        MMC.Print("MMC.RegisterMethodHook - The object needs to be a table!");
+        Roids.Print("Roids.RegisterMethodHook - The object needs to be a table!");
         return;
     end
     
     local orig = object[functionName];
     
     if not orig then
-        MMC.Print("MMC.RegisterMethodHook - The object doesn't have a function named "..functionName);
+        Roids.Print("Roids.RegisterMethodHook - The object doesn't have a function named "..functionName);
         return;
     end
     
-    local extension = MMC.Extensions[extensionName];
+    local extension = Roids.Extensions[extensionName];
     
     if not extension then
-        MMC.Print("MMC.RegisterMethodHook - Invalid extension: "..extension);
+        Roids.Print("Roids.RegisterMethodHook - Invalid extension: "..extension);
         return;
     end
     
     if not extension[callbackName] then
-        MMC.Print("MMC.RegisterMethodHook - Couldn't find callback: "..callbackName);
+        Roids.Print("Roids.RegisterMethodHook - Couldn't find callback: "..callbackName);
         return;
     end
     
@@ -201,12 +201,12 @@ function MMC.RegisterMethodHook(extensionName, object, functionName, callbackNam
     end;
 end
 
-function MMC.UnregisterEvent(extensionName, eventName, callbackName)
-    local extension = MMC.Extensions[extensionName];
+function Roids.UnregisterEvent(extensionName, eventName, callbackName)
+    local extension = Roids.Extensions[extensionName];
     if extension.internal.eventHandlers[eventName] then
         extension.internal.eventHandlers[eventName] = nil;
         extension.internal.frame:UnregisterEvent(eventName);
     end
 end
 
-_G["CastModifier"] = MMC
+_G["Roids"] = Roids

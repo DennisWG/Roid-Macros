@@ -3,26 +3,26 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("DiscordUnitFrames");
+local Extension = Roids.RegisterExtension("DiscordUnitFrames");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension.OnEnterFrame()
-    MMC.mouseoverUnit = this.unit;
+    Roids.mouseoverUnit = this.unit;
 end
 
 function Extension.OnLeaveFrame()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnEnterElement()
-    MMC.mouseoverUnit = this:GetParent().unit;
+    Roids.mouseoverUnit = this:GetParent().unit;
 end
 
 function Extension.OnLeaveElement()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnLoad()
@@ -30,7 +30,7 @@ function Extension.OnLoad()
         return;
     end
     
-    MMC.ClearHooks();
+    Roids.ClearHooks();
     Extension.Hook("DUF_UnitFrame_OnEnter", "OnEnterFrame");
     Extension.Hook("DUF_UnitFrame_OnLeave", "OnLeaveFrame");
     
@@ -38,4 +38,4 @@ function Extension.OnLoad()
     Extension.Hook("DUF_Element_OnLeave", "OnLeaveElement");
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

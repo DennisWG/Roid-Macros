@@ -3,20 +3,20 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
+local Roids = _G.Roids or {}
 
-MMC.Hooks = MMC.Hooks or {};
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+Roids.Hooks = Roids.Hooks or {};
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("Grid");
+local Extension = Roids.RegisterExtension("Grid");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension.OnEnter(unit)
-    MMC.mouseoverUnit = unit;
+    Roids.mouseoverUnit = unit;
 end
 
 function Extension.OnLeave()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnLoad()
@@ -24,12 +24,12 @@ function Extension.OnLoad()
         return;
     end
     
-    MMC.Hooks.Grid = { CreateFrames = GridFrame.frameClass.prototype.CreateFrames};
-    GridFrame.frameClass.prototype.CreateFrames = MMC.GrdCreateFrames;
+    Roids.Hooks.Grid = { CreateFrames = GridFrame.frameClass.prototype.CreateFrames};
+    GridFrame.frameClass.prototype.CreateFrames = Roids.GrdCreateFrames;
 end
 
 -- Taken from GridFrame.lua and added OnEnter and OnLeave scripts
-function MMC:GrdCreateFrames()
+function Roids:GrdCreateFrames()
 	-- create frame
 	--self.frame = CreateFrame("Button", nil, UIParent)
 	local f = self.frame
@@ -111,4 +111,4 @@ function MMC:GrdCreateFrames()
 	ClickCastFrames[self.frame] = true
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

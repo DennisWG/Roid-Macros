@@ -3,12 +3,12 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
+local Roids = _G.Roids or {}
 
 -- Returns information regarding the macro the button is holing. 
 -- buttonId: The id of the button we're trying to get information from
 -- returns: nil if the button doesn't hold a macro. Otherwhise the macro's name, texture path and a list of lines that form the macro's body
-function MMC.GetMacroInfo(buttonId)
+function Roids.GetMacroInfo(buttonId)
     local macroName = GetActionText(buttonId);
     
     if not macroName then
@@ -17,11 +17,11 @@ function MMC.GetMacroInfo(buttonId)
     
     local name, texture, body = GetMacroInfo(GetMacroIndexByName(macroName));
     
-    return name, texture, MMC.splitString(body, "\n");
+    return name, texture, Roids.splitString(body, "\n");
 end
 
 -- Returns all spells the current player has learned
-function MMC.GetLearnedSpells()
+function Roids.GetLearnedSpells()
     local i = 1
     local spells = {};
     while true do
@@ -46,17 +46,17 @@ end
 
 -- Sanitizes the given name in a uniform way
 -- returns: The name without white spaces and in lower case
-function MMC.SanitizeSpellName(name)
+function Roids.SanitizeSpellName(name)
     return string.lower(string.gsub(name,"%s*",""));
 end
 
 -- Returns whether or not the given name is a spell
-function MMC.IsSpell(name)
-    local name = MMC.SanitizeSpellName(name);
-    local spells = MMC.GetLearnedSpells();
+function Roids.IsSpell(name)
+    local name = Roids.SanitizeSpellName(name);
+    local spells = Roids.GetLearnedSpells();
     
     for k,v in pairs(spells) do
-        local knownName = MMC.SanitizeSpellName(v.name.."("..v.rank..")");
+        local knownName = Roids.SanitizeSpellName(v.name.."("..v.rank..")");
         if knownName == name then
             return true;
         end
@@ -65,24 +65,24 @@ function MMC.IsSpell(name)
     return false;
 end
 
-local Extension = MMC.RegisterExtension("Generic_show");
+local Extension = Roids.RegisterExtension("Generic_show");
 Extension.RegisterEvent("PLAYER_ENTERING_WORLD", "PLAYER_ENTERING_WORLD");
 
 function Extension.OnLoad()
 end
 
-function MMC.ParseSpell(line)
-    local rankStart, rankEnd = string.find(line, MMC.Localized.SpellRank);
+function Roids.ParseSpell(line)
+    local rankStart, rankEnd = string.find(line, Roids.Localized.SpellRank);
     local spellName, spellRank;
     
     if rankStart then
-        spellName = MMC.Trim(string.sub(line, 0, rankStart - 1));
-        spellRank = MMC.Trim(string.sub(line, rankStart + 1, rankEnd - 1));
+        spellName = Roids.Trim(string.sub(line, 0, rankStart - 1));
+        spellRank = Roids.Trim(string.sub(line, rankStart + 1, rankEnd - 1));
     else
-        spellName = MMC.Trim(line);
+        spellName = Roids.Trim(line);
     end
     
-    local spell = MMC.knownSpells[spellName];
+    local spell = Roids.knownSpells[spellName];
     if not spell then
         return false;
     end
@@ -93,8 +93,8 @@ function MMC.ParseSpell(line)
     return true;
 end
 
-function MMC.ParseItem(line)
-    local bag, slot = MMC.FindItem(MMC.Trim(line));
+function Roids.ParseItem(line)
+    local bag, slot = Roids.FindItem(Roids.Trim(line));
     
     if not bag then
         return false;
@@ -109,28 +109,28 @@ function MMC.ParseItem(line)
 end
 
 function Extension.PLAYER_ENTERING_WORLD()
-    MMC.knownSpells = MMC.GetLearnedSpells();
-    MMC.Hooks.GameTooltip_SetAction = GameTooltip.SetAction;
+    Roids.knownSpells = Roids.GetLearnedSpells();
+    Roids.Hooks.GameTooltip_SetAction = GameTooltip.SetAction;
     
     GameTooltip.SetAction = function(this, buttonId)
-        local name, texture, body = MMC.GetMacroInfo(buttonId);
+        local name, texture, body = Roids.GetMacroInfo(buttonId);
     
         if not name then
-            return MMC.Hooks.GameTooltip_SetAction(this, buttonId);
+            return Roids.Hooks.GameTooltip_SetAction(this, buttonId);
         end
         
         for _,line in pairs(body) do
             if string.find(line, "^#showtooltip ") then
                 local text = string.sub(line, 14);
-                if MMC.ParseSpell(text) then
+                if Roids.ParseSpell(text) then
                     return;
                 end
                 
-                if MMC.ParseItem(text) then
+                if Roids.ParseItem(text) then
                     return;
                 end
                 
-                MMC.Print("Unknown Tooltip: '"..text.."'");
+                Roids.Print("Unknown Tooltip: '"..text.."'");
             end
         end
     end

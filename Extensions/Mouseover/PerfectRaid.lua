@@ -3,20 +3,20 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
+local Roids = _G.Roids or {}
 
-MMC.Hooks = MMC.Hooks or {};
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+Roids.Hooks = Roids.Hooks or {};
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("PerfectRaid");
+local Extension = Roids.RegisterExtension("PerfectRaid");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension.OnEnter(unit)
-    MMC.mouseoverUnit = unit;
+    Roids.mouseoverUnit = unit;
 end
 
 function Extension.OnLeave()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnLoad()
@@ -24,11 +24,11 @@ function Extension.OnLoad()
         return;
     end
     
-    MMC.Hooks.PerfectRaid = { CreateFrame = PerfectRaid.CreateFrame };
-    PerfectRaid.CreateFrame = MMC.PerfectRaidCreateFrame;
+    Roids.Hooks.PerfectRaid = { CreateFrame = PerfectRaid.CreateFrame };
+    PerfectRaid.CreateFrame = Roids.PerfectRaidCreateFrame;
 end
 
-function MMC.PerfectRaidCreateFrame(self, num)
+function Roids.PerfectRaidCreateFrame(self, num)
     -- We need to allocate up to num frames
     
     if self.poolsize >= num then return end
@@ -134,4 +134,4 @@ function MMC.PerfectRaidCreateFrame(self, num)
 --]]
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

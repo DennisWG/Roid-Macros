@@ -3,11 +3,11 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
+local Roids = _G.Roids or {}
 
 SLASH_PETATTACK1 = "/petattack";
 
-SLASH_MMC1 = "/rl";
+SLASH_RELOAD1 = "/rl";
 
 SLASH_USE1 = "/use";
 
@@ -17,35 +17,35 @@ SLASH_EQUIPOH1 = "/equipoh";
 
 SLASH_UNSHIFT1 = "/unshift";
 
-MMC.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
-MMC.CAST_SlashCmd = function(msg)
+Roids.Hooks.CAST_SlashCmd = SlashCmdList["CAST"];
+Roids.CAST_SlashCmd = function(msg)
     -- get in there first, i.e do a PreHook
-    if MMC.DoCast(msg) then
+    if Roids.DoCast(msg) then
         return;
     end
     -- if there was nothing for us to handle pass it to the original
-    MMC.Hooks.CAST_SlashCmd(msg);
+    Roids.Hooks.CAST_SlashCmd(msg);
 end
 
-SlashCmdList["CAST"] = MMC.CAST_SlashCmd;
+SlashCmdList["CAST"] = Roids.CAST_SlashCmd;
 
-MMC.Hooks.TARGET_SlashCmd = SlashCmdList["TARGET"];
-MMC.TARGET_SlashCmd = function(msg)
-    if MMC.DoTarget(msg) then
+Roids.Hooks.TARGET_SlashCmd = SlashCmdList["TARGET"];
+Roids.TARGET_SlashCmd = function(msg)
+    if Roids.DoTarget(msg) then
         return;
     end
-    MMC.Hooks.TARGET_SlashCmd(msg);
+    Roids.Hooks.TARGET_SlashCmd(msg);
 end
-SlashCmdList["TARGET"] = MMC.TARGET_SlashCmd;
+SlashCmdList["TARGET"] = Roids.TARGET_SlashCmd;
 
-SlashCmdList["PETATTACK"] = function(msg) MMC.DoPetAttack(msg); end
+SlashCmdList["PETATTACK"] = function(msg) Roids.DoPetAttack(msg); end
 
-SlashCmdList["USE"] = MMC.DoUse;
+SlashCmdList["USE"] = Roids.DoUse;
 
-SlashCmdList["EQUIP"] = MMC.DoUse;
+SlashCmdList["EQUIP"] = Roids.DoUse;
 
-SlashCmdList["EQUIPOH"] = MMC.DoEquipOffhand;
+SlashCmdList["EQUIPOH"] = Roids.DoEquipOffhand;
 
-SlashCmdList["MMC"] = function() ReloadUI(); end
+SlashCmdList["RELOAD"] = function() ReloadUI(); end
 
-SlashCmdList["UNSHIFT"] = MMC.DoUnshift;
+SlashCmdList["UNSHIFT"] = Roids.DoUnshift;

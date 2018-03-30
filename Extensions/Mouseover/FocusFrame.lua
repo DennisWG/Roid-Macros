@@ -3,24 +3,24 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("FocusFrame");
+local Extension = Roids.RegisterExtension("FocusFrame");
 
 function Extension.RegisterMouseoverForFrame(frame)
     local onenter = frame:GetScript("OnEnter");
     local onleave = frame:GetScript("OnLeave");
     
     frame:SetScript("OnEnter", function()
-        MMC.mouseoverUnit = "focus";
+        Roids.mouseoverUnit = "focus";
         if onenter then
             onenter();
         end
     end);
     
     frame:SetScript("OnLeave", function()
-        MMC.mouseoverUnit = nil;
+        Roids.mouseoverUnit = nil;
         if onleave then
             onleave();
         end

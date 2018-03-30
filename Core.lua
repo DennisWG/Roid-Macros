@@ -5,17 +5,17 @@
 
 -- Setup to wrap our stuff in a table so we don't pollute the global environment
 local _G = _G or getfenv(0);
-local MMC = _G.CastModifier or {};
-_G.CastModifier = MMC;
-MMC.Hooks = MMC.Hooks or {};
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {};
+_G.Roids = Roids;
+Roids.Hooks = Roids.Hooks or {};
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-MMC.Extensions = MMC.Extensions or {};
+Roids.Extensions = Roids.Extensions or {};
 
 -- Attempts to execute a macro by the given name
 -- name: The name of the macro
 -- returns: Whether the macro was executed or not
-function MMC.ExecuteMacroByName(name)
+function Roids.ExecuteMacroByName(name)
     local macroId = GetMacroIndexByName(name);
     if not macroId then
         return false;
@@ -26,7 +26,7 @@ function MMC.ExecuteMacroByName(name)
         return false;
     end
     
-    local lines = MMC.splitString(body, "\n");
+    local lines = Roids.splitString(body, "\n");
     for k,v in pairs(lines) do
         ChatFrameEditBox:SetText(v);
         ChatEdit_SendText(ChatFrameEditBox);
@@ -36,7 +36,7 @@ end
 -- Searches for a ':', '>' or '<' in the given word and returns its position
 -- word: The word to search in
 -- returns: The position of the delimeter or nil and 1 for '>' or 2 for '<'
-function MMC.FindDelimeter(word)
+function Roids.FindDelimeter(word)
     local delimeter = string.find(word, ":");
     local which = nil;
     
@@ -59,7 +59,7 @@ end
 -- Parses the given message and looks for any conditionals
 -- msg: The message to parse
 -- returns: A set of conditionals found inside the given string
-function MMC.parseMsg(msg)
+function Roids.parseMsg(msg)
 	local modifier = "";
 	local modifierEnd = string.find(msg, "]");
 	local help = nil;
@@ -84,7 +84,7 @@ function MMC.parseMsg(msg)
         
     local pattern = "(@?%w+:?>?<?%w*[_?%-?%w*]*[/?%w*]*)";
     for w in string.gfind(modifier, pattern) do
-        local delimeter, which = MMC.FindDelimeter(w);
+        local delimeter, which = Roids.FindDelimeter(w);
         -- x:y
         if delimeter then
             local conditional = string.sub(w, 1, delimeter - 1);
@@ -97,7 +97,7 @@ function MMC.parseMsg(msg)
         elseif string.sub(w, 1, 1) == "@" then
             conditionals["target"] = string.sub(w,  2);
         -- Any other keyword like harm or help
-        elseif MMC.Keywords[w] ~= nil then
+        elseif Roids.Keywords[w] ~= nil then
             conditionals[w] = 1;
         end
     end
@@ -105,7 +105,7 @@ function MMC.parseMsg(msg)
 	return msg, conditionals;
 end
 
-function MMC.SetHelp(conditionals)
+function Roids.SetHelp(conditionals)
     if conditionals.help then
         conditionals.help = 1;
     elseif conditionals.harm then
@@ -116,7 +116,7 @@ end
 -- Fixes the conditionals' target by using the player's current target if it exists or falling back to the player itself if it doesn'target
 -- conditionals: The conditionals containing the current target
 -- returns: Whether or not we've changed the player's current target
-function MMC.FixEmptyTarget(conditionals)
+function Roids.FixEmptyTarget(conditionals)
     if not conditionals.target then
         if UnitExists("target") then
             conditionals.target = "target";
@@ -133,7 +133,7 @@ end
 -- name: The name of the player to target
 -- hook: The target hook
 -- returns: Whether or not we've changed the player's current target
-function MMC.FixEmptyTargetSetTarget(conditionals, name, hook)
+function Roids.FixEmptyTargetSetTarget(conditionals, name, hook)
     if not conditionals.target then
         hook(name);
         conditionals.target = "target";
@@ -143,7 +143,7 @@ function MMC.FixEmptyTargetSetTarget(conditionals, name, hook)
 end
 
 -- Returns the name of the focus target or nil
-function MMC.GetFocusName()
+function Roids.GetFocusName()
     if ClassicFocus_CurrentFocus then
         return ClassicFocus_CurrentFocus;
     elseif CURR_FOCUS_TARGET then
@@ -155,13 +155,13 @@ end
 
 -- Attempts to target the focus target.
 -- returns: Whether or not it succeeded
-function MMC.TryTargetFocus()
-    local name = MMC.GetFocusName();
+function Roids.TryTargetFocus()
+    local name = Roids.GetFocusName();
     if not name then
         return false;
     end
     
-    MMC.Hooks.TARGET_SlashCmd(name);
+    Roids.Hooks.TARGET_SlashCmd(name);
     return true;
 end
 
@@ -171,8 +171,8 @@ end
 -- fixEmptyTargetFunc: A function setting the player's target if the player has none. Required to return true if we need to re-target later or false if not
 -- targetBeforeAction: A boolean value that determines whether or not we need to target the target given in the conditionals before performing the given action
 -- action: A function that is being called when everything checks out
-function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAction, action)
-    local msg, conditionals = MMC.parseMsg(msg);
+function Roids.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAction, action)
+    local msg, conditionals = Roids.parseMsg(msg);
     
     -- trim leading and trailing white spaces
     msg = gsub(msg,"^%s*(.-)%s*$","%1");
@@ -183,7 +183,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
             return false;
         else
             if string.sub(msg, 1, 1) == "{" and string.sub(msg, -1) == "}" then
-                return MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
+                return Roids.ExecuteMacroByName(string.sub(msg, 2, -2));
             end
             
             if hook then
@@ -195,7 +195,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
     
     if conditionals.target == "mouseover" then
         if not UnitExists("mouseover") then
-            conditionals.target = MMC.mouseoverUnit;
+            conditionals.target = Roids.mouseoverUnit;
         end
         if not conditionals.target or (conditionals.target ~= "focus" and not UnitExists(conditionals.target)) then
             return false;
@@ -207,14 +207,14 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
         needRetarget = fixEmptyTargetFunc(conditionals, msg, hook)
     end
     
-    MMC.SetHelp(conditionals);
+    Roids.SetHelp(conditionals);
     
     if conditionals.target == "focus" then
-        if UnitExists("target") and UnitName("target") == MMC.GetFocusName() then
+        if UnitExists("target") and UnitName("target") == Roids.GetFocusName() then
             conditionals.target = "target";
             needRetarget = false;
         else
-            if not MMC.TryTargetFocus() then
+            if not Roids.TryTargetFocus() then
                 return false;
             end
             conditionals.target = "target";
@@ -223,7 +223,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
     end
     
     for k, v in pairs(conditionals) do
-        if not MMC.Keywords[k] or not MMC.Keywords[k](conditionals) then
+        if not Roids.Keywords[k] or not Roids.Keywords[k](conditionals) then
             if needRetarget then
                 TargetLastTarget();
                 needRetarget = false;
@@ -247,7 +247,7 @@ function MMC.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeActio
     
     local result = true;
     if string.sub(msg, 1, 1) == "{" and string.sub(msg, -1) == "}" then
-        result = MMC.ExecuteMacroByName(string.sub(msg, 2, -2));
+        result = Roids.ExecuteMacroByName(string.sub(msg, 2, -2));
     else
         action(msg);
     end
@@ -261,10 +261,10 @@ end
 
 -- Attempts to cast a single spell from the given set of conditional spells
 -- msg: The player's macro text
-function MMC.DoCast(msg)
+function Roids.DoCast(msg)
     local handled = false;
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoWithConditionals(v, MMC.Hooks.CAST_SlashCmd, MMC.FixEmptyTarget, true, CastSpellByName) then
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        if Roids.DoWithConditionals(v, Roids.Hooks.CAST_SlashCmd, Roids.FixEmptyTarget, true, CastSpellByName) then
             handled = true; -- we parsed at least one command
             break;
         end
@@ -274,7 +274,7 @@ end
 
 -- Attempts to target a unit by its name using a set of conditionals
 -- msg: The raw message intercepted from a /target command
-function MMC.DoTarget(msg)
+function Roids.DoTarget(msg)
     local handled = false;
     
     local action = function(msg)
@@ -282,11 +282,11 @@ function MMC.DoTarget(msg)
             msg = UnitName(string.sub(msg, 2));
         end
         
-        MMC.Hooks.TARGET_SlashCmd(msg);
+        Roids.Hooks.TARGET_SlashCmd(msg);
     end
     
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoWithConditionals(v, MMC.Hooks.TARGET_SlashCmd, MMC.FixEmptyTargetSetTarget, false, action) then
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        if Roids.DoWithConditionals(v, Roids.Hooks.TARGET_SlashCmd, Roids.FixEmptyTargetSetTarget, false, action) then
             handled = true;
             break;
         end
@@ -296,10 +296,10 @@ end
 
 -- Attempts to attack a unit by a set of conditionals
 -- msg: The raw message intercepted from a /petattack command
-function MMC.DoPetAttack(msg)
+function Roids.DoPetAttack(msg)
     local handled = false;
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoWithConditionals(v, nil, MMC.FixEmptyTarget, true, PetAttack) then
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        if Roids.DoWithConditionals(v, nil, Roids.FixEmptyTarget, true, PetAttack) then
             handled = true;
             break;
         end
@@ -310,23 +310,23 @@ end
 -- Searches for the given itemName in the player's iventory
 -- itemName: The name of the item to look for
 -- returns: The bag number and the slot number if the item has been found. nil otherwhise
-function MMC.FindItem(itemName)
-    MMCTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+function Roids.FindItem(itemName)
+    RoidsTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
     for i = 0, 4 do
         for j = 1, GetContainerNumSlots(i) do
-            MMCTooltip:ClearLines();
-            MMCTooltip:SetBagItem(i, j);
-            if MMCTooltipTextLeft1:GetText() == itemName then
+            RoidsTooltip:ClearLines();
+            RoidsTooltip:SetBagItem(i, j);
+            if RoidsTooltipTextLeft1:GetText() == itemName then
                 return i, j;
             end
         end
     end
     
     for i = 0, 19 do
-        MMCTooltip:ClearLines();
-        hasItem = MMCTooltip:SetInventoryItem("player", i);
+        RoidsTooltip:ClearLines();
+        hasItem = RoidsTooltip:SetInventoryItem("player", i);
         
-        if hasItem and MMCTooltipTextLeft1:GetText() == itemName then
+        if hasItem and RoidsTooltipTextLeft1:GetText() == itemName then
             return -i;
         end
     end
@@ -334,11 +334,11 @@ end
 
 -- Attempts to use or equip an item from the player's inventory by a  set of conditionals
 -- msg: The raw message intercepted from a /use or /equip command
-function MMC.DoUse(msg)
+function Roids.DoUse(msg)
     local handled = false;
     
     local action = function(msg)
-        local bag, slot = MMC.FindItem(msg);
+        local bag, slot = Roids.FindItem(msg);
         
         if bag and bag < 0 then
             return UseInventoryItem(-bag);
@@ -350,8 +350,8 @@ function MMC.DoUse(msg)
         UseContainerItem(bag, slot);
     end
     
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        if Roids.DoWithConditionals(v, action, Roids.FixEmptyTarget, true, action) then
             handled = true;
             break;
         end
@@ -359,11 +359,11 @@ function MMC.DoUse(msg)
     return handled;
 end
 
-function MMC.DoEquipOffhand(msg)
+function Roids.DoEquipOffhand(msg)
     local handled = false;
     
     local action = function(msg)
-        local bag, slot = MMC.FindItem(msg);
+        local bag, slot = Roids.FindItem(msg);
         if not bag or not slot then
             return;
         end
@@ -371,8 +371,8 @@ function MMC.DoEquipOffhand(msg)
         PickupInventoryItem(17);
     end
     
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
-        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        if Roids.DoWithConditionals(v, action, Roids.FixEmptyTarget, true, action) then
             handled = true;
             break;
         end
@@ -380,19 +380,19 @@ function MMC.DoEquipOffhand(msg)
     return handled;
 end
 
-function MMC.DoUnshift(msg)
+function Roids.DoUnshift(msg)
     local handled;
     
     local action = function(msg)
-        local currentShapeshiftIndex = MMC.GetCurrentShapeshiftIndex();
+        local currentShapeshiftIndex = Roids.GetCurrentShapeshiftIndex();
         if currentShapeshiftIndex ~= 0 then
             CastShapeshiftForm(currentShapeshiftIndex);
         end
     end
     
-    for k, v in pairs(MMC.splitString(msg, ";%s*")) do
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
         handled = false;
-        if MMC.DoWithConditionals(v, action, MMC.FixEmptyTarget, true, action) then
+        if Roids.DoWithConditionals(v, action, Roids.FixEmptyTarget, true, action) then
             handled = true;
             break;
         end
@@ -406,7 +406,7 @@ function MMC.DoUnshift(msg)
 end
 
 -- Holds information about the currently cast spell
-MMC.CurrentSpell = {
+Roids.CurrentSpell = {
     -- "channeled" or "cast"
     type = "",
     -- the name of the spell
@@ -420,28 +420,28 @@ MMC.CurrentSpell = {
 };
 
 -- Dummy Frame to hook ADDON_LOADED event in order to preserve compatiblity with other AddOns like SuperMacro
-MMC.Frame = CreateFrame("FRAME");
-MMC.Frame:RegisterEvent("ADDON_LOADED");
-MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_START");
-MMC.Frame:RegisterEvent("SPELLCAST_CHANNEL_STOP");
-MMC.Frame:RegisterEvent("SPELLCAST_INTERRUPTED");
-MMC.Frame:RegisterEvent("SPELLCAST_FAILED");
-MMC.Frame:RegisterEvent("PLAYER_ENTER_COMBAT");
-MMC.Frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
-MMC.Frame:RegisterEvent("START_AUTOREPEAT_SPELL");
-MMC.Frame:RegisterEvent("STOP_AUTOREPEAT_SPELL");
+Roids.Frame = CreateFrame("FRAME");
+Roids.Frame:RegisterEvent("ADDON_LOADED");
+Roids.Frame:RegisterEvent("SPELLCAST_CHANNEL_START");
+Roids.Frame:RegisterEvent("SPELLCAST_CHANNEL_STOP");
+Roids.Frame:RegisterEvent("SPELLCAST_INTERRUPTED");
+Roids.Frame:RegisterEvent("SPELLCAST_FAILED");
+Roids.Frame:RegisterEvent("PLAYER_ENTER_COMBAT");
+Roids.Frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
+Roids.Frame:RegisterEvent("START_AUTOREPEAT_SPELL");
+Roids.Frame:RegisterEvent("STOP_AUTOREPEAT_SPELL");
 
-MMC.Frame:SetScript("OnEvent", function()
-    MMC.Frame[event]();
+Roids.Frame:SetScript("OnEvent", function()
+    Roids.Frame[event]();
 end);
 
-function MMC.Frame.ADDON_LOADED()
+function Roids.Frame.ADDON_LOADED()
     if event ~= "ADDON_LOADED" then
         return;
     end
     
-    if arg1 == "CastModifier" then
-        MMC.InitializeExtensions();
+    if arg1 == "Roids" then
+        Roids.InitializeExtensions();
         return;
     end
     
@@ -450,14 +450,14 @@ function MMC.Frame.ADDON_LOADED()
     end
     
     local hooks = {
-        cast = { action = MMC.DoCast, },
-        target = { action = MMC.DoTarget, },
-        use = { action = MMC.DoUse, },
+        cast = { action = Roids.DoCast, },
+        target = { action = Roids.DoTarget, },
+        use = { action = Roids.DoUse, },
     };
     
     -- Hook SuperMacro's RunLine to stay compatible
-    MMC.Hooks.RunLine = RunLine;
-    MMC.RunLine = function(...)
+    Roids.Hooks.RunLine = RunLine;
+    Roids.RunLine = function(...)
         for i = 1, arg.n do
             local intercepted = false;
             local text = arg[i];
@@ -472,57 +472,57 @@ function MMC.Frame.ADDON_LOADED()
             end
             
             if not intercepted then
-                MMC.Hooks.RunLine(text);
+                Roids.Hooks.RunLine(text);
             end
         end
     end
-    RunLine = MMC.RunLine;
+    RunLine = Roids.RunLine;
 end
 
-function MMC.Frame.SPELLCAST_CHANNEL_START()
-    MMC.CurrentSpell.type = "channeled";
+function Roids.Frame.SPELLCAST_CHANNEL_START()
+    Roids.CurrentSpell.type = "channeled";
 end
 
-function MMC.Frame.SPELLCAST_CHANNEL_STOP()
-    MMC.CurrentSpell.type = "";
-    MMC.CurrentSpell.spellName = "";
+function Roids.Frame.SPELLCAST_CHANNEL_STOP()
+    Roids.CurrentSpell.type = "";
+    Roids.CurrentSpell.spellName = "";
 end
 
-MMC.Frame.SPELLCAST_INTERRUPTED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
-MMC.Frame.SPELLCAST_FAILED = MMC.Frame.SPELLCAST_CHANNEL_STOP;
+Roids.Frame.SPELLCAST_INTERRUPTED = Roids.Frame.SPELLCAST_CHANNEL_STOP;
+Roids.Frame.SPELLCAST_FAILED = Roids.Frame.SPELLCAST_CHANNEL_STOP;
 
-function MMC.Frame.PLAYER_ENTER_COMBAT()
-    MMC.CurrentSpell.autoAttack = true;
+function Roids.Frame.PLAYER_ENTER_COMBAT()
+    Roids.CurrentSpell.autoAttack = true;
 end
 
-function MMC.Frame.PLAYER_LEAVE_COMBAT()
-    MMC.CurrentSpell.autoAttack = false;
+function Roids.Frame.PLAYER_LEAVE_COMBAT()
+    Roids.CurrentSpell.autoAttack = false;
 end
 
-function MMC.Frame.START_AUTOREPEAT_SPELL(...)
+function Roids.Frame.START_AUTOREPEAT_SPELL(...)
     local _, className = UnitClass("player");
     if className == "HUNTER" then
-        MMC.CurrentSpell.autoShot = true;
+        Roids.CurrentSpell.autoShot = true;
     else
-        MMC.CurrentSpell.wand = true;
+        Roids.CurrentSpell.wand = true;
     end
 end
 
-function MMC.Frame.STOP_AUTOREPEAT_SPELL(...)
+function Roids.Frame.STOP_AUTOREPEAT_SPELL(...)
     local _, className = UnitClass("player");
     if className == "HUNTER" then
-        MMC.CurrentSpell.autoShot = false;
+        Roids.CurrentSpell.autoShot = false;
     else
-        MMC.CurrentSpell.wand = false;
+        Roids.CurrentSpell.wand = false;
     end
 end
 
 
-MMC.Hooks.SendChatMessage = SendChatMessage;
+Roids.Hooks.SendChatMessage = SendChatMessage;
 
 function SendChatMessage(msg, ...)
     if msg and string.find(msg, "^#showtooltip ") then
         return;
     end
-    MMC.Hooks.SendChatMessage(msg, unpack(arg));
+    Roids.Hooks.SendChatMessage(msg, unpack(arg));
 end

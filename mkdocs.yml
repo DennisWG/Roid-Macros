@@ -6,4 +6,3 @@ pages:
         - commands/petattack.md
         - commands/reload.md
     - About: about.md
-theme: readthedocs

@@ -3,10 +3,10 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("CT_UnitFrames");
+local Extension = Roids.RegisterExtension("CT_UnitFrames");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension.SetHook(widget)
@@ -15,12 +15,12 @@ function Extension.SetHook(widget)
     
     widget:SetScript("OnEnter", function()
         hookedOnEnter();
-        MMC.mouseoverUnit = "targettarget";
+        Roids.mouseoverUnit = "targettarget";
     end);
     
     widget:SetScript("OnLeave", function()
         hookedOnLeave();
-        MMC.mouseoverUnit = nil;
+        Roids.mouseoverUnit = nil;
     end);
 end
 
@@ -28,7 +28,7 @@ function Extension.OnLoad()
     if arg1 ~= "CT_UnitFrames" or not CT_AssistFrame then
         return;
     end
-    MMC.Print("CT_UnitFrames module loaded.");
+    Roids.Print("CT_UnitFrames module loaded.");
     
     Extension.SetHook(CT_AssistFrame);
     Extension.SetHook(CT_AssistFrameHealthBar);
@@ -36,4 +36,4 @@ function Extension.OnLoad()
     Extension.SetHook(CT_AssistFrame_Drag);
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

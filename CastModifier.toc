@@ -1,14 +1,14 @@
 ## Interface: 11200
 ## Author: DWG
-## Title: CastModifier
-## Notes: Adds TBC like modifiers to your cast macros
-## Title-deDE: CastModifier
-## Notes-deDE: Fügt TBC ähnliche Modifizierer zu den Zaubermacros hinzu
+## Title: Roid Macros
+## Notes: Vanilla macros on steroids!
+## Title-deDE: Roid Macros
+## Notes-deDE: Vanilla Macros auf Steroide!
 ## OptionalDeps: ClassicFocus, FocusFrame
-MMC.xml
+Widgets.xml
 Localization.lua
 Utility.lua
-MMC.lua
+Core.lua
 Console.lua
 Conditionals.lua
 ExtensionsManager.lua

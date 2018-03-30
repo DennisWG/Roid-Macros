@@ -3,10 +3,10 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("CT_RaidAssist");
+local Extension = Roids.RegisterExtension("CT_RaidAssist");
 Extension.RegisterEvent("ADDON_LOADED", "OnLoad");
 
 function Extension.OnEnter()
@@ -41,11 +41,11 @@ function Extension.OnEnter()
 			end
 		end
 	end
-	MMC.mouseoverUnit = "raid"..id;
+	Roids.mouseoverUnit = "raid"..id;
 end
 
 function Extension.OnLeave()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnLoad()
@@ -59,4 +59,4 @@ function Extension.OnLoad()
 
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;

@@ -3,18 +3,18 @@
 	License: MIT License
 ]]
 local _G = _G or getfenv(0)
-local MMC = _G.CastModifier or {}
-MMC.mouseoverUnit = MMC.mouseoverUnit or nil;
+local Roids = _G.Roids or {}
+Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
-local Extension = MMC.RegisterExtension("BlizzardPartyFrame");
+local Extension = Roids.RegisterExtension("BlizzardPartyFrame");
 
 function Extension.SetUnit(_, unit)
-    MMC.mouseoverUnit = unit;
+    Roids.mouseoverUnit = unit;
 end
 
 
 function Extension.OnClose()
-    MMC.mouseoverUnit = nil;
+    Roids.mouseoverUnit = nil;
 end
 
 function Extension.OnLoad()
@@ -23,4 +23,4 @@ function Extension.OnLoad()
     Extension.HookMethod(_G["GameTooltip"], "FadeOut", "OnClose");
 end
 
-_G["CastModifier"] = MMC;
+_G["Roids"] = Roids;
