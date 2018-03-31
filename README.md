@@ -10,7 +10,7 @@ Demo videos:
 
 ### Installation
 
-- Make sure ClassicMouseover not installed or disable it in the character select screen!
+- Make sure ClassicMouseover is not installed or disable it in the character select screen!
 - [Download](https://github.com/DennisWG/Roid-Macros/archive/master.zip) the latest version of Roid Macros directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
 - Rename `Roid-Macros-master` to `Roid-Macros`
 - Run World of Warcraft and make sure to enable this addon in the character select screen
