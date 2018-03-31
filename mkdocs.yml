@@ -1,8 +1,39 @@
-site_name: Cast Conditionals
+site_name: Roid-Macros
 pages:
     - Home: index.md
     - Commands:
         - commands.md
+        - commands/equip.md
         - commands/petattack.md
+        - commands/target.md
+        - commands/unshift.md
+        - commands/use.md
         - commands/reload.md
+    - Conditions:
+        - conditions.md
+        - conditions/attacks.md
+        - conditions/buffs.md
+        - conditions/channeled.md
+        - conditions/combat.md
+        - conditions/cooldown.md
+        - conditions/dead.md
+        - conditions/equipped.md
+        - conditions/group.md
+        - conditions/help_harm.md
+        - conditions/hp.md
+        - conditions/isnpc.md
+        - conditions/isplayer.md
+        - conditions/mod.md
+        - conditions/party.md
+        - conditions/power.md
+        - conditions/raid.md
+        - conditions/stance.md
+        - conditions/stealth.md
+        - conditions/target.md
+        - conditions/type.md
+    - Invoking Macros: macro_invoking.md
+    - Miscellaneous:
+        - showtooltip.md
+        - toggable_abilities_and_channelled_spells.md
+        - compatibility.md
     - About: about.md

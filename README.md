@@ -1,6 +1,6 @@
 # Roid Macros
 
-This addon allows you to use a small subset of the macro conditionals, first introduced in the TBC expansion, in your 1.12.1 Vanilla client.
+This addon allows you to use a small subset of the macro conditions, first introduced in the TBC expansion, in your 1.12.1 Vanilla client.
 
 Demo videos:
 
@@ -12,19 +12,12 @@ Demo videos:
 
 - Make sure ClassicMouseover not installed or disable it in the character select screen!
 - [Download](https://github.com/DennisWG/Roid-Macros/archive/master.zip) the latest version of Roid Macros directly from the repository and extract it into your `WoW/Interface/AddOns/` folder.
-- Rename `Roid Macros-master` to `Roid Macros`
+- Rename `Roid-Macros-master` to `Roid-Macros`
 - Run World of Warcraft and make sure to enable this addon in the character select screen
 
 ### Explanations and more information
 
-- [Cast Conditionals](https://github.com/DennisWG/Roid-Macros/wiki/cast-Conditionals)
-- [Target Conditionals](https://github.com/DennisWG/Roid-Macros/wiki/target-Conditionals)
-- [/petattack](https://github.com/DennisWG/Roid-Macros/wiki/petattack)
-- [UnitFrames Compatiblity](https://github.com/DennisWG/Roid-Macros/wiki/UnitFrames-Compatibility)
-- [Toggleable abilities and channelled spells](https://github.com/DennisWG/Roid-Macros/wiki/Toggleable-abilities-and-channelled-spells)
-- [Known Bugs and work arounds](https://github.com/DennisWG/Roid-Macros/wiki/Known-Bugs-and-work-arounds)
-- [Supported AddOns](https://github.com/DennisWG/Roid-Macros/wiki/Supported-AddOns)
-
+For an in-depth explanation please visit [the documentation](https://denniswg.github.io/Roid-Macros/).
 
 License
 ----

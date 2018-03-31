@@ -35,7 +35,7 @@ if Roids.Locale == "enUS" or Roids.Locale == "enGB" then
         ["Giant"] = "Giant",
         ["Humanoid"] = "Humanoid",
         ["Mechanical"] = "Mechanical",
-        ["Not specified"] = "Not specified",
+        ["Not specified"] = "Not_Specified",
         ["Totem"] = "Totem",
         ["Undead"] = "Undead",
     };
@@ -67,7 +67,7 @@ elseif Roids.Locale == "deDE" then
         ["Riese"] = "Giant",
         ["Humanoid"] = "Humanoid",
         ["Mechanisch"] = "Mechanical",
-        ["Nicht spezifiziert"] = "Not specified",
+        ["Nicht spezifiziert"] = "Not_Specified",
         ["Totem"] = "Totem",
         ["Untoter"] = "Undead",
     };
@@ -99,7 +99,7 @@ elseif Roids.Locale == "frFR" then
         ["Géant"] = "Giant",
         ["Humanoïde"] = "Humanoid",
         ["Machine"] = "Mechanical",
-        ["Non spécifié"] = "Not specified",
+        ["Non spécifié"] = "Not_Specified",
         ["Totem"] = "Totem",
         ["Mort-vivant"] = "Undead",
     };
@@ -131,7 +131,7 @@ elseif Roids.Locale == "koKR" then
         ["거인"] = "Giant",
         ["인간형"] = "Humanoid",
         ["기계"] = "Mechanical",
-        ["기타"] = "Not specified",
+        ["기타"] = "Not_Specified",
         ["토템"] = "Totem",
         ["언데드"] = "Undead",
     };
@@ -163,7 +163,7 @@ elseif Roids.Locale == "zhCN" then
         ["巨人"] = "Giant",
         ["人型生物"] = "Humanoid",
         ["机械"] = "Mechanical",
-        ["未指定"] = "Not specified",
+        ["未指定"] = "Not_Specified",
         ["图腾"] = "Totem",
         ["亡灵"] = "Undead",
     };
@@ -195,7 +195,7 @@ elseif Roids.Locale == "zhTW" then
         ["巨人"] = "Giant",
         ["人型生物"] = "Humanoid",
         ["機械"] = "Mechanical",
-        ["不明"] = "Not specified",
+        ["不明"] = "Not_Specified",
         ["圖騰"] = "Totem",
         ["不死族"] = "Undead",
     };
@@ -227,7 +227,7 @@ elseif Roids.Locale == "ruRU" then
         ["Великан"] = "Giant",
         ["Гуманоид"] = "Humanoid",
         ["Механизм"] = "Mechanical",
-        ["Не указано"] = "Not specified",
+        ["Не указано"] = "Not_Specified",
         ["Тотем"] = "Totem",
         ["Нежить"] = "Undead",
     };
@@ -259,7 +259,7 @@ elseif Roids.Locale == "esES" then
         ["Gigante"] = "Giant",
         ["Humanoide"] = "Humanoid",
         ["Mecánico"] = "Mechanical",
-        ["No especificado"] = "Not specified",
+        ["No especificado"] = "Not_Specified",
         ["Tótem"] = "Totem",
         ["No-muerto"] = "Undead",
     };

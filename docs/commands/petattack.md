@@ -7,8 +7,7 @@
 ```lua
 /petattack [@focus]
 ```
-
-You pet will attack your focus target (if you have the Addon ClassicFocus or FocusFrame installed).
+You pet will attack your focus target (Refer to the [Compatibility Notes](/../compatibility.md)).
 
 ---
 
