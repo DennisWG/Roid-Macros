@@ -30,6 +30,12 @@
     </url>
         
     <url>
+     <loc>/commands/target/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/commands/unshift/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
@@ -58,13 +64,31 @@
     </url>
         
     <url>
+     <loc>/conditions/attacks/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/conditions/buffs/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
+     <loc>/conditions/channeled/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/conditions/combat/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/conditions/cooldown/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -94,6 +118,24 @@
     </url>
         
     <url>
+     <loc>/conditions/hp/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/conditions/isnpc/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/conditions/isplayer/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/conditions/mod/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
@@ -101,6 +143,12 @@
         
     <url>
      <loc>/conditions/party/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/conditions/power/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -125,6 +173,42 @@
         
     <url>
      <loc>/conditions/target/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/conditions/type/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>/macro_invoking/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>/showtooltip/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/toggable_abilities_and_channelled_spells/</loc>
+     <lastmod>2018-03-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/compatibility/</loc>
      <lastmod>2018-03-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
