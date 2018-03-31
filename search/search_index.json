@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Roid Macros\n\n\nVanilla macros on steroids!\n\n\n\n\nOverview\n\n\nRoid Macros is aimed to provide TBC like macros (including conditionals!)\nwhile abusing Vanilla WoW's Lua API to go even further including things\nlike executing macros from within macros! \n\n\nFurther Information\n\n\n\n\nChat Commands\n\n\nConditions\n\n\n#showtooltip\n\n\nMacro invocation\n\n\nToggable abilities and channelled spells", 
+            "text": "Roid Macros\n\n\nVanilla macros on steroids!\n\n\n\n\nOverview\n\n\nRoid Macros is aimed to provide TBC like macros (including conditions!)\nwhile abusing Vanilla WoW's Lua API to go even further including things\nlike executing macros from within macros! \n\n\nFurther Information\n\n\n\n\nChat Commands\n\n\nConditions\n\n\n#showtooltip\n\n\nMacro invocation\n\n\nToggable abilities and channelled spells", 
             "title": "Home"
         }, 
         {
@@ -12,7 +12,7 @@
         }, 
         {
             "location": "/#overview", 
-            "text": "Roid Macros is aimed to provide TBC like macros (including conditionals!)\nwhile abusing Vanilla WoW's Lua API to go even further including things\nlike executing macros from within macros!", 
+            "text": "Roid Macros is aimed to provide TBC like macros (including conditions!)\nwhile abusing Vanilla WoW's Lua API to go even further including things\nlike executing macros from within macros!", 
             "title": "Overview"
         }, 
         {
@@ -62,7 +62,7 @@
         }, 
         {
             "location": "/commands/target/", 
-            "text": "A few words about /target macros\n\n\nIn theory, you can use every condition, however, a few of them behave a little\ndifferent in '/target' macros. Here's a list of them:\n\n\nDefinitions\n\n\nA few definitions before we start:\n\n\nfinal target\n\n\nThe unit that will be selected after evaluating every Conditional. E.g.\n\n/target Ragnaros\n - Ragnaros will be the \nfinal target\n.\n\n\nchecked target\n\n\nThe unit against which all Conditionals will be checked. E.g.\n\n/target [harm @mouseover] Ragnaros\n - Your current mouseover target will be\nthe \nchecked target\n while \nRagnaros\n is still the \nfinal target\n.\n\n\n\n\nAs stated before, instead of checking the final target, all conditionals will\nbe validated against the checked target. This means that your checked target\nmay or may not be the same as your final target. This allows you to create more\nspecialized macros and, on top of that, is more intuitive to use.\n\n\nExamples\n\n\n/target [harm @mouseover] Ragnaros; Dotalock\n\n\n\n\nThis will target Ragnaros, if your mouseover target is hostile to yourself. If\nit isn't the player Dotalock will be targeted instead.\n\n\nAdditionally, assume you want to target your mouseover target depending on\nwhether or not some pre-conditions are met. In Vanilla WoW, there is no way to\ndo something like that. With this AddOn, however, we can do things like this:\n\n\n/target [harm @target] @targettarget\n\n\n\n\nWhen you use this macro, you will target your target's target, if your current\ntarget is considered hostile towards you.\n\n\nKnown issues\n\n\nAssume you're assaulting a capital like Orgrimmar or Stormwind and you have a\nmacro like the following:\n\n\n/target [harm @mouseover] @mouseover\n\n\n\n\nNow you're trying to use this macro to select one of the city's guards that is\na fair bit away from you. Because of the way the Vanilla client implements\ntargeting by names, you're not guaranteed to target your mouseover target. This\nwill always happen when another unit with the same name is closer to you than\nthe desired unit. There is no way to work around this issue, as the actual\ntargeting procedure hasn't been implemented in Lua and is therefore out of\nreach for AddOn developers.", 
+            "text": "A few words about /target macros\n\n\nIn theory, you can use every condition, however, a few of them behave a little\ndifferent in '/target' macros. Here's a list of them:\n\n\nDefinitions\n\n\nA few definitions before we start:\n\n\nfinal target\n\n\nThe unit that will be selected after evaluating every condition. E.g.\n\n/target Ragnaros\n - Ragnaros will be the \nfinal target\n.\n\n\nchecked target\n\n\nThe unit against which all conditions will be checked. E.g.\n\n/target [harm @mouseover] Ragnaros\n - Your current mouseover target will be\nthe \nchecked target\n while \nRagnaros\n is still the \nfinal target\n.\n\n\n\n\nAs stated before, instead of checking the final target, all conditions will\nbe validated against the checked target. This means that your checked target\nmay or may not be the same as your final target. This allows you to create more\nspecialized macros and, on top of that, is more intuitive to use.\n\n\nExamples\n\n\n/target [harm @mouseover] Ragnaros; Dotalock\n\n\n\n\nThis will target Ragnaros, if your mouseover target is hostile to yourself. If\nit isn't the player Dotalock will be targeted instead.\n\n\nAdditionally, assume you want to target your mouseover target depending on\nwhether or not some pre-conditions are met. In Vanilla WoW, there is no way to\ndo something like that. With this AddOn, however, we can do things like this:\n\n\n/target [harm @target] @targettarget\n\n\n\n\nWhen you use this macro, you will target your target's target, if your current\ntarget is considered hostile towards you.\n\n\nKnown issues\n\n\nAssume you're assaulting a capital like Orgrimmar or Stormwind and you have a\nmacro like the following:\n\n\n/target [harm @mouseover] @mouseover\n\n\n\n\nNow you're trying to use this macro to select one of the city's guards that is\na fair bit away from you. Because of the way the Vanilla client implements\ntargeting by names, you're not guaranteed to target your mouseover target. This\nwill always happen when another unit with the same name is closer to you than\nthe desired unit. There is no way to work around this issue, as the actual\ntargeting procedure hasn't been implemented in Lua and is therefore out of\nreach for AddOn developers.", 
             "title": "A few words about /target macros"
         }, 
         {
@@ -77,12 +77,12 @@
         }, 
         {
             "location": "/commands/target/#final-target", 
-            "text": "The unit that will be selected after evaluating every Conditional. E.g. /target Ragnaros  - Ragnaros will be the  final target .", 
+            "text": "The unit that will be selected after evaluating every condition. E.g. /target Ragnaros  - Ragnaros will be the  final target .", 
             "title": "final target"
         }, 
         {
             "location": "/commands/target/#checked-target", 
-            "text": "The unit against which all Conditionals will be checked. E.g. /target [harm @mouseover] Ragnaros  - Your current mouseover target will be\nthe  checked target  while  Ragnaros  is still the  final target .   As stated before, instead of checking the final target, all conditionals will\nbe validated against the checked target. This means that your checked target\nmay or may not be the same as your final target. This allows you to create more\nspecialized macros and, on top of that, is more intuitive to use.", 
+            "text": "The unit against which all conditions will be checked. E.g. /target [harm @mouseover] Ragnaros  - Your current mouseover target will be\nthe  checked target  while  Ragnaros  is still the  final target .   As stated before, instead of checking the final target, all conditions will\nbe validated against the checked target. This means that your checked target\nmay or may not be the same as your final target. This allows you to create more\nspecialized macros and, on top of that, is more intuitive to use.", 
             "title": "checked target"
         }, 
         {
@@ -137,7 +137,7 @@
         }, 
         {
             "location": "/conditions/", 
-            "text": "Conditions\n\n\nConditions allow you to fine-tune your macro's behaviour without having to\nknow any Lua at all!\n\n\n\n\nNotation\n\n\n/command [condition] parameters\n\n\n\n\nConditions are put after the chat command but before the chat command's\nparameters into square brackets.\n\n\n\n\n/command [condition1 condition2] parameters\n\n\n\n\nConditions can be chained together by seperating them using an empty space. All\nconditions must be met before the command is executed.\n\n\n\n\n/command [condition:parameter] parameters\n\n\n\n\nSome conditions may take parameters. These follow after a colon \n:\n or, in\nsome cases, after a greater than \n or less than \n sign.\n\n\n\n\n/command [condition:1/2/3] parameters\n\n\n\n\nSome conditions may take multiple parameters. These have to be seperated by\nslashes \n/\n.\n\n\nBranches\n\n\nWhen using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:\n\n\n/cast [dead] Spell1\n/cast [nodead] Spell2\n\n\n\n\nRoid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon \n;\n at\nthe end. The same example but now with a branch instead:\n\n\n/cast [dead] Spell1; Spell2\n\n\n\n\nOf course you could also put in more conditons in the different branches!\n\n\n/cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock\n\n\n\n\nNote, that you may use any spell you want within each Conditional. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.\n\n\n\n\nSupported Chat Commands\n\n\nThis is a list of all Chat Commands that support conditions:\n\n\n\n\n/cast\n\n\n/target\n\n\n/equip\n\n\n/equipoh\n\n\n/petattack\n\n\n/unshift\n\n\n/use\n\n\n\n\n\n\nAvailable Conditoins:\n\n\n\n\nattacks / noattacks\n\n\n(no)buff / (no)mybuff / (no)debuff / (no)mydebuff\n\n\nchanneled / nochanneled\n\n\ncombat / nocombat\n\n\ncooldown / nocooldown\n\n\ndead / nodead\n\n\nequipped\n\n\ngroup\n\n\nhelp / harm\n\n\n(my)hp\n\n\nisnpc\n\n\nisplayer\n\n\nmod\n\n\nparty\n\n\n(my)power / (my)rawpower\n\n\nraid\n\n\nstance\n\n\nstealth / nostealth\n\n\ntype\n\n\nUnitID", 
+            "text": "Conditions\n\n\nConditions allow you to fine-tune your macro's behaviour without having to\nknow any Lua at all!\n\n\n\n\nNotation\n\n\n/command [condition] parameters\n\n\n\n\nConditions are put after the chat command but before the chat command's\nparameters into square brackets.\n\n\n\n\n/command [condition1 condition2] parameters\n\n\n\n\nConditions can be chained together by seperating them using an empty space. All\nconditions must be met before the command is executed.\n\n\n\n\n/command [condition:parameter] parameters\n\n\n\n\nSome conditions may take parameters. These follow after a colon \n:\n or, in\nsome cases, after a greater than \n or less than \n sign.\n\n\n\n\n/command [condition:1/2/3] parameters\n\n\n\n\nSome conditions may take multiple parameters. These have to be seperated by\nslashes \n/\n.\n\n\nBranches\n\n\nWhen using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:\n\n\n/cast [dead] Spell1\n/cast [nodead] Spell2\n\n\n\n\nRoid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon \n;\n at\nthe end. The same example but now with a branch instead:\n\n\n/cast [dead] Spell1; Spell2\n\n\n\n\nOf course you could also put in more conditons in the different branches!\n\n\n/cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock\n\n\n\n\nNote, that you may use any spell you want within each condition. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.\n\n\n\n\nSupported Chat Commands\n\n\nThis is a list of all Chat Commands that support conditions:\n\n\n\n\n/cast\n\n\n/target\n\n\n/equip\n\n\n/equipoh\n\n\n/petattack\n\n\n/unshift\n\n\n/use\n\n\n\n\n\n\nAvailable Conditoins:\n\n\n\n\nattacks / noattacks\n\n\n(no)buff / (no)mybuff / (no)debuff / (no)mydebuff\n\n\nchanneled / nochanneled\n\n\ncombat / nocombat\n\n\ncooldown / nocooldown\n\n\ndead / nodead\n\n\nequipped\n\n\ngroup\n\n\nhelp / harm\n\n\n(my)hp\n\n\nisnpc\n\n\nisplayer\n\n\nmod\n\n\nparty\n\n\n(my)power / (my)rawpower\n\n\nraid\n\n\nstance\n\n\nstealth / nostealth\n\n\ntype\n\n\nUnitID", 
             "title": "Conditions"
         }, 
         {
@@ -152,7 +152,7 @@
         }, 
         {
             "location": "/conditions/#branches", 
-            "text": "When using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:  /cast [dead] Spell1\n/cast [nodead] Spell2  Roid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon  ;  at\nthe end. The same example but now with a branch instead:  /cast [dead] Spell1; Spell2  Of course you could also put in more conditons in the different branches!  /cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock  Note, that you may use any spell you want within each Conditional. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.", 
+            "text": "When using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:  /cast [dead] Spell1\n/cast [nodead] Spell2  Roid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon  ;  at\nthe end. The same example but now with a branch instead:  /cast [dead] Spell1; Spell2  Of course you could also put in more conditons in the different branches!  /cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock  Note, that you may use any spell you want within each condition. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.", 
             "title": "Branches"
         }, 
         {
@@ -167,12 +167,12 @@
         }, 
         {
             "location": "/conditions/attacks/", 
-            "text": "attacks / noattacks\n\n\nThis Conditional will only fire when your target's target is [not] the\nspecified target.\n\n\nParameters\n\n\nThe UnitID of the target that must [not] be attacking you. Refer to\n\ntarget condition\n\n\nExamples\n\n\n/cast [attacks:player] {Yes}; {No}\n\n\n\n\nThis will execute the Macro with the name \nYes\n, if your target is currently\nattacking you, and the Macro named \nNo\n when it is not.", 
+            "text": "attacks / noattacks\n\n\nThis condition will only fire when your target's target is [not] the\nspecified target.\n\n\nParameters\n\n\nThe UnitID of the target that must [not] be attacking you. Refer to\n\ntarget condition\n\n\nExamples\n\n\n/cast [attacks:player] {Yes}; {No}\n\n\n\n\nThis will execute the Macro with the name \nYes\n, if your target is currently\nattacking you, and the Macro named \nNo\n when it is not.", 
             "title": "attacks / noattacks"
         }, 
         {
             "location": "/conditions/attacks/#attacks-noattacks", 
-            "text": "This Conditional will only fire when your target's target is [not] the\nspecified target.", 
+            "text": "This condition will only fire when your target's target is [not] the\nspecified target.", 
             "title": "attacks / noattacks"
         }, 
         {
@@ -207,12 +207,12 @@
         }, 
         {
             "location": "/conditions/channeled/", 
-            "text": "channeled / nochanneled\n\n\nThis Conditional will only fire when you currently are [not] casting any\nchanneled spells.\n\n\nExamples\n\n\n/cast [nochanneled] Shadow Bolt\n\n\n\n\nYou will cast Shadow Bolt whenever you're not casting any channeled spells.", 
+            "text": "channeled / nochanneled\n\n\nThis condition will only fire when you currently are [not] casting any\nchanneled spells.\n\n\nExamples\n\n\n/cast [nochanneled] Shadow Bolt\n\n\n\n\nYou will cast Shadow Bolt whenever you're not casting any channeled spells.", 
             "title": "channeled / nochanneled"
         }, 
         {
             "location": "/conditions/channeled/#channeled-nochanneled", 
-            "text": "This Conditional will only fire when you currently are [not] casting any\nchanneled spells.", 
+            "text": "This condition will only fire when you currently are [not] casting any\nchanneled spells.", 
             "title": "channeled / nochanneled"
         }, 
         {
@@ -237,12 +237,12 @@
         }, 
         {
             "location": "/conditions/cooldown/", 
-            "text": "cooldown / nocooldown\n\n\nThis Conditional will only fire when the given name of a spell or item is\noff/on cooldown.\n\n\nParameters\n\n\nThe name of the spell. White spaces must be replaced with an underscore \n_\n.\n\n\nExamples\n\n\n/cast [nocooldown:Spell_Lock] Spell Lock\n\n\n\n\nYour Felhunter will cast Spell Lock when it is off cooldown.", 
+            "text": "cooldown / nocooldown\n\n\nThis condition will only fire when the given name of a spell or item is\noff/on cooldown.\n\n\nParameters\n\n\nThe name of the spell. White spaces must be replaced with an underscore \n_\n.\n\n\nExamples\n\n\n/cast [nocooldown:Spell_Lock] Spell Lock\n\n\n\n\nYour Felhunter will cast Spell Lock when it is off cooldown.", 
             "title": "cooldown / nocooldown"
         }, 
         {
             "location": "/conditions/cooldown/#cooldown-nocooldown", 
-            "text": "This Conditional will only fire when the given name of a spell or item is\noff/on cooldown.", 
+            "text": "This condition will only fire when the given name of a spell or item is\noff/on cooldown.", 
             "title": "cooldown / nocooldown"
         }, 
         {
@@ -347,12 +347,12 @@
         }, 
         {
             "location": "/conditions/isnpc/", 
-            "text": "isnpc\n\n\nThis Conditional will only fire when the specified UnitID is a npc.\n\n\nParameters\n\n\nThe target's UnitID. Refer to \ntarget condition\n.\n\n\nExamples\n\n\n/cast [isnpc:target] {Yes}\n\n\n\n\nThis will execute the Macro with the name \nYes\n if your target is a npc.", 
+            "text": "isnpc\n\n\nThis condition will only fire when the specified UnitID is a npc.\n\n\nParameters\n\n\nThe target's UnitID. Refer to \ntarget condition\n.\n\n\nExamples\n\n\n/cast [isnpc:target] {Yes}\n\n\n\n\nThis will execute the Macro with the name \nYes\n if your target is a npc.", 
             "title": "isnpc"
         }, 
         {
             "location": "/conditions/isnpc/#isnpc", 
-            "text": "This Conditional will only fire when the specified UnitID is a npc.", 
+            "text": "This condition will only fire when the specified UnitID is a npc.", 
             "title": "isnpc"
         }, 
         {
@@ -367,12 +367,12 @@
         }, 
         {
             "location": "/conditions/isplayer/", 
-            "text": "isplayer\n\n\nThis Conditional will only fire when the specified UnitID is a player.\n\n\nParameters\n\n\nThe target's UnitID. Refer to \ntarget condition\n.\n\n\nExamples\n\n\n/cast [isplayer:target] {Yes}\n\n\n\n\nThis will execute the Macro with the name \nYes\n if your target is a player.", 
+            "text": "isplayer\n\n\nThis condition will only fire when the specified UnitID is a player.\n\n\nParameters\n\n\nThe target's UnitID. Refer to \ntarget condition\n.\n\n\nExamples\n\n\n/cast [isplayer:target] {Yes}\n\n\n\n\nThis will execute the Macro with the name \nYes\n if your target is a player.", 
             "title": "isplayer"
         }, 
         {
             "location": "/conditions/isplayer/#isplayer", 
-            "text": "This Conditional will only fire when the specified UnitID is a player.", 
+            "text": "This condition will only fire when the specified UnitID is a player.", 
             "title": "isplayer"
         }, 
         {
@@ -407,12 +407,12 @@
         }, 
         {
             "location": "/conditions/party/", 
-            "text": "party\n\n\nThe Conditional will only fire when your target is in your party.\n\n\nExamples\n\n\n/cast [party] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nparty. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "text": "party\n\n\nThe condition will only fire when your target is in your party.\n\n\nExamples\n\n\n/cast [party] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nparty. If your target isn't, it will cast Arcane Intellect on it instead.", 
             "title": "party"
         }, 
         {
             "location": "/conditions/party/#party", 
-            "text": "The Conditional will only fire when your target is in your party.", 
+            "text": "The condition will only fire when your target is in your party.", 
             "title": "party"
         }, 
         {
@@ -442,12 +442,12 @@
         }, 
         {
             "location": "/conditions/raid/", 
-            "text": "raid\n\n\nThe Conditional will only fire when your target is in your raid.\n\n\nExamples\n\n\n/cast [raid] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nraid. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "text": "raid\n\n\nThe condition will only fire when your target is in your raid.\n\n\nExamples\n\n\n/cast [raid] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nraid. If your target isn't, it will cast Arcane Intellect on it instead.", 
             "title": "raid"
         }, 
         {
             "location": "/conditions/raid/#raid", 
-            "text": "The Conditional will only fire when your target is in your raid.", 
+            "text": "The condition will only fire when your target is in your raid.", 
             "title": "raid"
         }, 
         {
@@ -582,7 +582,7 @@
         }, 
         {
             "location": "/compatibility/", 
-            "text": "Compatibility Notes\n\n\nUnitFrames\n\n\nCurrently, the following UnitFrames have been tested and are compatible with\nthis AddOn:\n\n\n\n\nagUnitFrames\n\n\nBlizzard's UnitFrames\n\n\nCT_RaidAssist\n\n\nCT_UnitFrames\n\n\nDiscordUnitFrames\n\n\nFocusFrame\n\n\nGrid\n\n\nLunaUnitFrames\n\n\nNotGrid\n\n\nPerfectRaid\n\n\npfUI\n\n\nsRaidFrames\n\n\nUnitFramesImproved_Vanilla\n\n\nXPerl\n\n\n\n\nNote\n: If your AddOn is not on this list, please give it a try anyway! I've\nimplemented this in a way where it very well might work in your UnitFrames\nAddOn as well! And if it doesn't please file an Issue and I'll try to add it asap.\n\n\nAction Bars\n\n\nCurrently, the following Action Bars have been tested and are compatible with\nthis Addon:\n\n\n\n\nBlizzard's Action Bars\n\n\nDiscord Action Bars\n\n\n\n\nNote\n: If your AddOn is not on this list, please give it a try anyway! I've\nimplemented this in a way where it very well might work in your Action Bars\nAddOn as well! And if it doesn't please file an Issue and I'll try to add it asap.\n\n\nSupported Addons\n\n\nClassicFocus / FocusFrame\n\n\nUsing one of these two Addons allows you to make use of the \n@focus\n target\ncondition!\n\n\nKnown Bugs and work arounds\n\n\nGray button fix\n\n\nIn order to fix the range and cooldown check (gray buttons), you have to write\nthis line at the top of each macro:\n\n\n/script if nil then CastSpellByName(\nSPELLNAME\n); end\n\n\n\n\nMake sure to replace SPELLNAME with the actual name of your spell.\n\n\n/script if nil then CastSpellByName(\nChain Heal\n); end\n/cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)\n\n\n\n\n\n\nNote:\n There is currently no way to make this work for different spells\ndepending on conditionals.\n\n\n/script if nil then CastSpellByName(\nChain Heal\n); end\n/cast [@target help] Chain Heal; Frost Shock\n\n\n\n\nThis will only activate the range and cooldown check for Chain Heal and not\ncheck Frost Shock at all! This appears to be a limitation with the API and I\ndon't see a way of fixing this. Please contact me if you do!", 
+            "text": "Compatibility Notes\n\n\nUnitFrames\n\n\nCurrently, the following UnitFrames have been tested and are compatible with\nthis AddOn:\n\n\n\n\nagUnitFrames\n\n\nBlizzard's UnitFrames\n\n\nCT_RaidAssist\n\n\nCT_UnitFrames\n\n\nDiscordUnitFrames\n\n\nFocusFrame\n\n\nGrid\n\n\nLunaUnitFrames\n\n\nNotGrid\n\n\nPerfectRaid\n\n\npfUI\n\n\nsRaidFrames\n\n\nUnitFramesImproved_Vanilla\n\n\nXPerl\n\n\n\n\nNote\n: If your AddOn is not on this list, please give it a try anyway! I've\nimplemented this in a way where it very well might work in your UnitFrames\nAddOn as well! And if it doesn't please file an Issue and I'll try to add it asap.\n\n\nAction Bars\n\n\nCurrently, the following Action Bars have been tested and are compatible with\nthis Addon:\n\n\n\n\nBlizzard's Action Bars\n\n\nDiscord Action Bars\n\n\n\n\nNote\n: If your AddOn is not on this list, please give it a try anyway! I've\nimplemented this in a way where it very well might work in your Action Bars\nAddOn as well! And if it doesn't please file an Issue and I'll try to add it asap.\n\n\nSupported Addons\n\n\nClassicFocus / FocusFrame\n\n\nUsing one of these two Addons allows you to make use of the \n@focus\n target\ncondition!\n\n\nKnown Bugs and work arounds\n\n\nGray button fix\n\n\nIn order to fix the range and cooldown check (gray buttons), you have to write\nthis line at the top of each macro:\n\n\n/script if nil then CastSpellByName(\nSPELLNAME\n); end\n\n\n\n\nMake sure to replace SPELLNAME with the actual name of your spell.\n\n\n/script if nil then CastSpellByName(\nChain Heal\n); end\n/cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)\n\n\n\n\n\n\nNote:\n There is currently no way to make this work for different spells\ndepending on conditions.\n\n\n/script if nil then CastSpellByName(\nChain Heal\n); end\n/cast [@target help] Chain Heal; Frost Shock\n\n\n\n\nThis will only activate the range and cooldown check for Chain Heal and not\ncheck Frost Shock at all! This appears to be a limitation with the API and I\ndon't see a way of fixing this. Please contact me if you do!", 
             "title": "Compatibility Notes"
         }, 
         {
@@ -617,7 +617,7 @@
         }, 
         {
             "location": "/compatibility/#gray-button-fix", 
-            "text": "In order to fix the range and cooldown check (gray buttons), you have to write\nthis line at the top of each macro:  /script if nil then CastSpellByName( SPELLNAME ); end  Make sure to replace SPELLNAME with the actual name of your spell.  /script if nil then CastSpellByName( Chain Heal ); end\n/cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)   Note:  There is currently no way to make this work for different spells\ndepending on conditionals.  /script if nil then CastSpellByName( Chain Heal ); end\n/cast [@target help] Chain Heal; Frost Shock  This will only activate the range and cooldown check for Chain Heal and not\ncheck Frost Shock at all! This appears to be a limitation with the API and I\ndon't see a way of fixing this. Please contact me if you do!", 
+            "text": "In order to fix the range and cooldown check (gray buttons), you have to write\nthis line at the top of each macro:  /script if nil then CastSpellByName( SPELLNAME ); end  Make sure to replace SPELLNAME with the actual name of your spell.  /script if nil then CastSpellByName( Chain Heal ); end\n/cast [@target help mod:alt] Chain Heal; Chain Heal(Rank 1)   Note:  There is currently no way to make this work for different spells\ndepending on conditions.  /script if nil then CastSpellByName( Chain Heal ); end\n/cast [@target help] Chain Heal; Frost Shock  This will only activate the range and cooldown check for Chain Heal and not\ncheck Frost Shock at all! This appears to be a limitation with the API and I\ndon't see a way of fixing this. Please contact me if you do!", 
             "title": "Gray button fix"
         }, 
         {
