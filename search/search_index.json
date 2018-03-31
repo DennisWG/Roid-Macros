@@ -22,13 +22,28 @@
         }, 
         {
             "location": "/commands/", 
-            "text": "Chat Commands\n\n\n\n\n/rl\n\n\n/petattack", 
+            "text": "Chat Commands\n\n\n\n\n/petattack\n\n\n/equip\n\n\n/unshift\n\n\n/use\n\n\n/rl", 
             "title": "Chat Commands"
         }, 
         {
             "location": "/commands/#chat-commands", 
-            "text": "/rl  /petattack", 
+            "text": "/petattack  /equip  /unshift  /use  /rl", 
             "title": "Chat Commands"
+        }, 
+        {
+            "location": "/commands/equip/", 
+            "text": "/equip and /equipoh\n\n\n/equip\n puts an item with the given name into the main hand slot.\n\n\n/equipoh\n puts an item with the given name into the off hand slot.\n\n\nExamples\n\n\n/equip Elementium Reinforced Bulwark\n\n\n\n\nWill equip the Elementium Reinforced Bulwark if it can be found in the inventory.\n\n\n\n\n/equipoh [equipped:Shields] Iblis, Blade of the Fallen Seraph\n\n\n\n\nWill equip Iblis, Blade of the Fallen Seraph if you currently have a shield equipped.", 
+            "title": "/equip and /equipoh"
+        }, 
+        {
+            "location": "/commands/equip/#equip-and-equipoh", 
+            "text": "/equip  puts an item with the given name into the main hand slot.  /equipoh  puts an item with the given name into the off hand slot.", 
+            "title": "/equip and /equipoh"
+        }, 
+        {
+            "location": "/commands/equip/#examples", 
+            "text": "/equip Elementium Reinforced Bulwark  Will equip the Elementium Reinforced Bulwark if it can be found in the inventory.   /equipoh [equipped:Shields] Iblis, Blade of the Fallen Seraph  Will equip Iblis, Blade of the Fallen Seraph if you currently have a shield equipped.", 
+            "title": "Examples"
         }, 
         {
             "location": "/commands/petattack/", 
@@ -46,6 +61,36 @@
             "title": "Examples"
         }, 
         {
+            "location": "/commands/unshift/", 
+            "text": "/unshift\n\n\n/unshift\n make you leave your shapeshift form.\n\n\nExamples\n\n\n/unshift [stance:1/2/4]\n\n\n\n\nThis macro will cause you to exit your shapeshift form if you're either in [Dire] Bear Form, Aquatic Form, or Travel Form.\n\n\n\n\n/unshift [stance:1/2/4]\n/cast [stance:0] Cat Form; [nocombat nostealth] Prowl\n\n\n\n\nYou will exit any form other than Cat Form. Then, if you're not shapeshifted, you'll go into Cat Form. If you are in Cat Form you'll cast Prowl.", 
+            "title": "/unshift"
+        }, 
+        {
+            "location": "/commands/unshift/#unshift", 
+            "text": "/unshift  make you leave your shapeshift form.", 
+            "title": "/unshift"
+        }, 
+        {
+            "location": "/commands/unshift/#examples", 
+            "text": "/unshift [stance:1/2/4]  This macro will cause you to exit your shapeshift form if you're either in [Dire] Bear Form, Aquatic Form, or Travel Form.   /unshift [stance:1/2/4]\n/cast [stance:0] Cat Form; [nocombat nostealth] Prowl  You will exit any form other than Cat Form. Then, if you're not shapeshifted, you'll go into Cat Form. If you are in Cat Form you'll cast Prowl.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/commands/use/", 
+            "text": "/use\n\n\n/use\n allows you to use items from your inventory or equipped ones.\n\n\nExamples\n\n\n/use Juju Flurry\n\n\n\n\nWill use Juju Flurry if it can be found in the inventory.\n\n\n\n\n/use [@player] Runecloth Bandage\n\n\n\n\nThis macro will search for Runecloth Bandages in your inventory and if it finds them use them upon your character.\n\n\n\n\n/use [combat] Major Mana Potion\n\n\n\n\nWith this line you'll never again use a Major Mana Potion accidentally when you're not in combat!", 
+            "title": "/use"
+        }, 
+        {
+            "location": "/commands/use/#use", 
+            "text": "/use  allows you to use items from your inventory or equipped ones.", 
+            "title": "/use"
+        }, 
+        {
+            "location": "/commands/use/#examples", 
+            "text": "/use Juju Flurry  Will use Juju Flurry if it can be found in the inventory.   /use [@player] Runecloth Bandage  This macro will search for Runecloth Bandages in your inventory and if it finds them use them upon your character.   /use [combat] Major Mana Potion  With this line you'll never again use a Major Mana Potion accidentally when you're not in combat!", 
+            "title": "Examples"
+        }, 
+        {
             "location": "/commands/reload/", 
             "text": "/rl\n\n\n/rl\n tells the client to reload all Addons. This is mainly used for debugging.", 
             "title": "/rl"
@@ -54,6 +99,241 @@
             "location": "/commands/reload/#rl", 
             "text": "/rl  tells the client to reload all Addons. This is mainly used for debugging.", 
             "title": "/rl"
+        }, 
+        {
+            "location": "/conditions/", 
+            "text": "Conditions\n\n\nConditions allow you to fine-tune your macro's behaviour without having to\nknow any Lua at all!\n\n\n\n\nNotation\n\n\n/command [condition] parameters\n\n\n\n\nConditions are put after the chat command but before the chat command's\nparameters into square brackets.\n\n\n\n\n/command [condition1 condition2] parameters\n\n\n\n\nConditions can be chained together by seperating them using an empty space.\n\n\n\n\n/command [condition:parameter] parameters\n\n\n\n\nSome conditions may take parameters. These follow after a colon \n:\n or, in\nsome cases, after a greater than \n or less than \n sign.\n\n\n\n\n/command [condition:1/2/3] parameters\n\n\n\n\nSome conditions may take multiple parameters. These have to be seperated by\nslashes \n/\n.\n\n\nBranches\n\n\nWhen using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:\n\n\n/cast [dead] Spell1\n/cast [nodead] Spell2\n\n\n\n\nRoid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon \n;\n at\nthe end. The same example but now with a branch instead:\n\n\n/cast [dead] Spell1; Spell2\n\n\n\n\nOf course you could also put in more conditons in the different branches!\n\n\n/cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock\n\n\n\n\nNote, that you may use any spell you want within each Conditional. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.\n\n\n\n\nSupported Chat Commands\n\n\nThis is a list of all Chat Commands that support conditions:\n\n\n\n\n/cast\n\n\n/target\n\n\n/equip\n\n\n/equipoh\n\n\n/petattack\n\n\n/unshift\n\n\n/use\n\n\n\n\n\n\nAvailable Conditoins:\n\n\n\n\n(no)buff / (no)mybuff / (no)debuff / (no)mydebuff\n\n\ncombat / nocombat\n\n\ndead / nodead\n\n\nequipped\n\n\ngroup\n\n\nhelp / harm\n\n\nmod\n\n\nparty\n\n\nraid\n\n\nstance\n\n\nUnitID\n\n\nstealth / nostealth", 
+            "title": "Conditions"
+        }, 
+        {
+            "location": "/conditions/#conditions", 
+            "text": "Conditions allow you to fine-tune your macro's behaviour without having to\nknow any Lua at all!", 
+            "title": "Conditions"
+        }, 
+        {
+            "location": "/conditions/#notation", 
+            "text": "/command [condition] parameters  Conditions are put after the chat command but before the chat command's\nparameters into square brackets.   /command [condition1 condition2] parameters  Conditions can be chained together by seperating them using an empty space.   /command [condition:parameter] parameters  Some conditions may take parameters. These follow after a colon  :  or, in\nsome cases, after a greater than   or less than   sign.   /command [condition:1/2/3] parameters  Some conditions may take multiple parameters. These have to be seperated by\nslashes  / .", 
+            "title": "Notation"
+        }, 
+        {
+            "location": "/conditions/#branches", 
+            "text": "When using conditions in your macros, it might be desirable to perform two\ndifferent actions that depend on both outcomes of a condition. While you could\nin theory achieve this by repeating the inverted condition one line below,\nyou'll realise that this would lead to making your macros exceedingly bigger.\nAn example:  /cast [dead] Spell1\n/cast [nodead] Spell2  Roid-Macros solves this by allowing you to branch off of the first set of\nparameters, if the conditions fails, by seperating them with a semicolon  ;  at\nthe end. The same example but now with a branch instead:  /cast [dead] Spell1; Spell2  Of course you could also put in more conditons in the different branches!  /cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock  Note, that you may use any spell you want within each Conditional. Also, there\nmustn't be a whitespace character after each semicolon. You may, however, use\nthem to improve readability.", 
+            "title": "Branches"
+        }, 
+        {
+            "location": "/conditions/#supported-chat-commands", 
+            "text": "This is a list of all Chat Commands that support conditions:   /cast  /target  /equip  /equipoh  /petattack  /unshift  /use", 
+            "title": "Supported Chat Commands"
+        }, 
+        {
+            "location": "/conditions/#available-conditoins", 
+            "text": "(no)buff / (no)mybuff / (no)debuff / (no)mydebuff  combat / nocombat  dead / nodead  equipped  group  help / harm  mod  party  raid  stance  UnitID  stealth / nostealth", 
+            "title": "Available Conditoins:"
+        }, 
+        {
+            "location": "/conditions/buffs/", 
+            "text": "[no]buff / [no]mybuff / [no]debuff / [no]mydebuff\n\n\nEnsures that you (mybuff/mydebuff) or the specified target (buff/debuff) has\nthe given buff or debuff. May be inverted by adding a 'no' at the beginning.\n\n\nParameters\n\n\nThe name of the buff or debuff. May be abbreviated and mustn't contain anything\nthat isn't a letter from the English alphabet. White spaces must be replaced by\nan underscore \n_\n.\n\n\nExamples\n\n\n/cast [nobuff:Fortitude @mouseover] Power Word: Fortitude\n\n\n\n\nWill cast Power Word: Fortitude on your mouseover target if no such buff could be found on it.\n\n\n\n\n/cast [mybuff:Blood_Fury] Healing Wave\n\n\n\n\nWill cast Healing Wave on yourself only while Blood Fury is active.\n\n\n\n\n/cast [debuff:Curse_of_Weakness @player] Healing Wave\n\n\n\n\nWill cast Healing Wave on yourself as long as Curse of Weakness is active.", 
+            "title": "[no]buff / [no]mybuff / [no]debuff / [no]mydebuff"
+        }, 
+        {
+            "location": "/conditions/buffs/#nobuff-nomybuff-nodebuff-nomydebuff", 
+            "text": "Ensures that you (mybuff/mydebuff) or the specified target (buff/debuff) has\nthe given buff or debuff. May be inverted by adding a 'no' at the beginning.", 
+            "title": "[no]buff / [no]mybuff / [no]debuff / [no]mydebuff"
+        }, 
+        {
+            "location": "/conditions/buffs/#parameters", 
+            "text": "The name of the buff or debuff. May be abbreviated and mustn't contain anything\nthat isn't a letter from the English alphabet. White spaces must be replaced by\nan underscore  _ .", 
+            "title": "Parameters"
+        }, 
+        {
+            "location": "/conditions/buffs/#examples", 
+            "text": "/cast [nobuff:Fortitude @mouseover] Power Word: Fortitude  Will cast Power Word: Fortitude on your mouseover target if no such buff could be found on it.   /cast [mybuff:Blood_Fury] Healing Wave  Will cast Healing Wave on yourself only while Blood Fury is active.   /cast [debuff:Curse_of_Weakness @player] Healing Wave  Will cast Healing Wave on yourself as long as Curse of Weakness is active.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/combat/", 
+            "text": "combat / nocombat\n\n\nMay only be used in combat. Can be inverted by adding \nno\n in front of \ncombat\n.\n\n\nExample:\n\n\n/cast [nocombat] Starfire; Wrath\n\n\n\n\nYour Oomkin will cast Starfire when you are not in combat and Wrath once you are.", 
+            "title": "combat / nocombat"
+        }, 
+        {
+            "location": "/conditions/combat/#combat-nocombat", 
+            "text": "May only be used in combat. Can be inverted by adding  no  in front of  combat .", 
+            "title": "combat / nocombat"
+        }, 
+        {
+            "location": "/conditions/combat/#example", 
+            "text": "/cast [nocombat] Starfire; Wrath  Your Oomkin will cast Starfire when you are not in combat and Wrath once you are.", 
+            "title": "Example:"
+        }, 
+        {
+            "location": "/conditions/dead/", 
+            "text": "dead / nodead\n\n\nMay only be used when your target is dead. Can be inverted by adding \nno\n in\nfront of \ndead\n.\n\n\nExamples:\n\n\n/cast [dead] Resurrection; Flash Heal\n\n\n\n\nWill cast Resurrection if your current target is dead. If it isn't you will cast Flash Heal instead.\n\n\n\n\n/cast [nodead] Flash Heal; Resurrection\n\n\n\n\nThe same as above just the other way around.", 
+            "title": "dead / nodead"
+        }, 
+        {
+            "location": "/conditions/dead/#dead-nodead", 
+            "text": "May only be used when your target is dead. Can be inverted by adding  no  in\nfront of  dead .", 
+            "title": "dead / nodead"
+        }, 
+        {
+            "location": "/conditions/dead/#examples", 
+            "text": "/cast [dead] Resurrection; Flash Heal  Will cast Resurrection if your current target is dead. If it isn't you will cast Flash Heal instead.   /cast [nodead] Flash Heal; Resurrection  The same as above just the other way around.", 
+            "title": "Examples:"
+        }, 
+        {
+            "location": "/conditions/equipped/", 
+            "text": "equipped\n\n\nEnsures that the given item type is equipped.\n\n\nParameters\n\n\nMay take a single parameter from the following list:\n\n\n\n\nDaggers - Looks for a dagger in your mainhand\n\n\nFists - Looks for a fist weapon in your mainhand\n\n\nAxes - Looks for an axe in your mainhand\n\n\nSwords - Looks for a sword in your mainhand\n\n\nStaffs - Looks for a staff in your mainhand\n\n\nMaces - Looks for a mace in your mainhand\n\n\nPolearms - Looks for a polearm in your mainhand\n\n\nShields - Looks for a shield in your offhand\n\n\nGuns - Looks for a gun in your ranged slot\n\n\nCrossbows - Looks for a crossbow in your ranged slot\n\n\nBows - Looks for a cow in your ranged slot\n\n\nThrown - Looks for a thrown weapon in your ranged slot\n\n\nWands - Looks for a wand in your ranged slot\n\n\n\n\nExamples\n\n\n/cast [equipped:Bows] Shoot Bow; [equipped:Crossbows] Shoot Crossbow; [equipped:Guns] Shoot Gun; [equipped:Thrown] Throw\n\n\n\n\nWill use your ranged shoot ability depending on what ranged weapon you\ncurrently have equipped.", 
+            "title": "equipped"
+        }, 
+        {
+            "location": "/conditions/equipped/#equipped", 
+            "text": "Ensures that the given item type is equipped.", 
+            "title": "equipped"
+        }, 
+        {
+            "location": "/conditions/equipped/#parameters", 
+            "text": "May take a single parameter from the following list:   Daggers - Looks for a dagger in your mainhand  Fists - Looks for a fist weapon in your mainhand  Axes - Looks for an axe in your mainhand  Swords - Looks for a sword in your mainhand  Staffs - Looks for a staff in your mainhand  Maces - Looks for a mace in your mainhand  Polearms - Looks for a polearm in your mainhand  Shields - Looks for a shield in your offhand  Guns - Looks for a gun in your ranged slot  Crossbows - Looks for a crossbow in your ranged slot  Bows - Looks for a cow in your ranged slot  Thrown - Looks for a thrown weapon in your ranged slot  Wands - Looks for a wand in your ranged slot", 
+            "title": "Parameters"
+        }, 
+        {
+            "location": "/conditions/equipped/#examples", 
+            "text": "/cast [equipped:Bows] Shoot Bow; [equipped:Crossbows] Shoot Crossbow; [equipped:Guns] Shoot Gun; [equipped:Thrown] Throw  Will use your ranged shoot ability depending on what ranged weapon you\ncurrently have equipped.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/group/", 
+            "text": "group\n\n\nThis condition will only fire when you're in a party or raid.\n\n\nParameters\n\n\nMay take one of the following parameters:\n\n\n\n\nparty - You must be in a party\n\n\nraid - You must be in a raid\n\n\n\n\nExamples\n\n\n/cast [group:party] Arcane Brilliance; [group:raid] Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when you are in a party. It will cast Arcane Intellect instead when you are in a raid.", 
+            "title": "group"
+        }, 
+        {
+            "location": "/conditions/group/#group", 
+            "text": "This condition will only fire when you're in a party or raid.", 
+            "title": "group"
+        }, 
+        {
+            "location": "/conditions/group/#parameters", 
+            "text": "May take one of the following parameters:   party - You must be in a party  raid - You must be in a raid", 
+            "title": "Parameters"
+        }, 
+        {
+            "location": "/conditions/group/#examples", 
+            "text": "/cast [group:party] Arcane Brilliance; [group:raid] Arcane Intellect  This macro will cast Arcane Brilliance when you are in a party. It will cast Arcane Intellect instead when you are in a raid.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/help_harm/", 
+            "text": "help / harm\n\n\nThe [help] condition is true when the unit can receive a beneficial effect,\ne.g., a healing spell. The [harm] condition is true when the unit would get an\nadverse effect, e.g., a damaging spell.\n\n\nExample:\n\n\n/cast [harm] Frost Shock; [help] Healing Wave\n\n\n\n\nThis will cast Frost Shock on hostile targets and Healing Wave on friendly targets.", 
+            "title": "help / harm"
+        }, 
+        {
+            "location": "/conditions/help_harm/#help-harm", 
+            "text": "The [help] condition is true when the unit can receive a beneficial effect,\ne.g., a healing spell. The [harm] condition is true when the unit would get an\nadverse effect, e.g., a damaging spell.", 
+            "title": "help / harm"
+        }, 
+        {
+            "location": "/conditions/help_harm/#example", 
+            "text": "/cast [harm] Frost Shock; [help] Healing Wave  This will cast Frost Shock on hostile targets and Healing Wave on friendly targets.", 
+            "title": "Example:"
+        }, 
+        {
+            "location": "/conditions/mod/", 
+            "text": "mod\n\n\nModifier keys are a convenient way to save action bar space and make certain\ndecisions.\n\n\nParameters\n\n\nMay take a number of parameters seperated by slashes \n/\n.\n\n\n\n\nctrl - the CTRL key is pressed down\n\n\nshift - the SHIFT key is pressed down\n\n\nalt - the ALT key is pressed down\n\n\n\n\nExamples:\n\n\n/cast [mod:ctrl] Healing Wave; Healing Wave (Rank 1)\n\n\n\n\nThis will cast your highest rank of Healing Wave whenever you have the CTRL key pressed, otherwise Healing Wave rank 1.\n\n\n\n\n/cast [mod:ctrl/shift] Healing Wave\n\n\n\n\nYou will cast Healing Wave when you have CTRL and SHIFT pressed.", 
+            "title": "mod"
+        }, 
+        {
+            "location": "/conditions/mod/#mod", 
+            "text": "Modifier keys are a convenient way to save action bar space and make certain\ndecisions.", 
+            "title": "mod"
+        }, 
+        {
+            "location": "/conditions/mod/#parameters", 
+            "text": "May take a number of parameters seperated by slashes  / .   ctrl - the CTRL key is pressed down  shift - the SHIFT key is pressed down  alt - the ALT key is pressed down", 
+            "title": "Parameters"
+        }, 
+        {
+            "location": "/conditions/mod/#examples", 
+            "text": "/cast [mod:ctrl] Healing Wave; Healing Wave (Rank 1)  This will cast your highest rank of Healing Wave whenever you have the CTRL key pressed, otherwise Healing Wave rank 1.   /cast [mod:ctrl/shift] Healing Wave  You will cast Healing Wave when you have CTRL and SHIFT pressed.", 
+            "title": "Examples:"
+        }, 
+        {
+            "location": "/conditions/party/", 
+            "text": "party\n\n\nThe Conditional will only fire when your target is in your party.\n\n\nExamples\n\n\n/cast [party] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nparty. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "title": "party"
+        }, 
+        {
+            "location": "/conditions/party/#party", 
+            "text": "The Conditional will only fire when your target is in your party.", 
+            "title": "party"
+        }, 
+        {
+            "location": "/conditions/party/#examples", 
+            "text": "/cast [party] Arcane Brilliance; Arcane Intellect  This macro will cast Arcane Brilliance when your current target is in your\nparty. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/raid/", 
+            "text": "raid\n\n\nThe Conditional will only fire when your target is in your raid.\n\n\nExamples\n\n\n/cast [raid] Arcane Brilliance; Arcane Intellect\n\n\n\n\nThis macro will cast Arcane Brilliance when your current target is in your\nraid. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "title": "raid"
+        }, 
+        {
+            "location": "/conditions/raid/#raid", 
+            "text": "The Conditional will only fire when your target is in your raid.", 
+            "title": "raid"
+        }, 
+        {
+            "location": "/conditions/raid/#examples", 
+            "text": "/cast [raid] Arcane Brilliance; Arcane Intellect  This macro will cast Arcane Brilliance when your current target is in your\nraid. If your target isn't, it will cast Arcane Intellect on it instead.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/stance/", 
+            "text": "stance\n\n\nAllows you to check whether or not you are in the given stance or shapeshift\nform.\n\n\nParameters\n\n\nMay take a number of parameters seperated by slashes \n/\n.\n\n\n\n\n0 - You're in no stance\n\n\n1, 2, ..., n - You're in stance 1, 2, ..., n where n is the total number of\nstances or shapeshift form availlable\n\n\n\n\nExamples\n\n\n/cast [stance:0] Cat Form\n\n\n\n\nEnter Cat Form when not shapeshifted.\n\n\n\n\n/cast [stance:1] Enrage; Dire Bear Form\n\n\n\n\nThis macro will cast Enrage if you are in your (Dire) Bear Form. If not it will\ngo into said Form.\n\n\n\n\n/cast [stance:1/2] Shield Bash; Defensive Stance\n\n\n\n\nIf you are in either the Battle Stance or the Defensive Stance, you will cast\nShield Bash. If you are in the Berserker Stance, however, you will switch into\nDefensive Stance.", 
+            "title": "stance"
+        }, 
+        {
+            "location": "/conditions/stance/#stance", 
+            "text": "Allows you to check whether or not you are in the given stance or shapeshift\nform.", 
+            "title": "stance"
+        }, 
+        {
+            "location": "/conditions/stance/#parameters", 
+            "text": "May take a number of parameters seperated by slashes  / .   0 - You're in no stance  1, 2, ..., n - You're in stance 1, 2, ..., n where n is the total number of\nstances or shapeshift form availlable", 
+            "title": "Parameters"
+        }, 
+        {
+            "location": "/conditions/stance/#examples", 
+            "text": "/cast [stance:0] Cat Form  Enter Cat Form when not shapeshifted.   /cast [stance:1] Enrage; Dire Bear Form  This macro will cast Enrage if you are in your (Dire) Bear Form. If not it will\ngo into said Form.   /cast [stance:1/2] Shield Bash; Defensive Stance  If you are in either the Battle Stance or the Defensive Stance, you will cast\nShield Bash. If you are in the Berserker Stance, however, you will switch into\nDefensive Stance.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/conditions/stealth/", 
+            "text": "stealth / nostealth\n\n\nThe condition will only pass when your character is stealthed. May be inverted by adding \nno\n in front of \nstealth\n.\n\n\nExample\n\n\n/cast [stealth @player] Healing Touch; Shadowmeld\n\n\n\n\nIf your character is stealthed, he or she will cast Healing Touch. If your character is not stealthed, Shadowmeld will be cast instead.", 
+            "title": "stealth / nostealth"
+        }, 
+        {
+            "location": "/conditions/stealth/#stealth-nostealth", 
+            "text": "The condition will only pass when your character is stealthed. May be inverted by adding  no  in front of  stealth .", 
+            "title": "stealth / nostealth"
+        }, 
+        {
+            "location": "/conditions/stealth/#example", 
+            "text": "/cast [stealth @player] Healing Touch; Shadowmeld  If your character is stealthed, he or she will cast Healing Touch. If your character is not stealthed, Shadowmeld will be cast instead.", 
+            "title": "Example"
+        }, 
+        {
+            "location": "/conditions/target/", 
+            "text": "UnitID\n\n\nAn identifier that refers to a unit int he game world that can be interacted\nwith. Available identifiers are:\n\n\n\n\n@player\n - The current player (You!)\n\n\n@pet\n - The current player's pet\n\n\n@partyN\n - The Nth party member excluding the player (N is 1, 2, 3 or 4)\n\n\n@partypetN\n - The pet of the Nth party member (N is 1, 2, 3 or 4)\n\n\n@raidN\n - The Nth raid member (N is 1, 2, 3, ..., 40)\n\n\n@raidpetN\n - The pet of the Nth raid member (N is 1, 2, 3, ..., 40)\n\n\n@target\n - The currently targetted unit\n\n\n@mouseover\n - The unit which the mouse is currently hovering over (May be\nincompatible with some unit frames. Refer to the \nCompatibility Notes\n\n\n@npc\n - The NPC with which the player is currently interacting.\n\n\n\n\nYou may append \ntarget\n to any of these to refer to that unit's target. You may\neven chain them together like \n@playertargettargettarget\n, but you'll notice an\nattendant performance hit if you overdo it.\n\n\nExamples\n\n\n/cast [harm @target] Frost Shock; [help @mouseover] Healing Wave\n\n\n\n\nYou will cast Frost Shock on your current target if it is considered hostile.\nIf it isn't and your mouseover target is considered friendly, your character\nwill cast Healing Wave on your mouseover target instead.\n\n\n\n\n/cast [@mouseover] Flash Heal; [@focus] Flash Heal\n\n\n\n\nCasts Flash Heal if you have a mouseover target. Casts Flash Heal on your focus\ntarget if you don't (Requires ClassicFous or FocusFrames).", 
+            "title": "UnitID"
+        }, 
+        {
+            "location": "/conditions/target/#unitid", 
+            "text": "An identifier that refers to a unit int he game world that can be interacted\nwith. Available identifiers are:   @player  - The current player (You!)  @pet  - The current player's pet  @partyN  - The Nth party member excluding the player (N is 1, 2, 3 or 4)  @partypetN  - The pet of the Nth party member (N is 1, 2, 3 or 4)  @raidN  - The Nth raid member (N is 1, 2, 3, ..., 40)  @raidpetN  - The pet of the Nth raid member (N is 1, 2, 3, ..., 40)  @target  - The currently targetted unit  @mouseover  - The unit which the mouse is currently hovering over (May be\nincompatible with some unit frames. Refer to the  Compatibility Notes  @npc  - The NPC with which the player is currently interacting.   You may append  target  to any of these to refer to that unit's target. You may\neven chain them together like  @playertargettargettarget , but you'll notice an\nattendant performance hit if you overdo it.", 
+            "title": "UnitID"
+        }, 
+        {
+            "location": "/conditions/target/#examples", 
+            "text": "/cast [harm @target] Frost Shock; [help @mouseover] Healing Wave  You will cast Frost Shock on your current target if it is considered hostile.\nIf it isn't and your mouseover target is considered friendly, your character\nwill cast Healing Wave on your mouseover target instead.   /cast [@mouseover] Flash Heal; [@focus] Flash Heal  Casts Flash Heal if you have a mouseover target. Casts Flash Heal on your focus\ntarget if you don't (Requires ClassicFous or FocusFrames).", 
+            "title": "Examples"
         }, 
         {
             "location": "/about/", 

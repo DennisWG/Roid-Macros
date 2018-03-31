@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>About - Cast Conditionals</title>
+        <title>Conditions - Cast Conditionals</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -77,65 +77,65 @@
 </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Conditions <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
-<li >
-    <a href="../conditions/">Conditions</a>
+<li class="active">
+    <a href="./">Conditions</a>
 </li>
                             
 <li >
-    <a href="../conditions/buffs/">[no]buff / [no]mybuff / [no]debuff / [no]mydebuff</a>
+    <a href="buffs/">Buffs</a>
 </li>
                             
 <li >
-    <a href="../conditions/combat/">combat / nocombat</a>
+    <a href="combat/">Combat</a>
 </li>
                             
 <li >
-    <a href="../conditions/dead/">dead / nodead</a>
+    <a href="dead/">Dead</a>
 </li>
                             
 <li >
-    <a href="../conditions/equipped/">equipped</a>
+    <a href="equipped/">Equipped</a>
 </li>
                             
 <li >
-    <a href="../conditions/group/">group</a>
+    <a href="group/">Group</a>
 </li>
                             
 <li >
-    <a href="../conditions/help_harm/">help / harm</a>
+    <a href="help_harm/">Help harm</a>
 </li>
                             
 <li >
-    <a href="../conditions/mod/">mod</a>
+    <a href="mod/">Mod</a>
 </li>
                             
 <li >
-    <a href="../conditions/party/">party</a>
+    <a href="party/">Party</a>
 </li>
                             
 <li >
-    <a href="../conditions/raid/">raid</a>
+    <a href="raid/">Raid</a>
 </li>
                             
 <li >
-    <a href="../conditions/stance/">stance</a>
+    <a href="stance/">Stance</a>
 </li>
                             
 <li >
-    <a href="../conditions/stealth/">stealth / nostealth</a>
+    <a href="stealth/">Stealth</a>
 </li>
                             
 <li >
-    <a href="../conditions/target/">UnitID</a>
+    <a href="target/">Target</a>
 </li>
                         </ul>
                     </li>
-                    <li class="active">
-                        <a href="./">About</a>
+                    <li >
+                        <a href="../about/">About</a>
                     </li>
                 </ul>
 
@@ -146,12 +146,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../conditions/target/">
+                        <a rel="next" href="../commands/reload/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li class="disabled">
-                        <a rel="prev" >
+                    <li >
+                        <a rel="prev" href="buffs/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -163,27 +163,93 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#conditions">Conditions</a></li>
+        <li class="main "><a href="#notation">Notation</a></li>
+        <li class="main "><a href="#branches">Branches</a></li>
+        <li class="main "><a href="#supported-chat-commands">Supported Chat Commands</a></li>
+        <li class="main "><a href="#available-conditoins">Available Conditoins:</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p>MIT License</p>
-<p>Copyright (c) 2018 Dennis Werner Garske (DWG)</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p></div>
+<h1 id="conditions">Conditions</h1>
+<p>Conditions allow you to fine-tune your macro's behaviour without having to
+know any Lua at all!</p>
+<hr />
+<h1 id="notation">Notation</h1>
+<pre><code class="lua">/command [condition] parameters
+</code></pre>
+
+<p>Conditions are put after the chat command but before the chat command's
+parameters into square brackets.</p>
+<hr />
+<pre><code class="lua">/command [condition1 condition2] parameters
+</code></pre>
+
+<p>Conditions can be chained together by seperating them using an empty space.</p>
+<hr />
+<pre><code class="lua">/command [condition:parameter] parameters
+</code></pre>
+
+<p>Some conditions may take parameters. These follow after a colon <code>:</code> or, in
+some cases, after a greater than <code>&gt;</code> or less than <code>&lt;</code> sign.</p>
+<hr />
+<pre><code class="lua">/command [condition:1/2/3] parameters
+</code></pre>
+
+<p>Some conditions may take multiple parameters. These have to be seperated by
+slashes <code>/</code>.</p>
+<h1 id="branches">Branches</h1>
+<p>When using conditions in your macros, it might be desirable to perform two
+different actions that depend on both outcomes of a condition. While you could
+in theory achieve this by repeating the inverted condition one line below,
+you'll realise that this would lead to making your macros exceedingly bigger.
+An example:</p>
+<pre><code class="lua">/cast [dead] Spell1
+/cast [nodead] Spell2
+</code></pre>
+
+<p>Roid-Macros solves this by allowing you to branch off of the first set of
+parameters, if the conditions fails, by seperating them with a semicolon <code>;</code> at
+the end. The same example but now with a branch instead:</p>
+<pre><code class="lua">/cast [dead] Spell1; Spell2
+</code></pre>
+
+<p>Of course you could also put in more conditons in the different branches!</p>
+<pre><code class="lua">/cast [condition1] Healing Wave; [condition2] Windfury Totem; [condition3] Healing Wave (Rank 3); Frost Shock
+</code></pre>
+
+<p>Note, that you may use any spell you want within each Conditional. Also, there
+mustn't be a whitespace character after each semicolon. You may, however, use
+them to improve readability.</p>
+<hr />
+<h1 id="supported-chat-commands">Supported Chat Commands</h1>
+<p>This is a list of all Chat Commands that support conditions:</p>
+<ul>
+<li>/cast</li>
+<li>/target</li>
+<li><a href="../commands/equip/">/equip</a></li>
+<li><a href="../commands/equip/">/equipoh</a></li>
+<li><a href="../commands/petattack/">/petattack</a></li>
+<li><a href="../commands/unshift/">/unshift</a></li>
+<li><a href="../commands/use/">/use</a></li>
+</ul>
+<hr />
+<h1 id="available-conditoins">Available Conditoins:</h1>
+<ul>
+<li><a href="buffs/">(no)buff / (no)mybuff / (no)debuff / (no)mydebuff</a></li>
+<li><a href="combat/">combat / nocombat</a></li>
+<li><a href="dead/">dead / nodead</a></li>
+<li><a href="equipped/">equipped</a></li>
+<li><a href="group/">group</a></li>
+<li><a href="help_harm/">help / harm</a></li>
+<li><a href="mod/">mod</a></li>
+<li><a href="party/">party</a></li>
+<li><a href="raid/">raid</a></li>
+<li><a href="stance/">stance</a></li>
+<li><a href="target/">UnitID</a></li>
+<li><a href="stealth/">stealth / nostealth</a></li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
