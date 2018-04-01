@@ -76,6 +76,7 @@ function Roids.parseMsg(msg)
     local target;
     local conditionals = {};
     
+    msg = Roids.Trim(msg)
     
     if string.sub(msg, 1, 1) == "!" then
         msg = string.sub(msg, 2);
@@ -174,8 +175,7 @@ end
 function Roids.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAction, action)
     local msg, conditionals = Roids.parseMsg(msg);
     
-    -- trim leading and trailing white spaces
-    msg = gsub(msg,"^%s*(.-)%s*$","%1");
+    msg = Roids.Trim(msg);
     
     -- No conditionals. Just exit.
     if not conditionals then
@@ -263,6 +263,8 @@ end
 -- msg: The player's macro text
 function Roids.DoCast(msg)
     local handled = false;
+    msg = Roids.Trim(msg);
+    
     for k, v in pairs(Roids.splitString(msg, ";%s*")) do
         if Roids.DoWithConditionals(v, Roids.Hooks.CAST_SlashCmd, Roids.FixEmptyTarget, true, CastSpellByName) then
             handled = true; -- we parsed at least one command
