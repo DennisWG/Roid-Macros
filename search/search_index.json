@@ -22,12 +22,12 @@
         }, 
         {
             "location": "/commands/", 
-            "text": "Chat Commands\n\n\n\n\n/petattack\n\n\n/equip\n\n\n/target\n\n\n/unshift\n\n\n/use\n\n\n/rl", 
+            "text": "Chat Commands\n\n\n\n\n/petattack\n\n\n/equip\n\n\n/startattack\n\n\n/stopattack\n\n\n/stopcasting\n\n\n/target\n\n\n/unshift\n\n\n/use\n\n\n/rl", 
             "title": "Chat Commands"
         }, 
         {
             "location": "/commands/#chat-commands", 
-            "text": "/petattack  /equip  /target  /unshift  /use  /rl", 
+            "text": "/petattack  /equip  /startattack  /stopattack  /stopcasting  /target  /unshift  /use  /rl", 
             "title": "Chat Commands"
         }, 
         {
@@ -58,6 +58,51 @@
         {
             "location": "/commands/petattack/#examples", 
             "text": "/petattack [@focus]  You pet will attack your focus target (Refer to the  Compatibility Notes ).   /petattack [@mouseover harm nodead]  Your pet will attack your mouseover target if it is attackable and not dead.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/commands/startattack/", 
+            "text": "/startattack\n\n\n/startattack\n will make you attack with your melee weapons. Spammable.\n\n\nExamples\n\n\n/startattack\n/cast Heroic Strike\n\n\n\n\nYou will start attacking and cast Heroic Strike whenever it is ready.", 
+            "title": "/startattack"
+        }, 
+        {
+            "location": "/commands/startattack/#startattack", 
+            "text": "/startattack  will make you attack with your melee weapons. Spammable.", 
+            "title": "/startattack"
+        }, 
+        {
+            "location": "/commands/startattack/#examples", 
+            "text": "/startattack\n/cast Heroic Strike  You will start attacking and cast Heroic Strike whenever it is ready.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/commands/stopattack/", 
+            "text": "/stopattack\n\n\n/stopattack\n will make you stop attacking with your melee weapons. Spammable.\n\n\nExamples\n\n\n/cast Gouge\n/stopattack\n\n\n\n\nYou will cast Gouge and immediately stop attacking.", 
+            "title": "/stopattack"
+        }, 
+        {
+            "location": "/commands/stopattack/#stopattack", 
+            "text": "/stopattack  will make you stop attacking with your melee weapons. Spammable.", 
+            "title": "/stopattack"
+        }, 
+        {
+            "location": "/commands/stopattack/#examples", 
+            "text": "/cast Gouge\n/stopattack  You will cast Gouge and immediately stop attacking.", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/commands/stopcasting/", 
+            "text": "/stopcasting\n\n\n/stopcasting\n will interrupt your current spell.\n\n\nExamples\n\n\n/stopcasting\n/cast [@mouseover] Flash Heal\n\n\n\n\nYou will interrupt your current cast and cast Flash Heal at your mouseover\ntarget instead.", 
+            "title": "/stopcasting"
+        }, 
+        {
+            "location": "/commands/stopcasting/#stopcasting", 
+            "text": "/stopcasting  will interrupt your current spell.", 
+            "title": "/stopcasting"
+        }, 
+        {
+            "location": "/commands/stopcasting/#examples", 
+            "text": "/stopcasting\n/cast [@mouseover] Flash Heal  You will interrupt your current cast and cast Flash Heal at your mouseover\ntarget instead.", 
             "title": "Examples"
         }, 
         {

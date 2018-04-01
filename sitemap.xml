@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,43 +13,61 @@
         
     <url>
      <loc>/commands/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/equip/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/petattack/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/commands/startattack/</loc>
+     <lastmod>2018-04-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/commands/stopattack/</loc>
+     <lastmod>2018-04-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/commands/stopcasting/</loc>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/target/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/unshift/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/use/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/commands/reload/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -59,127 +77,127 @@
         
     <url>
      <loc>/conditions/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/attacks/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/buffs/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/channeled/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/combat/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/cooldown/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/dead/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/equipped/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/group/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/help_harm/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/hp/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/isnpc/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/isplayer/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/mod/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/party/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/power/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/raid/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/stance/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/stealth/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/target/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/conditions/type/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -188,7 +206,7 @@
     
     <url>
      <loc>/macro_invoking/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -197,19 +215,19 @@
         
     <url>
      <loc>/showtooltip/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/toggable_abilities_and_channelled_spells/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/compatibility/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -218,7 +236,7 @@
     
     <url>
      <loc>/about/</loc>
-     <lastmod>2018-03-31</lastmod>
+     <lastmod>2018-04-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>A few words about /target macros - Roid-Macros</title>
+        <title>/stopcasting - Roid-Macros</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -72,12 +72,12 @@
     <a href="../stopattack/">/stopattack</a>
 </li>
                             
-<li >
-    <a href="../stopcasting/">/stopcasting</a>
+<li class="active">
+    <a href="./">/stopcasting</a>
 </li>
                             
-<li class="active">
-    <a href="./">A few words about /target macros</a>
+<li >
+    <a href="../target/">Target</a>
 </li>
                             
 <li >
@@ -214,12 +214,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../stopcasting/">
+                        <a rel="next" href="../stopattack/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../unshift/">
+                        <a rel="prev" href="../target/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -231,58 +231,21 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#a-few-words-about-target-macros">A few words about /target macros</a></li>
-            <li><a href="#definitions">Definitions</a></li>
+        <li class="main active"><a href="#stopcasting">/stopcasting</a></li>
             <li><a href="#examples">Examples</a></li>
-            <li><a href="#known-issues">Known issues</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="a-few-words-about-target-macros">A few words about /target macros</h1>
-<p>In theory, you can use every condition, however, a few of them behave a little
-different in '/target' macros. Here's a list of them:</p>
-<h2 id="definitions">Definitions</h2>
-<p>A few definitions before we start:</p>
-<h5 id="final-target">final target</h5>
-<p>The unit that will be selected after evaluating every condition. E.g.
-<code>/target Ragnaros</code> - Ragnaros will be the <code>final target</code>.</p>
-<h5 id="checked-target">checked target</h5>
-<p>The unit against which all conditions will be checked. E.g.
-<code>/target [harm @mouseover] Ragnaros</code> - Your current mouseover target will be
-the <code>checked target</code> while <code>Ragnaros</code> is still the <code>final target</code>.</p>
-<hr />
-<p>As stated before, instead of checking the final target, all conditions will
-be validated against the checked target. This means that your checked target
-may or may not be the same as your final target. This allows you to create more
-specialized macros and, on top of that, is more intuitive to use.</p>
+<h1 id="stopcasting">/stopcasting</h1>
+<p><code>/stopcasting</code> will interrupt your current spell.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="lua">/target [harm @mouseover] Ragnaros; Dotalock
+<pre><code class="lua">/stopcasting
+/cast [@mouseover] Flash Heal
 </code></pre>
 
-<p>This will target Ragnaros, if your mouseover target is hostile to yourself. If
-it isn't the player Dotalock will be targeted instead.</p>
-<p>Additionally, assume you want to target your mouseover target depending on
-whether or not some pre-conditions are met. In Vanilla WoW, there is no way to
-do something like that. With this AddOn, however, we can do things like this:</p>
-<pre><code class="lua">/target [harm @target] @targettarget
-</code></pre>
-
-<p>When you use this macro, you will target your target's target, if your current
-target is considered hostile towards you.</p>
-<h2 id="known-issues">Known issues</h2>
-<p>Assume you're assaulting a capital like Orgrimmar or Stormwind and you have a
-macro like the following:</p>
-<pre><code class="lua">/target [harm @mouseover] @mouseover
-</code></pre>
-
-<p>Now you're trying to use this macro to select one of the city's guards that is
-a fair bit away from you. Because of the way the Vanilla client implements
-targeting by names, you're not guaranteed to target your mouseover target. This
-will always happen when another unit with the same name is closer to you than
-the desired unit. There is no way to work around this issue, as the actual
-targeting procedure hasn't been implemented in Lua and is therefore out of
-reach for AddOn developers.</p></div>
+<p>You will interrupt your current cast and cast Flash Heal at your mouseover
+target instead.</p></div>
         </div>
 
         <footer class="col-md-12">
