@@ -5,6 +5,9 @@ pages:
         - commands.md
         - commands/equip.md
         - commands/petattack.md
+        - commands/startattack.md
+        - commands/stopattack.md
+        - commands/stopcasting.md
         - commands/target.md
         - commands/unshift.md
         - commands/use.md
