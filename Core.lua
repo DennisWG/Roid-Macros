@@ -442,7 +442,7 @@ function Roids.Frame.ADDON_LOADED()
         return;
     end
     
-    if arg1 == "Roids" then
+    if arg1 == "Roid-Macros" then
         Roids.InitializeExtensions();
         return;
     end
