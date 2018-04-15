@@ -110,27 +110,30 @@ end
 
 function Extension.PLAYER_ENTERING_WORLD()
     Roids.knownSpells = Roids.GetLearnedSpells();
-    Roids.Hooks.GameTooltip_SetAction = GameTooltip.SetAction;
     
-    GameTooltip.SetAction = function(this, buttonId)
-        local name, texture, body = Roids.GetMacroInfo(buttonId);
-    
-        if not name then
-            return Roids.Hooks.GameTooltip_SetAction(this, buttonId);
-        end
+    if not Roids.Hooks.GameTooltip_SetAction then
+        Roids.Hooks.GameTooltip_SetAction = GameTooltip.SetAction;
         
-        for _,line in pairs(body) do
-            if string.find(line, "^#showtooltip ") then
-                local text = string.sub(line, 14);
-                if Roids.ParseSpell(text) then
-                    return;
+        GameTooltip.SetAction = function(this, buttonId)
+            local name, texture, body = Roids.GetMacroInfo(buttonId);
+        
+            if not name then
+                return Roids.Hooks.GameTooltip_SetAction(this, buttonId);
+            end
+            
+            for _,line in pairs(body) do
+                if string.find(line, "^#showtooltip ") then
+                    local text = string.sub(line, 14);
+                    if Roids.ParseSpell(text) then
+                        return;
+                    end
+                    
+                    if Roids.ParseItem(text) then
+                        return;
+                    end
+                    
+                    Roids.Print("Unknown Tooltip: '"..text.."'");
                 end
-                
-                if Roids.ParseItem(text) then
-                    return;
-                end
-                
-                Roids.Print("Unknown Tooltip: '"..text.."'");
             end
         end
     end
