@@ -118,14 +118,10 @@ end
 -- conditionals: The conditionals containing the current target
 -- returns: Whether or not we've changed the player's current target
 function Roids.FixEmptyTarget(conditionals)
-    if GetCVar("autoSelfCast") == "0" then
-        return false;
-    end
-
     if not conditionals.target then
         if UnitExists("target") then
             conditionals.target = "target";
-        else
+        elseif GetCVar("autoSelfCast") == "1" then
             conditionals.target = "player";
         end
     end
