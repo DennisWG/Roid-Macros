@@ -241,11 +241,11 @@ function Roids.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAct
             needRetarget = true;
         end
         
-        local targetWillCast = SpellIsTargeting();
-        TargetUnit(conditionals.target);
-        if targetWillCast then
-            return true;
+        if SpellIsTargeting() then
+            SpellStopCasting()
         end
+
+        TargetUnit(conditionals.target);
     else
         if needRetarget then
             TargetLastTarget();
