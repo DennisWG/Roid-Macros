@@ -121,7 +121,7 @@ function Roids.FixEmptyTarget(conditionals)
     if not conditionals.target then
         if UnitExists("target") then
             conditionals.target = "target";
-        else
+        elseif GetCVar("autoSelfCast") == "1" then
             conditionals.target = "player";
         end
     end
@@ -232,11 +232,15 @@ function Roids.DoWithConditionals(msg, hook, fixEmptyTargetFunc, targetBeforeAct
         end
     end
     
-    if targetBeforeAction then
+    if conditionals.target ~= nil and targetBeforeAction then
         if not UnitIsUnit("target", conditionals.target) then
             needRetarget = true;
         end
         
+        if SpellIsTargeting() then
+            SpellStopCasting()
+        end
+
         TargetUnit(conditionals.target);
     else
         if needRetarget then
