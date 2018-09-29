@@ -11,6 +11,9 @@ local Roids = _G.Roids or {} -- redundant since we're loading first but peace of
 -- returns: A list of sub-strings
 function Roids.splitString(str, seperatorPattern)
     local tbl = {};
+    if not str then
+        return tbl;
+    end
     local pattern = "(.-)" .. seperatorPattern;
     local lastEnd = 1;
     local s, e, cap = string.find(str, pattern, 1);
