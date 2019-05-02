@@ -12,25 +12,44 @@ Roids.mouseoverUnit = Roids.mouseoverUnit or nil;
 
 Roids.Extensions = Roids.Extensions or {};
 
--- Attempts to execute a macro by the given name
--- name: The name of the macro
--- returns: Whether the macro was executed or not
-function Roids.ExecuteMacroByName(name)
-    local macroId = GetMacroIndexByName(name);
-    if not macroId then
-        return false;
-    end
-    
-    local _,_, body = GetMacroInfo(macroId);
-    if not body then
-        return false;
-    end
-    
+-- Executes the given Macro's body
+-- body: The Macro's body
+function Roids.ExecuteMacroBody(body)
     local lines = Roids.splitString(body, "\n");
     for k,v in pairs(lines) do
         ChatFrameEditBox:SetText(v);
         ChatEdit_SendText(ChatFrameEditBox);
     end
+end
+
+-- Gets the body of the Macro with the given name
+-- name: The name of the Macro
+-- returns: The body of the macro
+function Roids.GetMacroBody(name)
+    local macroId = GetMacroIndexByName(name);
+    if not macroId then
+        return false;
+    end
+
+    local _,_, body = GetMacroInfo(macroId);
+    if not body and SuperMacroFrame ~= nil then
+        body = GetSuperMacroInfo(name, "body");
+    end
+
+    return body;
+end
+
+-- Attempts to execute a macro by the given name
+-- name: The name of the macro
+-- returns: Whether the macro was executed or not
+function Roids.ExecuteMacroByName(name)
+    local body = Roids.GetMacroBody(name);
+    if not body then
+        return false;
+    end
+
+    Roids.ExecuteMacroBody(body);
+    return true;
 end
 
 -- Searches for a ':', '>' or '<' in the given word and returns its position

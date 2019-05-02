@@ -13,6 +13,8 @@ Console.lua
 Conditionals.lua
 ExtensionsManager.lua
 
+Compatibility\SuperMacro.lua
+
 Extensions\Mouseover\GameTooltip.lua
 Extensions\Mouseover\CT_RaidAssist.lua
 Extensions\Mouseover\CT_UnitFrames.lua
