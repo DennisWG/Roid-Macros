@@ -42,10 +42,11 @@ end
 function Extension.OnLoad()
     -- NotGrid loads before Roids, so if NotGrid is enabled, then it's global will exist.
     if not NotGrid then
-	-- Hooking manually as we need a post hook.
-        CreateFrames = NotGrid.CreateFrames;
-        NotGrid.CreateFrames = Roids.NotGrid_CreateFrames;
+        return
     end
+    -- Hooking manually as we need a post hook.
+    CreateFrames = NotGrid.CreateFrames;
+    NotGrid.CreateFrames = Roids.NotGrid_CreateFrames;
     
     Extension.UnregisterEvent("ADDON_LOADED", "Onload")
 end
