@@ -178,8 +178,6 @@ end
 function Roids.TryTargetFocus()
     local name = Roids.GetFocusName();
     
-    Roids.Print("Roids.TryTargetFocus name: "..name)
-    
     if not name then
         return false;
     end

@@ -23,7 +23,7 @@ function Extension.FocusNameHook()
         target = pfUI.uf.focus.unitname
     end
     
-    Extension.DLOG(target)
+    --Extension.DLOG(target)
     
     return target
 end
