@@ -85,6 +85,9 @@ function Roids.RegisterExtension(name)
         end
     end;
     
+    
+    -- This is a function wrapper that we swap with the function that we want to hook
+    -- @return Value of Callback() or Origininal() if dontCallOriginal is false
     extension.internal.OnHook = function(object, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
         local hook;
         
@@ -94,10 +97,11 @@ function Roids.RegisterExtension(name)
             hook = extension.internal.hooks[functionName];
         end
         
-        hook.callback(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        local retval = hook.callback(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         if not hook.dontCallOriginal then
-            hook.origininal(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            retval = hook.origininal(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         end
+        return retval
     end;
     
     
@@ -127,6 +131,10 @@ function Roids.RegisterHook(extensionName, functionName, callbackName, dontCallO
     local orig = _G[functionName];
     local extension = Roids.Extensions[extensionName];
     
+    if not orig then
+        Roids.Print("Roids.RegisterHook - Invalid function to hook: "..functionName)
+    end
+    
     if not extension then
         Roids.Print("Roids.RegisterHook - Invalid extension: "..extension);
         return;
@@ -146,7 +154,7 @@ function Roids.RegisterHook(extensionName, functionName, callbackName, dontCallO
     };
     
     _G[functionName] = function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
-        extension.internal.OnHook(nil, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        return extension.internal.OnHook(nil, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
     end;
 end
 
@@ -197,7 +205,7 @@ function Roids.RegisterMethodHook(extensionName, object, functionName, callbackN
     };
     
     object[functionName] = function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
-        extension.internal.OnHook(object, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        return extension.internal.OnHook(object, functionName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
     end;
 end
 

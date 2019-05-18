@@ -14,6 +14,7 @@ Conditionals.lua
 ExtensionsManager.lua
 
 Compatibility\SuperMacro.lua
+Compatibility\pfUI.lua
 
 Extensions\Mouseover\GameTooltip.lua
 Extensions\Mouseover\CT_RaidAssist.lua

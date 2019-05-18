@@ -177,6 +177,7 @@ end
 -- returns: Whether or not it succeeded
 function Roids.TryTargetFocus()
     local name = Roids.GetFocusName();
+    
     if not name then
         return false;
     end
