@@ -431,6 +431,46 @@ function Roids.DoUnshift(msg)
     return handled;
 end
 
+-- Attempts cancel a helpful buff by a set of conditionals
+-- The buff must be specified by it's icon due to a limitation to 1.12 API
+--
+-- example:
+--      /cancelaura [nomod] Interface\\Icons\\Spell_Holy_WordFortitude
+--
+-- NOTICE:
+-- This function does not work for canceling druid forms, rogue Stealth, death knight presences, or priest Shadowform.
+-- Use /unshift instead
+--
+-- TODO:
+--      Create a mapping of common helpful buffs
+--      Interface\\Icons\\Spell_Holy_WordFortitude -> Power Word: Fortitude
+--
+-- msg: The raw message intercepted from a /cancelaura
+function Roids.DoCancelAura(msg)
+    local handled;
+    
+    local action = function(q)
+        for i=1,40 do 
+            local icon = UnitBuff("player",i);
+            if icon then
+                if icon == q then
+                    CancelPlayerBuff(i)
+                end
+            end
+        end
+    end
+    
+    for k, v in pairs(Roids.splitString(msg, ";%s*")) do
+        handled = false;
+        if Roids.DoWithConditionals(v, action, nil, false, action) then
+            handled = true;
+            break;
+        end
+    end
+    
+    return handled;
+end
+
 -- Holds information about the currently cast spell
 Roids.CurrentSpell = {
     -- "channeled" or "cast"

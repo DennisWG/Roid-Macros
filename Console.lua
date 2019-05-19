@@ -5,6 +5,9 @@
 local _G = _G or getfenv(0)
 local Roids = _G.Roids or {}
 
+SLASH_CANCELAURA1 = "/cancelaura";
+SlashCmdList.CANCELAURA = Roids.DoCancelAura;
+
 SLASH_PETATTACK1 = "/petattack";
 
 SlashCmdList.PETATTACK = function(msg) Roids.DoPetAttack(msg); end
