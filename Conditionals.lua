@@ -380,6 +380,10 @@ Roids.Keywords = {
         return modifiersPressed;
     end,
     
+    nomod = function(conditionals)
+        return not IsAltKeyDown() and not IsControlKeyDown() and not IsShiftKeyDown()
+    end,
+    
     target = function(conditionals)
         return Roids.IsValidTarget(conditionals.target, conditionals.help);
     end,

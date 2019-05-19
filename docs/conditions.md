@@ -88,7 +88,7 @@ This is a list of all Chat Commands that support conditions:
 
 ---
 
-# Available Conditoins:
+# Available Conditions:
 * [attacks / noattacks](conditions/attacks.md)
 * [(no)buff / (no)mybuff / (no)debuff / (no)mydebuff](conditions/buffs.md)
 * [channeled / nochanneled](conditions/channeled.md)
@@ -101,7 +101,7 @@ This is a list of all Chat Commands that support conditions:
 * [(my)hp](conditions/hp.md)
 * [isnpc](conditions/isnpc.md)
 * [isplayer](conditions/isplayer.md)
-* [mod](conditions/mod.md)
+* [(no)mod](conditions/mod.md)
 * [party](conditions/party.md)
 * [(my)power / (my)rawpower](conditions/power.md)
 * [raid](conditions/raid.md)

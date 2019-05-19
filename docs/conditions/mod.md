@@ -14,10 +14,12 @@ May take a number of parameters seperated by slashes `/`.
 ## Examples:
 
 ```lua
-/cast [mod:ctrl] Healing Wave; Healing Wave (Rank 1)
+/cast [mod:ctrl] Renew; [nomod @focus] Heal; Flash Heal
 ```
 
-This will cast your highest rank of Healing Wave whenever you have the CTRL key pressed, otherwise Healing Wave rank 1.
+This will cast Renew on your Target if CTRL is pressed. If that fails it will try to cast
+Heal at your Focus target if you have one and no modifier keys are pressed. In all other cases
+it will cast Flash Heal
 
 ---
 
