@@ -450,11 +450,12 @@ function Roids.DoCancelAura(msg)
     local handled;
     
     local action = function(q)
-        for i=1,40 do 
-            local icon = UnitBuff("player",i);
+        for i=0,40 do 
+            local icon = GetPlayerBuffTexture(i)
             if icon then
                 if icon == q then
-                    CancelPlayerBuff(i)
+                    CancelPlayerBuff(GetPlayerBuff(i,"HELPFUL"))
+                    break;
                 end
             end
         end
