@@ -67,6 +67,7 @@ end
 
 local Extension = Roids.RegisterExtension("Generic_show");
 Extension.RegisterEvent("PLAYER_ENTERING_WORLD", "PLAYER_ENTERING_WORLD");
+Extension.RegisterEvent("SPELLS_CHANGED", "SPELLS_CHANGED");
 
 function Extension.OnLoad()
 end
@@ -137,4 +138,8 @@ function Extension.PLAYER_ENTERING_WORLD()
             end
         end
     end
+end
+
+function Extension.SPELLS_CHANGED()
+	Roids.knownSpells = Roids.GetLearnedSpells();
 end
