@@ -71,7 +71,7 @@ function Extension.RegisterTargetTargetScripts()
 end
 
 function Extension.PLAYER_ENTERING_WORLD()
-    if not pfUI then
+    if not pfUI or not pfUI.uf then
         return;
     end
     Extension.RegisterPlayerScripts();
