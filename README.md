@@ -4,9 +4,8 @@ This addon allows you to use a small subset of the macro conditions, first intro
 
 Demo videos:
 
-[![Example Video](https://img.youtube.com/vi/xHTe4Df77MY/0.jpg)](https://www.youtube.com/watch?v=xHTe4Df77MY)
-
-[![Example Video2](https://img.youtube.com/vi/0w5nePeJlPU/0.jpg)](https://www.youtube.com/watch?v=0w5nePeJlPU)
+[![Example Video](https://i9.ytimg.com/vi/xHTe4Df77MY/mq2.jpg?sqp=CJjhi5kG&rs=AOn4CLA0OYCKrr3Cj2p_ccYLYfUA_i9MOQ)](https://www.youtube.com/watch?v=xHTe4Df77MY)
+[![Example Video2](https://i9.ytimg.com/vi/0w5nePeJlPU/mq2.jpg?sqp=CJjhi5kG&rs=AOn4CLBzPjcmu5zGYpT3vR5ieDvVyuE-iw)](https://www.youtube.com/watch?v=0w5nePeJlPU)
 
 ### Installation
 
