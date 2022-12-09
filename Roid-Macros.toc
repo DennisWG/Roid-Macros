@@ -17,6 +17,7 @@ Compatibility\SuperMacro.lua
 Compatibility\pfUI.lua
 
 Extensions\Mouseover\GameTooltip.lua
+Extensions\Mouseover\Blizzard.lua
 Extensions\Mouseover\CT_RaidAssist.lua
 Extensions\Mouseover\CT_UnitFrames.lua
 Extensions\Mouseover\DiscordUnitFrames.lua
