@@ -1,5 +1,5 @@
 --[[
-	Author: Fondlez (http://github.com/fondlez)
+	Author: Fondlez
   
   This extension adds support for mouseover macros in Roid-Macros for the
   the default Blizzard target-of-target frame.
