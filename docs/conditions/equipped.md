@@ -1,6 +1,6 @@
-# equipped
+# equipped / noequipped / worn / noworn
 
-Ensures that the given item type is equipped.
+Ensures that the given item type is equipped/worn. Can be inverted by adding `no` in front of `equipped` or `worn`
 
 ## Parameters
 

@@ -95,7 +95,7 @@ This is a list of all Chat Commands that support conditions:
 * [combat / nocombat](conditions/combat.md)
 * [cooldown / nocooldown](conditions/cooldown.md)
 * [dead / nodead](conditions/dead.md)
-* [equipped](conditions/equipped.md)
+* [equipped / noquipped / worn / noworn](conditions/equipped.md)
 * [group](conditions/group.md)
 * [help / harm](conditions/help_harm.md)
 * [(my)hp](conditions/hp.md)
