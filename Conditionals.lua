@@ -407,6 +407,9 @@ Roids.Keywords = {
     noequipped = function(conditionals)
         return not Roids.HasWeaponEquipped(conditionals.equipped);
     end,
+
+    worn = equipped
+    noworn = noequipped
     
     dead = function(conditionals)
         return UnitIsDeadOrGhost(conditionals.target);
